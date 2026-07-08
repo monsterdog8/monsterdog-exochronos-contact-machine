@@ -1,0 +1,11 @@
+{
+  "status": "fail_closed",
+  "reason": "Missing Pinata credentials and no IPFS deployer module found",
+  "cid": null,
+  "gateway_url": null,
+  "sha512": null,
+  "required_env": {
+    "PINATA_API_KEY": "missing",
+    "PINATA_SECRET": "missing"
+  }
+}

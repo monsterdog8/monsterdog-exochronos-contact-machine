@@ -1,10 +1,20 @@
- M artifact_hashes.txt
- M execute_harbor_forensic_v2_corrected.sh
- M git_status.txt
- M hash_verify.log
- D real_contact_logs/run_1783524221219499358/computation_output.json
- D real_contact_logs/run_1783524221219499358/environment.json
- D real_contact_logs/run_1783524221219499358/network_output.json
- D real_contact_logs/run_1783524221219499358/result.json
- D real_contact_logs/run_1783524221219499358/stdout.log
-?? real_contact_logs/run_1783524262135424856/
+AM FINAL_EXECUTION_REPORT.md
+A  MISSING_ARTIFACTS.md
+MM artifact_hashes.txt
+A  deployments/deployment_failed_20260708_161959.json
+M  git_commit.txt
+MM git_status.txt
+MM hash_verify.log
+A  logs/daemon.log
+A  logs/hub.log
+A  real_contact_logs/result.json
+A  real_contact_logs/run_1783527566122075725/computation_output.json
+A  real_contact_logs/run_1783527566122075725/environment.json
+A  real_contact_logs/run_1783527566122075725/network_output.json
+A  real_contact_logs/run_1783527566122075725/result.json
+A  real_contact_logs/run_1783527566122075725/stdout.log
+A  real_contact_logs/stderr.log
+A  real_contact_logs/stdout.log
+A  replay_outputs/anchor_tx.json
+A  replay_outputs/simulation.json
+A  risk_outputs/ipfs_result.json

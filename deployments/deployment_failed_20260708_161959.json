@@ -1,0 +1,12 @@
+{
+  "status": "fail_closed",
+  "reason": "Hardhat config/scripts missing and required blockchain credentials absent",
+  "network": "sepolia",
+  "contract_addresses": [],
+  "tx_hash": null,
+  "block_number": null,
+  "required_env": {
+    "PRIVATE_KEY": "missing",
+    "INFURA_KEY": "missing"
+  }
+}
