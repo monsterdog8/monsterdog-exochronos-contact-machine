@@ -1,5 +1,0 @@
-{
-"status":"ok",
-"run_id":"1783523749650497722",
-"executed_commands":["date -Iseconds","uname -a","id","ls -la","git status --short"]
-}

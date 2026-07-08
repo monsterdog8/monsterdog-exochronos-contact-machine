@@ -33,7 +33,7 @@ echo "command: curl -s https://api.github.com" | tee -a "$OUT_DIR/stdout.log"
 curl -s https://api.github.com > "$OUT_DIR/network_output.json"
 wc -c < "$OUT_DIR/network_output.json" | awk '{print "network_output_bytes: "$1}' | tee -a "$OUT_DIR/stdout.log"
 
-echo "command: python3 computation workload" | tee -a "$OUT_DIR/stdout.log"
+echo "command: python3 - (heredoc computation workload)" | tee -a "$OUT_DIR/stdout.log"
 OUT_DIR="$OUT_DIR" python3 - <<'PY' > "$OUT_DIR/computation_output.json"
 import hashlib
 import json
@@ -75,7 +75,7 @@ cat "$OUT_DIR/computation_output.json" | tee -a "$OUT_DIR/stdout.log"
   printf '"run_id":"%s",\n' "$RUN_ID"
   printf '"network_output_sha256":"%s",\n' "$(sha256sum "$OUT_DIR/network_output.json" | awk '{print $1}')"
   printf '"computation_output_sha256":"%s",\n' "$(sha256sum "$OUT_DIR/computation_output.json" | awk '{print $1}')"
-  printf '"executed_commands":["date -Iseconds","uname -a","id","ls -la","curl -s https://api.github.com","python3 - (heredoc computation workload)"]\n'
+  printf '"executed_commands":["date -Iseconds","uname -a","id","ls -la","curl -s https://api.github.com","python3 -"]\n'
   printf '}\n'
 } > "$OUT_DIR/result.json"
 
