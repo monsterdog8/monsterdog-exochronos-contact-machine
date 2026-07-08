@@ -1,0 +1,4 @@
+?? artifact_hashes.txt
+?? git_status.txt
+?? hash_verify.log
+?? real_contact_logs/
