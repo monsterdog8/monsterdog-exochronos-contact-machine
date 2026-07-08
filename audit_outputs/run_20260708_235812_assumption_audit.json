@@ -1,0 +1,13 @@
+{
+  "audited_at_utc": "2026-07-08T23:59:33Z",
+  "checks": {
+    "environment_json_exists": true,
+    "execution_manifest_exists": true,
+    "hash_verify_log_exists": true,
+    "result_json_exists": true,
+    "stdout_log_exists": true
+  },
+  "claim_ceiling": "STRUCTURAL_LOCAL_ONLY",
+  "run_directory": "real_contact_logs/run_20260708_235812",
+  "verdict": "PASS_LOCAL_ONLY"
+}

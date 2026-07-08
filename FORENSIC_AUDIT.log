@@ -1,0 +1,9 @@
+audited_at_utc=2026-07-08T23:59:33Z
+run_directory=real_contact_logs/run_20260708_235812
+environment_json_exists=PASS
+execution_manifest_exists=PASS
+hash_verify_log_exists=PASS
+result_json_exists=PASS
+stdout_log_exists=PASS
+verdict=PASS_LOCAL_ONLY
+claim_ceiling=STRUCTURAL_LOCAL_ONLY

@@ -1,0 +1,11 @@
+?? FORENSIC_AUDIT.log
+?? audit_assumptions.sh
+?? audit_outputs/
+?? execute_harbor_forensic_v2_corrected.sh
+?? generate_hashes.sh
+?? git_status.txt
+?? hash_verify.log
+?? real_contact_logs/
+?? replay_outputs/
+?? risk_outputs/
+?? risk_substitution_experiment.py
