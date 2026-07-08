@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-RUN_ID=$(date +%s)
+RUN_ID=$(date +%s%N)
 OUT_DIR="real_contact_logs/run_$RUN_ID"
 
 mkdir -p "$OUT_DIR"
