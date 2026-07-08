@@ -1,0 +1,26 @@
+=== EXECUTION START ===
+command: date -Iseconds
+2026-07-08T15:15:49+00:00
+command: uname -a
+Linux runnervm5mmn9 6.17.0-1018-azure #18~24.04.1-Ubuntu SMP Thu May 28 16:39:11 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+command: id
+uid=1001(runner) gid=1001(runner) groups=1001(runner),4(adm),100(users),118(docker),999(systemd-journal)
+command: ls -la
+total 52
+drwxr-xr-x 4 runner runner 4096 Jul  8 15:14 .
+drwxr-xr-x 3 runner runner 4096 Jul  8 15:14 ..
+drwxrwxr-x 7 runner runner 4096 Jul  8 15:15 .git
+-rw-rw-r-- 1 runner runner 2380 Jul  8 15:14 EXECUTION_PHASES.md
+-rw-rw-r-- 1 runner runner 1072 Jul  8 15:14 LICENSE
+-rw-rw-r-- 1 runner runner  319 Jul  8 15:14 README.md
+-rw-rw-r-- 1 runner runner  701 Jul  8 15:14 artifact_hashes.txt
+-rwxrwxr-x 1 runner runner  936 Jul  8 15:15 execute_harbor_forensic_v2_corrected.sh
+-rwxrwxr-x 1 runner runner  188 Jul  8 15:14 generate_hashes.sh
+-rw-rw-r-- 1 runner runner   85 Jul  8 15:14 git_commit.txt
+-rw-rw-r-- 1 runner runner  149 Jul  8 15:14 git_status.txt
+-rw-rw-r-- 1 runner runner  329 Jul  8 15:14 hash_verify.log
+drwxrwxr-x 5 runner runner 4096 Jul  8 15:15 real_contact_logs
+command: git status --short
+ M execute_harbor_forensic_v2_corrected.sh
+?? real_contact_logs/run_1783523749650497722/
+=== EXECUTION END ===
