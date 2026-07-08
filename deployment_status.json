@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-07-08T17:01:17+00:00",
+  "status": "UNAVAILABLE",
+  "classification": "RPC_MISSING",
+  "detail": "INFURA_KEY not set",
+  "rpc_reachable": false,
+  "private_key_present": false,
+  "hardhat_config_present": false,
+  "deploy_script_present": false,
+  "tx_hash": "",
+  "contract_addresses": [],
+  "block_number": null
+}

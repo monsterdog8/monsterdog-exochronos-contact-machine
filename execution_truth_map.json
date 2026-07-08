@@ -1,0 +1,221 @@
+{
+  "generated_at": "2026-07-08T17:03:08.440717+00:00",
+  "artifacts": [
+    {
+      "path": "stdout.log",
+      "classification": "EXECUTED",
+      "exists": true,
+      "size_bytes": 4113,
+      "timestamp_utc": "2026-07-08T17:00:56.321104+00:00",
+      "sha256": "dfdffb5bd6404aecae1ac5ec436cf6d41695f5ca0baa6ce2586c011e256359cf",
+      "producer_command": "bash phase5 execution chain",
+      "dependency_origin": [
+        "date",
+        "uname",
+        "id",
+        "ls",
+        "git status",
+        "curl",
+        "python3"
+      ]
+    },
+    {
+      "path": "stderr.log",
+      "classification": "EXECUTED",
+      "exists": true,
+      "size_bytes": 26,
+      "timestamp_utc": "2026-07-08T17:02:14.243310+00:00",
+      "sha256": "d8ab10cf297ec4e0b345e02495bde778b114db04de9168d2f6f6b1f3485b8b01",
+      "producer_command": "bash phase5 execution chain",
+      "dependency_origin": [
+        "phase5 command stderr stream"
+      ]
+    },
+    {
+      "path": "environment.json",
+      "classification": "EXECUTED",
+      "exists": true,
+      "size_bytes": 239,
+      "timestamp_utc": "2026-07-08T17:00:52.755105+00:00",
+      "sha256": "bb602e793837048fd0cb5fd9ccb9f8d2ff064ca30bf95209f643e9c5158b6a5f",
+      "producer_command": "bash phase5 execution chain",
+      "dependency_origin": [
+        "runtime environment"
+      ]
+    },
+    {
+      "path": "result.json",
+      "classification": "EXECUTED",
+      "exists": true,
+      "size_bytes": 396,
+      "timestamp_utc": "2026-07-08T17:00:52.855105+00:00",
+      "sha256": "71c7d15f67abb39d9c338e6f4f1862f98c398e36e91ce5cee9acc513dc2912ca",
+      "producer_command": "bash phase5 execution chain",
+      "dependency_origin": [
+        "network_output.json",
+        "computation_output.json"
+      ]
+    },
+    {
+      "path": "network_output.json",
+      "classification": "EXECUTED",
+      "exists": true,
+      "size_bytes": 31,
+      "timestamp_utc": "2026-07-08T17:00:52.793105+00:00",
+      "sha256": "dd0c698a40bb0909da56fca3c45bfc189abb0de9fa26719a219b1fd87e54739c",
+      "producer_command": "curl -s https://api.github.com",
+      "dependency_origin": [
+        "api.github.com"
+      ]
+    },
+    {
+      "path": "computation_output.json",
+      "classification": "EXECUTED",
+      "exists": true,
+      "size_bytes": 151,
+      "timestamp_utc": "2026-07-08T17:00:52.843105+00:00",
+      "sha256": "fa003e64146c2c445462e81b30a0a2be92ef7b8feadcb8c117e3a94e54aa8fc6",
+      "producer_command": "python3 prime/hash workload",
+      "dependency_origin": [
+        "network_output.json"
+      ]
+    },
+    {
+      "path": "FORENSIC_AUDIT.log",
+      "classification": "GENERATED",
+      "exists": true,
+      "size_bytes": 780,
+      "timestamp_utc": "2026-07-08T17:02:23.038461+00:00",
+      "sha256": "4dc3415dc23ec64e5120761aee874e760402c6a4c195dbe6273922b7df4cbf67",
+      "producer_command": "python3 forensic scan",
+      "dependency_origin": [
+        "repository filesystem"
+      ]
+    },
+    {
+      "path": "ci_validation.log",
+      "classification": "GENERATED",
+      "exists": true,
+      "size_bytes": 530,
+      "timestamp_utc": "2026-07-08T17:01:29.474118+00:00",
+      "sha256": "3e1d96437b76c63d8c4bc3dd96ecdadb32ba0b4443e2855430eda75bbf14d8ac",
+      "producer_command": "bash ci validation",
+      "dependency_origin": [
+        "workflow directory state",
+        "env state"
+      ]
+    },
+    {
+      "path": "execution_truth_map.json",
+      "classification": "GENERATED",
+      "exists": true,
+      "size_bytes": 5463,
+      "timestamp_utc": "2026-07-08T17:01:57.987026+00:00",
+      "sha256": "a2d396fcd5cf01965c4b64c1cf430c2bb91df6435c2ba8b44e3ce6c9502c1520",
+      "producer_command": "python3 truth map builder",
+      "dependency_origin": [
+        "artifact files"
+      ]
+    },
+    {
+      "path": "ipfs_result.json",
+      "classification": "GENERATED",
+      "exists": true,
+      "size_bytes": 423,
+      "timestamp_utc": "2026-07-08T17:01:08.286102+00:00",
+      "sha256": "eed331244c3fa0838e9da1cec169b894299d1772f043df322b335c220adac107",
+      "producer_command": "bash ipfs attempt classifier",
+      "dependency_origin": [
+        "PINATA_API_KEY",
+        "PINATA_SECRET",
+        "curl response"
+      ]
+    },
+    {
+      "path": "deployment_status.json",
+      "classification": "GENERATED",
+      "exists": true,
+      "size_bytes": 339,
+      "timestamp_utc": "2026-07-08T17:01:17.766119+00:00",
+      "sha256": "fec0b3ad10072a421339c4f66f86b46e3f2018d86c098eb898fb3770753fb008",
+      "producer_command": "bash blockchain classifier",
+      "dependency_origin": [
+        "INFURA_KEY",
+        "PRIVATE_KEY",
+        "hardhat files"
+      ]
+    },
+    {
+      "path": "MISSING_ARTIFACTS.md",
+      "classification": "INFERRED",
+      "exists": true,
+      "size_bytes": 744,
+      "timestamp_utc": "2026-07-08T17:00:01.128130+00:00",
+      "sha256": "4bfd106dd2f7efec82fdf3f37b0f4bb8dae1069c6cde1f39ef1dd5fec4c59ae1",
+      "producer_command": "prior mission artifact inference",
+      "dependency_origin": [
+        "repository scan"
+      ]
+    },
+    {
+      "path": "audit_assumptions.sh",
+      "classification": "UNAVAILABLE",
+      "exists": false,
+      "size_bytes": 0,
+      "timestamp_utc": null,
+      "sha256": "",
+      "producer_command": "required artifact check",
+      "dependency_origin": [
+        "repository scan"
+      ]
+    },
+    {
+      "path": "risk_substitution_experiment.py",
+      "classification": "UNAVAILABLE",
+      "exists": false,
+      "size_bytes": 0,
+      "timestamp_utc": null,
+      "sha256": "",
+      "producer_command": "required artifact check",
+      "dependency_origin": [
+        "repository scan"
+      ]
+    },
+    {
+      "path": "MONSTERDOG_FULL_DEPLOYMENT.py",
+      "classification": "UNAVAILABLE",
+      "exists": false,
+      "size_bytes": 0,
+      "timestamp_utc": null,
+      "sha256": "",
+      "producer_command": "required artifact check",
+      "dependency_origin": [
+        "repository scan"
+      ]
+    },
+    {
+      "path": "scripts/start_ecosystem.sh",
+      "classification": "UNAVAILABLE",
+      "exists": false,
+      "size_bytes": 0,
+      "timestamp_utc": null,
+      "sha256": "",
+      "producer_command": "required artifact check",
+      "dependency_origin": [
+        "repository scan"
+      ]
+    },
+    {
+      "path": "hardhat.config.js",
+      "classification": "UNAVAILABLE",
+      "exists": false,
+      "size_bytes": 0,
+      "timestamp_utc": null,
+      "sha256": "",
+      "producer_command": "required artifact check",
+      "dependency_origin": [
+        "repository scan"
+      ]
+    }
+  ]
+}

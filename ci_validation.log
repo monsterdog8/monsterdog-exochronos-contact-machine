@@ -1,0 +1,12 @@
+timestamp: 2026-07-08T17:01:29+00:00
+repo: /home/runner/work/monsterdog-exochronos-contact-machine/monsterdog-exochronos-contact-machine
+phase: ci/cd validation
+workflows_dir: missing
+ci_status: FAIL
+cause: no GitHub Actions workflows found
+required_secrets_present:
+  - PRIVATE_KEY: false
+  - PINATA_API_KEY: false
+  - PINATA_SECRET: false
+  - INFURA_KEY: false
+runner_compatibility: linux-x86_64 observed (Linux runnervm5mmn9 6.17.0-1018-azure #18~24.04.1-Ubuntu SMP Thu May 28 16:39:11 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux)

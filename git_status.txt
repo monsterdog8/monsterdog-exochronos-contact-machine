@@ -1,20 +1,21 @@
-AM FINAL_EXECUTION_REPORT.md
-A  MISSING_ARTIFACTS.md
-MM artifact_hashes.txt
-A  deployments/deployment_failed_20260708_161959.json
-M  git_commit.txt
-MM git_status.txt
-MM hash_verify.log
-A  logs/daemon.log
-A  logs/hub.log
-A  real_contact_logs/result.json
-A  real_contact_logs/run_1783527566122075725/computation_output.json
-A  real_contact_logs/run_1783527566122075725/environment.json
-A  real_contact_logs/run_1783527566122075725/network_output.json
-A  real_contact_logs/run_1783527566122075725/result.json
-A  real_contact_logs/run_1783527566122075725/stdout.log
-A  real_contact_logs/stderr.log
-A  real_contact_logs/stdout.log
-A  replay_outputs/anchor_tx.json
-A  replay_outputs/simulation.json
-A  risk_outputs/ipfs_result.json
+ M artifact_hashes.txt
+ M git_status.txt
+ M hash_verify.log
+ M real_contact_logs/result.json
+ M real_contact_logs/stderr.log
+ M real_contact_logs/stdout.log
+ M risk_outputs/ipfs_result.json
+?? FINAL_DEPLOYMENT_STATUS.md
+?? FORENSIC_AUDIT.log
+?? ci_validation.log
+?? computation_output.json
+?? deployment_status.json
+?? deployments/deployment_status.json
+?? environment.json
+?? execution_truth_map.json
+?? ipfs_result.json
+?? network_output.json
+?? real_contact_logs/run_1783530056211631204/
+?? result.json
+?? stderr.log
+?? stdout.log

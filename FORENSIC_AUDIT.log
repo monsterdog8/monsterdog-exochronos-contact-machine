@@ -1,0 +1,22 @@
+timestamp: 2026-07-08T17:02:23+0000
+repository: /home/runner/work/monsterdog-exochronos-contact-machine/monsterdog-exochronos-contact-machine
+total_files_scanned: 47
+--- missing_artifacts ---
+audit_assumptions.sh
+risk_substitution_experiment.py
+MONSTERDOG_FULL_DEPLOYMENT.py
+scripts/start_ecosystem.sh
+hardhat.config.js
+--- null_outputs(size=0) ---
+--- stale_files(age_hours>24) ---
+--- duplicated_reports ---
+FINAL_EXECUTION_REPORT.md
+--- orphan_scripts(executable,manually-invoked) ---
+generate_hashes.sh
+execute_harbor_forensic_v2_corrected.sh
+--- broken_pipelines ---
+missing critical scripts/config prevents full pipeline
+--- partial_executions ---
+real_contact_logs/run_1783524262135424856
+real_contact_logs/run_1783527566122075725
+real_contact_logs/run_1783530056211631204
