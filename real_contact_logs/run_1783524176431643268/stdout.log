@@ -1,0 +1,27 @@
+=== EXECUTION START ===
+command: date -Iseconds
+2026-07-08T15:22:56+00:00
+command: uname -a
+Linux runnervmkkn4f 6.17.0-1018-azure #18~24.04.1-Ubuntu SMP Thu May 28 16:39:11 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+command: id
+uid=1001(runner) gid=1001(runner) groups=1001(runner),4(adm),100(users),118(docker),999(systemd-journal)
+command: ls -la
+total 52
+drwxr-xr-x 4 runner runner 4096 Jul  8 15:20 .
+drwxr-xr-x 3 runner runner 4096 Jul  8 15:20 ..
+drwxrwxr-x 7 runner runner 4096 Jul  8 15:22 .git
+-rw-rw-r-- 1 runner runner 2380 Jul  8 15:20 EXECUTION_PHASES.md
+-rw-rw-r-- 1 runner runner 1072 Jul  8 15:20 LICENSE
+-rw-rw-r-- 1 runner runner  319 Jul  8 15:20 README.md
+-rw-rw-r-- 1 runner runner 2565 Jul  8 15:22 artifact_hashes.txt
+-rwxrwxr-x 1 runner runner 2356 Jul  8 15:22 execute_harbor_forensic_v2_corrected.sh
+-rwxrwxr-x 1 runner runner  188 Jul  8 15:20 generate_hashes.sh
+-rw-rw-r-- 1 runner runner   94 Jul  8 15:22 git_commit.txt
+-rw-rw-r-- 1 runner runner  241 Jul  8 15:22 git_status.txt
+-rw-rw-r-- 1 runner runner 1263 Jul  8 15:22 hash_verify.log
+drwxrwxr-x 9 runner runner 4096 Jul  8 15:22 real_contact_logs
+command: curl -s https://api.github.com
+network_output_bytes: 31
+command: python3 computation workload
+{"network_bytes": 31, "network_sha256": "dd0c698a40bb0909da56fca3c45bfc189abb0de9fa26719a219b1fd87e54739c", "prime_count": 5133, "prime_limit": 50000}
+=== EXECUTION END ===

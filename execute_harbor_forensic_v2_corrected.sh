@@ -60,10 +60,10 @@ prime_count = sum(1 for n in range(limit + 1) if is_prime(n))
 sha = hashlib.sha256(network_bytes).hexdigest()
 
 payload = {
-    "prime_limit": limit,
-    "prime_count": prime_count,
-    "network_sha256": sha,
     "network_bytes": len(network_bytes),
+    "network_sha256": sha,
+    "prime_count": prime_count,
+    "prime_limit": limit,
 }
 print(json.dumps(payload, sort_keys=True))
 PY
@@ -75,7 +75,7 @@ cat "$OUT_DIR/computation_output.json" | tee -a "$OUT_DIR/stdout.log"
   printf '"run_id":"%s",\n' "$RUN_ID"
   printf '"network_output_sha256":"%s",\n' "$(sha256sum "$OUT_DIR/network_output.json" | awk '{print $1}')"
   printf '"computation_output_sha256":"%s",\n' "$(sha256sum "$OUT_DIR/computation_output.json" | awk '{print $1}')"
-  printf '"executed_commands":["date -Iseconds","uname -a","id","ls -la","curl -s https://api.github.com","python3 computation workload"]\n'
+  printf '"executed_commands":["date -Iseconds","uname -a","id","ls -la","curl -s https://api.github.com","python3 - (heredoc computation workload)"]\n'
   printf '}\n'
 } > "$OUT_DIR/result.json"
 
