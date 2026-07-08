@@ -31,7 +31,7 @@ echo "=== EXECUTION START ===" | tee "$OUT_DIR/stdout.log"
 
 echo "command: curl -s https://api.github.com" | tee -a "$OUT_DIR/stdout.log"
 curl -s https://api.github.com > "$OUT_DIR/network_output.json"
-wc -c < "$OUT_DIR/network_output.json" | awk '{print "network_output_bytes: "$1}' | tee -a "$OUT_DIR/stdout.log"
+wc -c < "$OUT_DIR/network_output.json" | awk '{print "network_output_bytes: " $1}' | tee -a "$OUT_DIR/stdout.log"
 
 echo "command: python3 - (heredoc computation workload)" | tee -a "$OUT_DIR/stdout.log"
 OUT_DIR="$OUT_DIR" python3 - <<'PY' > "$OUT_DIR/computation_output.json"

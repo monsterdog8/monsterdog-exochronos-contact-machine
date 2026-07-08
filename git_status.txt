@@ -2,30 +2,9 @@
  M execute_harbor_forensic_v2_corrected.sh
  M git_status.txt
  M hash_verify.log
- D real_contact_logs/run_1783523210/environment.json
- D real_contact_logs/run_1783523210/result.json
- D real_contact_logs/run_1783523210/stdout.log
- D real_contact_logs/run_1783523251577288055/environment.json
- D real_contact_logs/run_1783523251577288055/result.json
- D real_contact_logs/run_1783523251577288055/stdout.log
- D real_contact_logs/run_1783523749650497722/environment.json
- D real_contact_logs/run_1783523749650497722/result.json
- D real_contact_logs/run_1783523749650497722/stdout.log
- D real_contact_logs/run_1783524105675586632/environment.json
- D real_contact_logs/run_1783524105675586632/network_output.json
- D real_contact_logs/run_1783524105675586632/stdout.log
- D real_contact_logs/run_1783524122454089135/computation_output.json
- D real_contact_logs/run_1783524122454089135/environment.json
- D real_contact_logs/run_1783524122454089135/network_output.json
- D real_contact_logs/run_1783524122454089135/stdout.log
- D real_contact_logs/run_1783524129439479496/computation_output.json
- D real_contact_logs/run_1783524129439479496/environment.json
- D real_contact_logs/run_1783524129439479496/network_output.json
- D real_contact_logs/run_1783524129439479496/result.json
- D real_contact_logs/run_1783524129439479496/stdout.log
- D real_contact_logs/run_1783524176431643268/computation_output.json
- D real_contact_logs/run_1783524176431643268/environment.json
- D real_contact_logs/run_1783524176431643268/network_output.json
- D real_contact_logs/run_1783524176431643268/result.json
- D real_contact_logs/run_1783524176431643268/stdout.log
-?? real_contact_logs/run_1783524221219499358/
+ D real_contact_logs/run_1783524221219499358/computation_output.json
+ D real_contact_logs/run_1783524221219499358/environment.json
+ D real_contact_logs/run_1783524221219499358/network_output.json
+ D real_contact_logs/run_1783524221219499358/result.json
+ D real_contact_logs/run_1783524221219499358/stdout.log
+?? real_contact_logs/run_1783524262135424856/
