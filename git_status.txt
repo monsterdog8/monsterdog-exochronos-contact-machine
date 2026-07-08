@@ -2,4 +2,6 @@
  M execute_harbor_forensic_v2_corrected.sh
  M git_status.txt
  M hash_verify.log
-?? real_contact_logs/run_1783523749650497722/
+?? real_contact_logs/run_1783524105675586632/
+?? real_contact_logs/run_1783524122454089135/
+?? real_contact_logs/run_1783524129439479496/
