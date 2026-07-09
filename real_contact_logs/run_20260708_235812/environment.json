@@ -1,0 +1,14 @@
+{
+  "captured_at_utc": "2026-07-09T00:00:40Z",
+  "environment_key_count": 221,
+  "selected_environment": {
+    "HOME": "/home/runner",
+    "LANG": "C.UTF-8",
+    "PATH": "/home/runner/work/_temp/ghcca-node/node/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+    "PWD": "/home/runner/work/monsterdog-exochronos-contact-machine/monsterdog-exochronos-contact-machine",
+    "PYTHONPATH": null,
+    "SHELL": "/bin/bash",
+    "TZ": null,
+    "USER": "runner"
+  }
+}

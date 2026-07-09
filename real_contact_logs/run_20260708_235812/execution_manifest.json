@@ -1,0 +1,23 @@
+{
+  "artifact_count": 3,
+  "artifacts": [
+    {
+      "file": "stdout.log",
+      "sha256": "7593d1cb05f45beb6a7c937a42603efe9d7c1ba3558452ebe2a8deaca35c8524",
+      "size_bytes": 1986
+    },
+    {
+      "file": "environment.json",
+      "sha256": "cdb0c45cb3a7f2ad7f9f2498386389b9d2345df0dd87e535fd50b666beb511af",
+      "size_bytes": 679
+    },
+    {
+      "file": "result.json",
+      "sha256": "88fef9f5d5bdbe87b89e17a987fabe5211eed13e3618b5507d092dad140eb912",
+      "size_bytes": 471
+    }
+  ],
+  "generated_at_utc": "2026-07-09T00:00:40Z",
+  "mode": "FAIL_CLOSED",
+  "run_directory": "real_contact_logs/run_20260708_235812"
+}

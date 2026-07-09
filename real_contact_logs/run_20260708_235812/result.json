@@ -1,0 +1,18 @@
+{
+  "claim_ceiling": "STRUCTURAL_LOCAL_ONLY",
+  "executed_at_utc": "2026-07-09T00:00:40Z",
+  "host": {
+    "machine": "x86_64",
+    "release": "6.17.0-1018-azure",
+    "system": "Linux"
+  },
+  "local_only_until_replay": true,
+  "mode": "FAIL_CLOSED",
+  "observables_only": true,
+  "phase": 3,
+  "repository": {
+    "branch": "copilot/copilotcreate-execution-artifacts",
+    "head": "c077f1958aeb1420975e4bfd910a23d74fe34dc2"
+  },
+  "status": "OBSERVED_LOCAL_EXECUTION"
+}

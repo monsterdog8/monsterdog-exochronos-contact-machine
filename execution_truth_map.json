@@ -1,0 +1,25 @@
+{
+  "audit_verdict": "PASS_LOCAL_ONLY",
+  "claim_ceiling": "STRUCTURAL_LOCAL_ONLY",
+  "claim_firewall_active": true,
+  "local_only_until_replay": true,
+  "mode": "FAIL_CLOSED",
+  "required_directories": {
+    "audit_outputs": true,
+    "real_contact_logs": true,
+    "replay_outputs": true,
+    "risk_outputs": true
+  },
+  "required_files": {
+    "EXECUTION_PHASES.md": true,
+    "FINAL_DEPLOYMENT_STATUS.md": true,
+    "FINAL_EXECUTION_REPORT.md": true,
+    "FORENSIC_AUDIT.log": true,
+    "execution_truth_map.json": true,
+    "git_status.txt": true,
+    "hash_verify.log": true
+  },
+  "risk_verdict": "PASS_LOCAL_ONLY",
+  "run_directory": "real_contact_logs/run_20260708_235812",
+  "status": "READY_LOCAL_REPLAY"
+}
