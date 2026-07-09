@@ -1,11 +1,26 @@
 {
   "audit_verdict": "PASS_LOCAL_ONLY",
-  "claim_ceiling": "STRUCTURAL_LOCAL_ONLY",
+  "claim_ceiling": "LAB_ONLY",
   "claim_firewall_active": true,
   "local_only_until_replay": true,
   "mode": "FAIL_CLOSED",
+  "aegis_verdict": "PARTIAL_PASS_LOCAL_BUNDLE__PRODUCTION_LOCKED",
+  "aegis_global_ceiling": "LAB_ONLY",
+  "aegis_production_gate": "LOCKED",
+  "aegis_cycle": 10,
+  "lane_ceilings": {
+    "global": "LAB_ONLY",
+    "CORE": "LOCAL_BOUNDED",
+    "SUPPORT": "CONF_DEMO_COMPLETE",
+    "LAB": "LAB_ONLY",
+    "ARCHITECTURE": "ARCH_BOUNDED",
+    "WORLD": "UX_SYMBOLIC_ONLY",
+    "PRODUCTION": "LOCKED",
+    "QUARANTINE": "QUARANTINE_HOLD"
+  },
   "required_directories": {
     "audit_outputs": true,
+    "monsterboy_aegis_modules": true,
     "real_contact_logs": true,
     "replay_outputs": true,
     "risk_outputs": true
@@ -15,11 +30,25 @@
     "FINAL_DEPLOYMENT_STATUS.md": true,
     "FINAL_EXECUTION_REPORT.md": true,
     "FORENSIC_AUDIT.log": true,
+    "REPORT_FINAL_CANONICAL.json": true,
+    "REPORT_FINAL_MONSTERBOY_AEGIS.md": true,
+    "UNIFIED_SYNC_CONFIG.json": true,
     "execution_truth_map.json": true,
     "git_status.txt": true,
-    "hash_verify.log": true
+    "hash_verify.log": true,
+    "monsterboy_aegis_orchestrator.py": true
   },
   "risk_verdict": "PASS_LOCAL_ONLY",
   "run_directory": "real_contact_logs/run_20260708_235812",
-  "status": "READY_LOCAL_REPLAY"
+  "status": "READY_LOCAL_REPLAY",
+  "safe_hold_active": true,
+  "forbidden_claims": [
+    "production",
+    "external",
+    "scientific",
+    "independent",
+    "oracle",
+    "consciousness",
+    "global-superiority"
+  ]
 }

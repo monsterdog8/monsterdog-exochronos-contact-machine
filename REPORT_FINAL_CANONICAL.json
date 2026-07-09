@@ -1,0 +1,61 @@
+{
+  "framework": "MONSTERBOY_AEGIS",
+  "version": "X-01",
+  "generated_utc": "2026-04-27T17:34:09.238225+00:00",
+  "mode": "AUDIT / VERIFY / ARCHITECTURE / BUNDLE / EXECUTION_LOCALE",
+  "verdict": "PARTIAL_PASS_LOCAL_BUNDLE__PRODUCTION_LOCKED",
+  "global_ceiling": "LAB_ONLY",
+  "production_gate": "LOCKED",
+  "cycle": 10,
+  "checks": {
+    "zip_extraction": {"status": "PASS_LOCAL", "detail": "3/3 ZIP extraits sans path traversal"},
+    "python_compile": {"status": "PASS_LOCAL", "detail": "80/54 fichiers .py"},
+    "json_parse": {"status": "PARTIAL", "detail": "111/112 valides; 1 JSON tronqué en QUARANTINE"},
+    "jsonl_parse": {"status": "PASS_LOCAL", "detail": "9 fichiers; 0 ligne invalide"},
+    "csv_parse": {"status": "PARTIAL", "detail": "48/49 via virgule; 1 fichier .csv est TSV"},
+    "pdf_render": {"status": "PARTIAL", "detail": "1 PDF LaTeX valide 6 pages; 1 placeholder non-PDF"},
+    "x01a_self_test": {"status": "PASS_LOCAL_NEGATIVE_GATE", "detail": "self-test bloque ledger incomplet"},
+    "arxiv_benchmark": {"status": "PASS_LOCAL_LAB", "detail": "benchmark_outputs régénérés"},
+    "production_gate": {"status": "LOCKED", "detail": "4 artefacts bruts absents/non vides non satisfaits"}
+  },
+  "ceilings": {
+    "global": "LAB_ONLY",
+    "CORE": "LOCAL_BOUNDED",
+    "SUPPORT": "CONF_DEMO_COMPLETE",
+    "LAB": "LAB_ONLY",
+    "ARCHITECTURE": "ARCH_BOUNDED",
+    "WORLD": "UX_SYMBOLIC_ONLY",
+    "PRODUCTION": "LOCKED",
+    "QUARANTINE": "QUARANTINE_HOLD"
+  },
+  "synchronization": {
+    "verdict_global": "BLOQUE_FAIL_CLOSED",
+    "promotion_ceiling": "LAB_ONLY",
+    "scientific_validation": "NOT_SUPPORTED",
+    "A-1": "UNLOCKED",
+    "A-2": "PARTIAL",
+    "A-3": "LOCKED"
+  },
+  "production_x01a": {
+    "required_artefacts": {
+      "x01a_ledger_production_SCHEMA_ALIGNED.jsonl": "absent",
+      "stdout_stderr_production_SCHEMA_ALIGNED.txt": "absent",
+      "raw_ledger_gate_PRODUCTION_result.json": "absent",
+      "sha256sum_production_SCHEMA_ALIGNED.txt": "absent"
+    },
+    "https_run_28_28": false,
+    "endpoint_verified": false
+  },
+  "quarantine": [
+    "extracted/MONSTERBOY_ÆGIS_MEMORY_FILE/70d0e351.json",
+    "extracted/MONSTERBOY_ÆGIS_MEMORY_FILE/Storyboard_MONSTERDOG.pdf"
+  ],
+  "counter_hypotheses": {
+    "CH1_insufficient_data": "active_for_PRODUCTION",
+    "CH2_overinterpretation": "controlled_by_LAB_ONLY_ceiling",
+    "CH3_inadequate_framework": "discriminated_by_lane_separation",
+    "CH4_false_signal": "active_quarantine_hold",
+    "CH5_alternative_explanation": "not_testable_without_external"
+  },
+  "next_action": "Provide four raw production X-01A artefacts from HTTPS 28/28 run"
+}
