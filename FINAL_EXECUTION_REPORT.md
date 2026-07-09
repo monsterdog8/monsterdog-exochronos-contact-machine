@@ -1,7 +1,7 @@
 # FINAL EXECUTION REPORT
 
 ## Mission
-EXOCHRONOS Phase 3 local execution evidence package.
+EXOCHRONOS Phase 3 local execution evidence package + MONSTERBOY ÆGIS X-01 audit bundle.
 
 ## Observables Produced
 - real_contact_logs run with stdout.log, environment.json, result.json, execution_manifest.json
@@ -10,7 +10,19 @@ EXOCHRONOS Phase 3 local execution evidence package.
 - risk_outputs risk substitution report
 - execution_truth_map.json and git_status.txt
 
+## ÆGIS Bundle Produced
+- REPORT_FINAL_MONSTERBOY_AEGIS.md — canonical final report
+- REPORT_FINAL_CANONICAL.json — machine-readable report
+- UNIFIED_SYNC_CONFIG.json — sync configuration
+- monsterboy_aegis_modules/ — reusable Python modules (manifest, safe_hold_gate, audit, sync_config)
+- monsterboy_aegis_orchestrator.py — CLI orchestrator
+
 ## Verdict
 - Deployment Status: READY_LOCAL_REPLAY
-- Claim Ceiling: STRUCTURAL_LOCAL_ONLY
+- Claim Ceiling: LAB_ONLY
 - Constraint: LOCAL_ONLY_UNTIL_REPLAY
+- ÆGIS Verdict: PARTIAL_PASS_LOCAL_BUNDLE__PRODUCTION_LOCKED
+- Production Gate: LOCKED (4 artefacts absent)
+
+## Next Action
+Provide four raw production X-01A artefacts from HTTPS 28/28 run.

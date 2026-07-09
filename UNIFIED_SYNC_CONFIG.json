@@ -1,0 +1,57 @@
+{
+  "framework": "MONSTERBOY_AEGIS",
+  "version": "X-01",
+  "generated_utc": "2026-04-27T17:34:09.238225+00:00",
+  "mode": "AUDIT / VERIFY / ARCHITECTURE / BUNDLE / EXECUTION_LOCALE",
+  "verdict": "PARTIAL_PASS_LOCAL_BUNDLE__PRODUCTION_LOCKED",
+  "cycle": 10,
+  "ceilings": {
+    "global": "LAB_ONLY",
+    "CORE": "LOCAL_BOUNDED",
+    "SUPPORT": "CONF_DEMO_COMPLETE",
+    "LAB": "LAB_ONLY",
+    "ARCHITECTURE": "ARCH_BOUNDED",
+    "WORLD": "UX_SYMBOLIC_ONLY",
+    "PRODUCTION": "LOCKED",
+    "QUARANTINE": "QUARANTINE_HOLD"
+  },
+  "counter_hypotheses": {
+    "CH1_insufficient_data": "active_for_PRODUCTION",
+    "CH2_overinterpretation": "controlled_by_LAB_ONLY_ceiling",
+    "CH3_inadequate_framework": "discriminated_by_lane_separation",
+    "CH4_false_signal": "active_quarantine_hold",
+    "CH5_alternative_explanation": "not_testable_without_external"
+  },
+  "proof_limits": [
+    "Python compilation != full execution",
+    "ZIP extraction != semantic validation",
+    "Local benchmark != external truth",
+    "Self-test X-01A negative != production",
+    "Canonical report validated != scientific validation",
+    "Local hash != external proof"
+  ],
+  "forbidden_claims": [
+    "production",
+    "external",
+    "scientific",
+    "independent",
+    "oracle",
+    "consciousness",
+    "global-superiority"
+  ],
+  "safe_hold": {
+    "active": true,
+    "block_overclaim": true,
+    "advance_subscope": true,
+    "glorify_blockage": false
+  },
+  "synchronization": {
+    "verdict_global": "BLOQUE_FAIL_CLOSED",
+    "promotion_ceiling": "LAB_ONLY",
+    "scientific_validation": "NOT_SUPPORTED",
+    "A-1": "UNLOCKED",
+    "A-2": "PARTIAL",
+    "A-3": "LOCKED"
+  },
+  "next_action": "Provide four raw production X-01A artefacts from HTTPS 28/28 run, then pass raw_ledger_gate_PRODUCTION_result.json."
+}
