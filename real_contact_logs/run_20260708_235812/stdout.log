@@ -1,28 +1,31 @@
 # EXOCHRONOS Phase 3 Local Execution Trace
-started_at_utc=2026-07-08T23:59:33Z
+started_at_utc=2026-07-09T00:00:40Z
 host_uname=Linux runnervmkkn4f 6.17.0-1018-azure #18~24.04.1-Ubuntu SMP Thu May 28 16:39:11 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
 current_user=uid=1001(runner) gid=1001(runner) groups=1001(runner),4(adm),100(users),118(docker),999(systemd-journal)
 working_directory=/home/runner/work/monsterdog-exochronos-contact-machine/monsterdog-exochronos-contact-machine
-git_head=b22cda8f34e7b6d6b3d6f376f285528ba7f486d2
+git_head=c077f1958aeb1420975e4bfd910a23d74fe34dc2
 git_branch=copilot/copilotcreate-execution-artifacts
 --- git status --short ---
-?? audit_assumptions.sh
-?? execute_harbor_forensic_v2_corrected.sh
-?? generate_hashes.sh
-?? real_contact_logs/
-?? risk_substitution_experiment.py
+ M execute_harbor_forensic_v2_corrected.sh
+ M real_contact_logs/run_20260708_235812/stdout.log
 --- directory listing ---
-total 56
+total 80
 drwxr-xr-x 7 runner runner 4096 Jul  8 23:59 .
 drwxr-xr-x 3 runner runner 4096 Jul  8 23:57 ..
-drwxrwxr-x 7 runner runner 4096 Jul  8 23:59 .git
+drwxrwxr-x 7 runner runner 4096 Jul  9 00:00 .git
 -rw-rw-r-- 1 runner runner 2380 Jul  8 23:58 EXECUTION_PHASES.md
+-rw-rw-r-- 1 runner runner  388 Jul  8 23:59 FINAL_DEPLOYMENT_STATUS.md
+-rw-rw-r-- 1 runner runner  525 Jul  8 23:59 FINAL_EXECUTION_REPORT.md
+-rw-rw-r-- 1 runner runner  283 Jul  8 23:59 FORENSIC_AUDIT.log
 -rw-rw-r-- 1 runner runner 1072 Jul  8 23:58 LICENSE
 -rw-rw-r-- 1 runner runner  319 Jul  8 23:58 README.md
 -rwxrwxr-x 1 runner runner 1674 Jul  8 23:59 audit_assumptions.sh
 drwxrwxr-x 2 runner runner 4096 Jul  8 23:59 audit_outputs
--rwxrwxr-x 1 runner runner 2762 Jul  8 23:59 execute_harbor_forensic_v2_corrected.sh
+-rwxrwxr-x 1 runner runner 2758 Jul  9 00:00 execute_harbor_forensic_v2_corrected.sh
+-rw-rw-r-- 1 runner runner  718 Jul  8 23:59 execution_truth_map.json
 -rwxrwxr-x 1 runner runner  787 Jul  8 23:59 generate_hashes.sh
+-rw-rw-r-- 1 runner runner  259 Jul  8 23:59 git_status.txt
+-rw-rw-r-- 1 runner runner  679 Jul  8 23:59 hash_verify.log
 drwxrwxr-x 3 runner runner 4096 Jul  8 23:59 real_contact_logs
 drwxrwxr-x 2 runner runner 4096 Jul  8 23:59 replay_outputs
 drwxrwxr-x 2 runner runner 4096 Jul  8 23:59 risk_outputs

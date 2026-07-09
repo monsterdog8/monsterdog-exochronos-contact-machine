@@ -1,6 +1,6 @@
 {
   "claim_ceiling": "STRUCTURAL_LOCAL_ONLY",
-  "generated_at_utc": "2026-07-08T23:59:33Z",
+  "generated_at_utc": "2026-07-09T00:00:40Z",
   "mode": "FAIL_CLOSED",
   "required_evidence_checks": {
     "FORENSIC_AUDIT.log": true,

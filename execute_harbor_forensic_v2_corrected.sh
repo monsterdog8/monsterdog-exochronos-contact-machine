@@ -88,7 +88,7 @@ for name in ["stdout.log", "environment.json", "result.json"]:
 manifest = {
     "generated_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     "run_directory": str(run_dir),
-    "artifact_count": len(entries) + 1,
+    "artifact_count": len(entries),
     "artifacts": entries,
     "mode": "FAIL_CLOSED",
 }

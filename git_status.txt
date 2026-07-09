@@ -1,11 +1,11 @@
-?? FORENSIC_AUDIT.log
-?? audit_assumptions.sh
-?? audit_outputs/
-?? execute_harbor_forensic_v2_corrected.sh
-?? generate_hashes.sh
-?? git_status.txt
-?? hash_verify.log
-?? real_contact_logs/
-?? replay_outputs/
-?? risk_outputs/
-?? risk_substitution_experiment.py
+ M FORENSIC_AUDIT.log
+ M audit_outputs/run_20260708_235812_assumption_audit.json
+ M execute_harbor_forensic_v2_corrected.sh
+ M git_status.txt
+ M hash_verify.log
+ M real_contact_logs/run_20260708_235812/environment.json
+ M real_contact_logs/run_20260708_235812/execution_manifest.json
+ M real_contact_logs/run_20260708_235812/result.json
+ M real_contact_logs/run_20260708_235812/stdout.log
+ M replay_outputs/run_20260708_235812_sha256.txt
+ M risk_outputs/risk_substitution_report.json
