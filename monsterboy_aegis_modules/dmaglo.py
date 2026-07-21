@@ -96,11 +96,18 @@ def verify_dual_runtime(
     """
     ΔMAGLO rc3.2.1: dual-runtime recompute verification.
 
-    Loads artefacts from run_dir twice (two independent reads = dual runtime
-    within LOCAL scope), hashes each payload, computes delta hash, and verifies
-    the two hashes match.  This confirms local replay determinism.
+    Performs two independent reads of the Phase 3 artefacts and hashes each
+    payload separately.  The purpose is to confirm that the serialised artefacts
+    are stable on disk and produce a reproducible (deterministic) hash across
+    two independent loads — i.e. the artefacts are replay-stable.
 
-    Claim ceiling: LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY
+    Claim scope: LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY.
+    This does NOT claim external validation, production readiness, or any
+    correctness property beyond local file-system determinism.
+
+    The "zero delta" sentinel value is the SHA-256 of (hash_a + hash_a), i.e.
+    the same hash concatenated with itself, which is the expected delta when
+    both runs are identical.  Any deviation from this indicates instability.
     """
     result = DmagloResult(
         generated_utc=datetime.now(timezone.utc).isoformat(),

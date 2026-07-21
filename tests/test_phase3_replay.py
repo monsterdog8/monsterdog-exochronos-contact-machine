@@ -117,9 +117,18 @@ class TestDmagloRc321:
         assert result.run_a_hash != ""
 
     def test_delta_hash_present(self):
+        import hashlib
         result = verify_dual_runtime(PHASE3_RUN_DIR)
         assert result.delta_hash != ""
         assert len(result.delta_hash) == 64  # SHA-256 hex
+        # When both runs match, delta_hash is SHA-256(hash_a + hash_a) — the
+        # zero-delta sentinel.  Assert explicitly so the invariant is documented.
+        expected_zero_delta = hashlib.sha256(
+            (result.run_a_hash + result.run_a_hash).encode("utf-8")
+        ).hexdigest()
+        assert result.delta_hash == expected_zero_delta, (
+            "delta_hash does not equal zero-delta sentinel; artefacts may be unstable"
+        )
 
     def test_result_to_dict_keys(self):
         result = verify_dual_runtime(PHASE3_RUN_DIR)
