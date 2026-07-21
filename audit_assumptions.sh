@@ -46,7 +46,7 @@ out = {
     "checks": checks,
     "verdict": "PASS_LOCAL_ONLY" if all_pass else "FAIL_CLOSED",
     "phase_3_status": hash_verify_data.get("phase_3_status", "SAFE_HOLD"),
-    "delta_maglo_rc": hash_verify_data.get("delta_maglo_rc", "rc3.2.1"),
+    "delta_maglo_rc": hash_verify_data.get("delta_maglo_rc", "UNKNOWN"),
     "delta_maglo_verdict": hash_verify_data.get("delta_maglo_verdict", "FAIL_CLOSED"),
     "global_ceiling": hash_verify_data.get("global_ceiling", "LAB_ONLY"),
 }

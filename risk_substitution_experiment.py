@@ -32,7 +32,7 @@ report = {
     "run_directory": str(run_dir) if run_dir else None,
     "required_evidence_checks": required,
     "phase_3_status": hash_verify.get("phase_3_status", "SAFE_HOLD"),
-    "delta_maglo_rc": hash_verify.get("delta_maglo_rc", "rc3.2.1"),
+    "delta_maglo_rc": hash_verify.get("delta_maglo_rc", "UNKNOWN"),
     "delta_maglo_verdict": hash_verify.get("delta_maglo_verdict", "FAIL_CLOSED"),
     "global_ceiling": hash_verify.get("global_ceiling", "LAB_ONLY"),
     "risk_substitution": {

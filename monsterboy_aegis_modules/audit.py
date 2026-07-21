@@ -12,6 +12,8 @@ from pathlib import Path
 from typing import Any
 import hashlib
 
+CHUNK_SIZE = 8192
+
 
 def compile_check_python(filepath: str | Path) -> dict[str, Any]:
     """
@@ -171,10 +173,15 @@ def aggregate_results(*check_results: dict[str, Any]) -> dict[str, Any]:
 
 
 def sha256_file(filepath: str | Path) -> str:
-    """Compute the SHA-256 digest for a file."""
+    """
+    Compute a lowercase SHA-256 hex digest via chunked reads.
+
+    Uses chunked reads to handle large files efficiently and to match the
+    lowercase output format emitted by sha256sum.
+    """
     digest = hashlib.sha256()
     with open(filepath, "rb") as f:
-        for chunk in iter(lambda: f.read(8192), b""):
+        for chunk in iter(lambda: f.read(CHUNK_SIZE), b""):
             digest.update(chunk)
     return digest.hexdigest()
 
@@ -184,8 +191,14 @@ def verify_replay_artifacts(
     hash_file: str | Path,
 ) -> dict[str, Any]:
     """
-    Verify replay artefacts using two local runtimes:
+    Verify replay artifacts using two local runtimes:
     shell-produced sha256sum output and Python hashlib recomputation.
+
+    Returns a dict with:
+      - status: str - Either "PASS_LOCAL_ONLY" or "FAIL_CLOSED"
+      - checks_passed: number of successful checks
+      - checks_failed: number of failed checks
+      - checks: ordered list of {"name": ..., "status": ...} entries
     """
     run_dir = Path(run_dir)
     hash_file = Path(hash_file)
@@ -213,7 +226,10 @@ def verify_replay_artifacts(
                 continue
             parts = line.split(maxsplit=1)
             if len(parts) == 2:
-                shell_hashes[parts[1]] = parts[0]
+                # Store both raw and resolved paths to support verification
+                # with both relative and absolute run_dir arguments.
+                shell_hashes[str(Path(parts[1]))] = parts[0]
+                shell_hashes[str(Path(parts[1]).resolve())] = parts[0]
     except OSError:
         return {
             "status": "FAIL_CLOSED",
@@ -244,7 +260,7 @@ def verify_replay_artifacts(
 
         checks.append({"name": f"{name}_exists", "status": "PASS"})
         python_hash = sha256_file(path)
-        shell_hash = shell_hashes.get(relpath)
+        shell_hash = shell_hashes.get(relpath) or shell_hashes.get(str(path.resolve()))
         checks.append(
             {
                 "name": f"{name}_shell_python_match",

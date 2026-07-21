@@ -2,7 +2,7 @@
   "claim_ceiling": "LAB_ONLY",
   "delta_maglo_rc": "rc3.2.1",
   "delta_maglo_verdict": "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY",
-  "generated_at_utc": "2026-07-21T11:40:34Z",
+  "generated_at_utc": "2026-07-21T11:49:30Z",
   "global_ceiling": "LAB_ONLY",
   "mode": "FAIL_CLOSED",
   "phase_3_status": "READY_LOCAL_REPLAY",
