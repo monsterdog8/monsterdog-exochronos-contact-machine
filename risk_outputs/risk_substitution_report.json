@@ -1,10 +1,18 @@
 {
-  "claim_ceiling": "STRUCTURAL_LOCAL_ONLY",
-  "generated_at_utc": "2026-07-09T00:00:40Z",
+  "claim_ceiling": "LAB_ONLY",
+  "delta_maglo_rc": "rc3.2.1",
+  "delta_maglo_verdict": "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY",
+  "generated_at_utc": "2026-07-21T11:49:30Z",
+  "global_ceiling": "LAB_ONLY",
   "mode": "FAIL_CLOSED",
+  "phase_3_status": "READY_LOCAL_REPLAY",
   "required_evidence_checks": {
     "FORENSIC_AUDIT.log": true,
+    "checks_failed_zero": true,
+    "delta_maglo_local_dual_runtime_recompute_only": true,
+    "global_ceiling_lab_only": true,
     "hash_verify.log": true,
+    "phase_3_status_ready_local_replay": true,
     "run_directory_present": true
   },
   "risk_substitution": {
@@ -12,6 +20,6 @@
     "missing_artifact_risk": "fail_closed_if_detected",
     "simulated_output_risk": "mitigated_by_observable_artifacts"
   },
-  "run_directory": "real_contact_logs/run_20260708_235812",
+  "run_directory": "real_contact_logs/run_20260721_114100",
   "verdict": "PASS_LOCAL_ONLY"
 }
