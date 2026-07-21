@@ -3,7 +3,7 @@
 ## Phase 2: Repository Population ✅ COMPLETE
 
 **Status:** Infrastructure initialized  
-**Claim Ceiling:** STRUCTURAL_LOCAL_ONLY  
+**Claim Ceiling:** LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY  
 **Verdict:** READY_FOR_FIRST_EXECUTION
 
 ---
@@ -66,7 +66,7 @@ real_contact_logs/
 | Phase | Condition | Verdict |
 |---|---|---|
 | 2 (current) | Infrastructure only, no execution | READY_FOR_FIRST_EXECUTION |
-| 3 (next) | Execution complete, logs present | PLAN_TO_RUN → OBSERVED_REPLAYABLE |
+| 3 (next) | Execution complete, logs present | PLAN_TO_RUN → READY_LOCAL_REPLAY |
 | 4 | Hashes verified | PARTIAL |
 | 5 | Assumptions audited | PARTIAL |
 | 6 | Risk analysis complete | PASS (local) or FAIL_CLOSED |
@@ -77,7 +77,7 @@ real_contact_logs/
 
 1. ❌ No PASS without execution logs
 2. ❌ No PASS without hash verification
-3. ❌ No claims beyond STRUCTURAL_LOCAL_ONLY
+3. ❌ No claims beyond LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY
 4. ✅ Always preserve reproducibility
 5. ✅ Always preserve audit trail
 6. ✅ All outputs are versioned and hashable

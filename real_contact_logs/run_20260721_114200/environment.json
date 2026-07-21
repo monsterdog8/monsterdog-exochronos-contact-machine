@@ -1,0 +1,14 @@
+{
+  "captured_at_utc": "2026-07-21T11:41:43Z",
+  "environment_key_count": 208,
+  "selected_environment": {
+    "HOME": "/home/runner",
+    "LANG": "C.UTF-8",
+    "PATH": "/home/runner/.codex/tmp/arg0/codex-arg09DS7ds:/opt/hostedtoolcache/node/24.18.0/x64/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/path:/home/runner/work/_temp/ghcca-node/node/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+    "PWD": "/home/runner/work/monsterdog-exochronos-contact-machine/monsterdog-exochronos-contact-machine",
+    "PYTHONPATH": null,
+    "SHELL": "/bin/bash",
+    "TZ": null,
+    "USER": "runner"
+  }
+}

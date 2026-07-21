@@ -1,0 +1,17 @@
+{
+  "audited_at_utc": "2026-07-21T11:42:44Z",
+  "checks": {
+    "environment_json_exists": true,
+    "execution_manifest_exists": true,
+    "hash_verify_log_exists": true,
+    "result_json_exists": true,
+    "stdout_log_exists": true
+  },
+  "checks_failed": 0,
+  "claim_ceiling": "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY",
+  "delta_maglo_claim": "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY",
+  "global_claim_ceiling": "LAB_ONLY",
+  "phase3_status": "READY_LOCAL_REPLAY",
+  "run_directory": "real_contact_logs/run_20260721_114200",
+  "verdict": "PASS_LOCAL_ONLY"
+}
