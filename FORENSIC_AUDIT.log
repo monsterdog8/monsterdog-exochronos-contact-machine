@@ -1,9 +1,13 @@
-audited_at_utc=2026-07-09T00:00:40Z
-run_directory=real_contact_logs/run_20260708_235812
+audited_at_utc=2026-07-21T11:42:44Z
+run_directory=real_contact_logs/run_20260721_114200
 environment_json_exists=PASS
 execution_manifest_exists=PASS
 hash_verify_log_exists=PASS
 result_json_exists=PASS
 stdout_log_exists=PASS
+checks_failed=0
 verdict=PASS_LOCAL_ONLY
-claim_ceiling=STRUCTURAL_LOCAL_ONLY
+phase3_status=READY_LOCAL_REPLAY
+claim_ceiling=LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY
+delta_maglo_claim=LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY
+global_claim_ceiling=LAB_ONLY

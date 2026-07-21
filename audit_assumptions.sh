@@ -26,13 +26,18 @@ checks = {
     "execution_manifest_exists": (run_dir / "execution_manifest.json").is_file(),
     "hash_verify_log_exists": Path("hash_verify.log").is_file(),
 }
-all_pass = all(checks.values())
+checks_failed = sum(1 for ok in checks.values() if not ok)
+all_pass = checks_failed == 0
 out = {
     "audited_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     "run_directory": str(run_dir),
     "checks": checks,
+    "checks_failed": checks_failed,
     "verdict": "PASS_LOCAL_ONLY" if all_pass else "FAIL_CLOSED",
-    "claim_ceiling": "STRUCTURAL_LOCAL_ONLY" if all_pass else "NONE",
+    "phase3_status": "READY_LOCAL_REPLAY" if all_pass else "SAFE_HOLD",
+    "claim_ceiling": "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY" if all_pass else "NONE",
+    "delta_maglo_claim": "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY" if all_pass else "NONE",
+    "global_claim_ceiling": "LAB_ONLY" if all_pass else "LOCKED",
 }
 print(json.dumps(out, indent=2, sort_keys=True))
 PY
@@ -46,8 +51,12 @@ print(f"audited_at_utc={audit['audited_at_utc']}")
 print(f"run_directory={audit['run_directory']}")
 for k, v in audit["checks"].items():
     print(f"{k}={'PASS' if v else 'FAIL'}")
+print(f"checks_failed={audit['checks_failed']}")
 print(f"verdict={audit['verdict']}")
+print(f"phase3_status={audit['phase3_status']}")
 print(f"claim_ceiling={audit['claim_ceiling']}")
+print(f"delta_maglo_claim={audit['delta_maglo_claim']}")
+print(f"global_claim_ceiling={audit['global_claim_ceiling']}")
 PY
 
 echo "$AUDIT_JSON"

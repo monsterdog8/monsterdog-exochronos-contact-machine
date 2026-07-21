@@ -2,11 +2,15 @@
 
 - Mode: FAIL_CLOSED
 - Status: READY_LOCAL_REPLAY
-- Claim Ceiling: LAB_ONLY
+- Claim Ceiling: LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY
+- Delta MAGLO Claim: LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY
+- Global Claim Ceiling: LAB_ONLY
 - Scope: LOCAL_ONLY
-- Run Directory: real_contact_logs/run_20260708_235812
+- Run Directory: real_contact_logs/run_20260721_114200
 - Audit Verdict: PASS_LOCAL_ONLY
 - Risk Verdict: PASS_LOCAL_ONLY
+- Checks Failed: 0
+- Replay Recompute: PASS (sha256sum + python hashlib)
 - ÆGIS Verdict: PARTIAL_PASS_LOCAL_BUNDLE__PRODUCTION_LOCKED
 - ÆGIS Global Ceiling: LAB_ONLY
 - ÆGIS Production Gate: LOCKED
