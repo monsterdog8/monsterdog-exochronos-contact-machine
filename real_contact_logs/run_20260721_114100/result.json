@@ -1,0 +1,18 @@
+{
+  "claim_ceiling": "STRUCTURAL_LOCAL_ONLY",
+  "executed_at_utc": "2026-07-21T11:40:34Z",
+  "host": {
+    "machine": "x86_64",
+    "release": "6.17.0-1020-azure",
+    "system": "Linux"
+  },
+  "local_only_until_replay": true,
+  "mode": "FAIL_CLOSED",
+  "observables_only": true,
+  "phase": 3,
+  "repository": {
+    "branch": "copilot/phase-3-replay-validation",
+    "head": "b9a88e595dfe49a46a44e84bbc692401ea19af88"
+  },
+  "status": "OBSERVED_LOCAL_EXECUTION"
+}

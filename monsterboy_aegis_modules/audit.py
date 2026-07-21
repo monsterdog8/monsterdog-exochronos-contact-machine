@@ -10,6 +10,7 @@ import ast
 import json
 from pathlib import Path
 from typing import Any
+import hashlib
 
 
 def compile_check_python(filepath: str | Path) -> dict[str, Any]:
@@ -166,4 +167,105 @@ def aggregate_results(*check_results: dict[str, Any]) -> dict[str, Any]:
         "verdict": verdict,
         "total_checks": len(check_results),
         "statuses": statuses,
+    }
+
+
+def sha256_file(filepath: str | Path) -> str:
+    """Compute the SHA-256 digest for a file."""
+    digest = hashlib.sha256()
+    with open(filepath, "rb") as f:
+        for chunk in iter(lambda: f.read(8192), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def verify_replay_artifacts(
+    run_dir: str | Path,
+    hash_file: str | Path,
+) -> dict[str, Any]:
+    """
+    Verify replay artefacts using two local runtimes:
+    shell-produced sha256sum output and Python hashlib recomputation.
+    """
+    run_dir = Path(run_dir)
+    hash_file = Path(hash_file)
+    required = [
+        "stdout.log",
+        "environment.json",
+        "result.json",
+        "execution_manifest.json",
+    ]
+    checks: list[dict[str, str]] = []
+
+    if not hash_file.is_file():
+        return {
+            "status": "FAIL_CLOSED",
+            "checks_passed": 0,
+            "checks_failed": 1,
+            "checks": [{"name": "hash_file_exists", "status": "FAIL"}],
+        }
+
+    shell_hashes: dict[str, str] = {}
+    try:
+        for line in hash_file.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split(maxsplit=1)
+            if len(parts) == 2:
+                shell_hashes[parts[1]] = parts[0]
+    except OSError:
+        return {
+            "status": "FAIL_CLOSED",
+            "checks_passed": 0,
+            "checks_failed": 1,
+            "checks": [{"name": "hash_file_readable", "status": "FAIL"}],
+        }
+
+    manifest_path = run_dir / "execution_manifest.json"
+    manifest_hashes: dict[str, str] = {}
+    if manifest_path.is_file():
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest_hashes = {
+                entry["file"]: entry["sha256"]
+                for entry in manifest.get("artifacts", [])
+                if "file" in entry and "sha256" in entry
+            }
+        except (OSError, json.JSONDecodeError):
+            checks.append({"name": "execution_manifest_json_valid", "status": "FAIL"})
+
+    for name in required:
+        path = run_dir / name
+        relpath = str(path)
+        if not path.is_file():
+            checks.append({"name": f"{name}_exists", "status": "FAIL"})
+            continue
+
+        checks.append({"name": f"{name}_exists", "status": "PASS"})
+        python_hash = sha256_file(path)
+        shell_hash = shell_hashes.get(relpath)
+        checks.append(
+            {
+                "name": f"{name}_shell_python_match",
+                "status": "PASS" if shell_hash == python_hash else "FAIL",
+            }
+        )
+
+        if name != "execution_manifest.json":
+            manifest_hash = manifest_hashes.get(name)
+            checks.append(
+                {
+                    "name": f"{name}_manifest_match",
+                    "status": "PASS" if manifest_hash == python_hash else "FAIL",
+                }
+            )
+
+    checks_passed = sum(1 for check in checks if check["status"] == "PASS")
+    checks_failed = sum(1 for check in checks if check["status"] == "FAIL")
+    return {
+        "status": "PASS_LOCAL_ONLY" if checks_failed == 0 else "FAIL_CLOSED",
+        "checks_passed": checks_passed,
+        "checks_failed": checks_failed,
+        "checks": checks,
     }

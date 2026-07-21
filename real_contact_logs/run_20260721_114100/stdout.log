@@ -1,0 +1,55 @@
+# EXOCHRONOS Phase 3 Local Execution Trace
+started_at_utc=2026-07-21T11:40:34Z
+host_uname=Linux runnervm3jd5f 6.17.0-1020-azure #20~24.04.1-Ubuntu SMP Fri Jun 19 20:09:14 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+current_user=uid=1001(runner) gid=1001(runner) groups=1001(runner),4(adm),100(users),118(docker),999(systemd-journal)
+working_directory=/home/runner/work/monsterdog-exochronos-contact-machine/monsterdog-exochronos-contact-machine
+git_head=b9a88e595dfe49a46a44e84bbc692401ea19af88
+git_branch=copilot/phase-3-replay-validation
+--- git status --short ---
+ M FORENSIC_AUDIT.log
+ M audit_assumptions.sh
+ M generate_hashes.sh
+ M hash_verify.log
+ M monsterboy_aegis_modules/__pycache__/__init__.cpython-312.pyc
+ M monsterboy_aegis_modules/__pycache__/audit.cpython-312.pyc
+ M monsterboy_aegis_modules/__pycache__/manifest.cpython-312.pyc
+ M monsterboy_aegis_modules/__pycache__/safe_hold_gate.cpython-312.pyc
+ M monsterboy_aegis_modules/__pycache__/sync_config.cpython-312.pyc
+ M monsterboy_aegis_modules/audit.py
+ M risk_outputs/risk_substitution_report.json
+ M risk_substitution_experiment.py
+?? audit_outputs/run_20260721_113900_assumption_audit.json
+?? real_contact_logs/run_20260721_113900/
+?? real_contact_logs/run_20260721_114100/
+?? replay_outputs/run_20260721_113900_sha256.txt
+?? tests/
+--- directory listing ---
+total 112
+drwxr-xr-x 9 runner runner 4096 Jul 21 11:40 .
+drwxr-xr-x 3 runner runner 4096 Jul 21 11:37 ..
+drwxrwxr-x 7 runner runner 4096 Jul 21 11:40 .git
+-rw-rw-r-- 1 runner runner 2380 Jul 21 11:37 EXECUTION_PHASES.md
+-rw-rw-r-- 1 runner runner 1057 Jul 21 11:37 FINAL_DEPLOYMENT_STATUS.md
+-rw-rw-r-- 1 runner runner 1095 Jul 21 11:37 FINAL_EXECUTION_REPORT.md
+-rw-rw-r-- 1 runner runner  283 Jul 21 11:38 FORENSIC_AUDIT.log
+-rw-rw-r-- 1 runner runner 1072 Jul 21 11:37 LICENSE
+-rw-rw-r-- 1 runner runner  319 Jul 21 11:37 README.md
+-rw-rw-r-- 1 runner runner 2651 Jul 21 11:37 REPORT_FINAL_CANONICAL.json
+-rw-rw-r-- 1 runner runner 6254 Jul 21 11:37 REPORT_FINAL_MONSTERBOY_AEGIS.md
+-rw-rw-r-- 1 runner runner 1806 Jul 21 11:37 UNIFIED_SYNC_CONFIG.json
+-rwxrwxr-x 1 runner runner 2781 Jul 21 11:40 audit_assumptions.sh
+drwxrwxr-x 2 runner runner 4096 Jul 21 11:38 audit_outputs
+-rwxrwxr-x 1 runner runner 2758 Jul 21 11:37 execute_harbor_forensic_v2_corrected.sh
+-rw-rw-r-- 1 runner runner 1539 Jul 21 11:37 execution_truth_map.json
+-rwxrwxr-x 1 runner runner 1647 Jul 21 11:40 generate_hashes.sh
+-rw-rw-r-- 1 runner runner  484 Jul 21 11:37 git_status.txt
+-rw-rw-r-- 1 runner runner  679 Jul 21 11:38 hash_verify.log
+drwxrwxr-x 3 runner runner 4096 Jul 21 11:37 monsterboy_aegis_modules
+-rw-rw-r-- 1 runner runner 5038 Jul 21 11:37 monsterboy_aegis_orchestrator.py
+drwxrwxr-x 5 runner runner 4096 Jul 21 11:40 real_contact_logs
+drwxrwxr-x 2 runner runner 4096 Jul 21 11:38 replay_outputs
+drwxrwxr-x 2 runner runner 4096 Jul 21 11:37 risk_outputs
+-rwxrwxr-x 1 runner runner 2155 Jul 21 11:40 risk_substitution_experiment.py
+drwxrwxr-x 3 runner runner 4096 Jul 21 11:40 tests
+--- python version ---
+Python 3.12.3
