@@ -33,6 +33,7 @@ from monsterboy_aegis_modules.audit import (
     batch_parse_json,
 )
 from monsterboy_aegis_modules.manifest import generate_manifest
+from monsterboy_aegis_modules.closure_gauntlet import run_closure_gauntlet
 from monsterboy_aegis_modules.safe_hold_gate import (
     apply_safe_hold,
     check_production_gate,
@@ -106,15 +107,24 @@ def run_orchestrator(
         json.dump(config, f, indent=2, ensure_ascii=False)
     results["sync_config_path"] = str(config_path)
 
+    # 7. Closure gauntlet CH11->CH20
+    print("[7/7] Running closure gauntlet CH11->CH20...")
+    closure = run_closure_gauntlet(target_dir=target_dir, gate=gate, output_dir=output_dir)
+    results["closure_gauntlet"] = closure
+
     # Aggregate
     agg = aggregate_results(
         {"status": results["python_compile"]["status"]},
         {"status": results["json_parse"]["status"]},
         {"status": "FAIL" if gate.missing_artefacts else "PASS_LOCAL"},
+        {"status": results["closure_gauntlet"]["master_state_v2"]["GLOBAL_VERDICT"]},
     )
 
     production_locked = bool(gate.missing_artefacts)
-    if production_locked:
+    global_verdict = closure["master_state_v2"]["GLOBAL_VERDICT"]
+    if global_verdict == "FAIL_CLOSED":
+        final_verdict = "FAIL_CLOSED"
+    elif production_locked:
         final_verdict = "PARTIAL_PASS_LOCAL_BUNDLE__PRODUCTION_LOCKED"
     else:
         final_verdict = "PASS_PRODUCTION_GATE"
@@ -124,8 +134,9 @@ def run_orchestrator(
         "version": "X-01",
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "verdict": final_verdict,
-        "global_ceiling": "LAB_ONLY" if production_locked else "PARTIALLY_PUBLISHABLE",
+        "global_ceiling": "LAB_ONLY" if final_verdict != "PASS_PRODUCTION_GATE" else "PARTIALLY_PUBLISHABLE",
         "production_gate": "LOCKED" if production_locked else "UNLOCKED",
+        "governance_global_verdict": global_verdict,
         "aggregate": agg,
         "checks": results,
     }
