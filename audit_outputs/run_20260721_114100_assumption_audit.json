@@ -1,0 +1,20 @@
+{
+  "audited_at_utc": "2026-07-21T11:49:30Z",
+  "checks": {
+    "delta_maglo_local_dual_runtime_recompute_only": true,
+    "environment_json_exists": true,
+    "execution_manifest_exists": true,
+    "global_ceiling_lab_only": true,
+    "hash_verify_checks_failed_zero": true,
+    "hash_verify_log_exists": true,
+    "phase_3_status_ready_local_replay": true,
+    "result_json_exists": true,
+    "stdout_log_exists": true
+  },
+  "delta_maglo_rc": "rc3.2.1",
+  "delta_maglo_verdict": "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY",
+  "global_ceiling": "LAB_ONLY",
+  "phase_3_status": "READY_LOCAL_REPLAY",
+  "run_directory": "real_contact_logs/run_20260721_114100",
+  "verdict": "PASS_LOCAL_ONLY"
+}
