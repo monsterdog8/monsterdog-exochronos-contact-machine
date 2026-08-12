@@ -39,11 +39,13 @@ checks = {
     "delta_maglo_local_dual_runtime_recompute_only": hash_verify_data.get("delta_maglo_verdict") == "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY",
     "global_ceiling_lab_only": hash_verify_data.get("global_ceiling") == "LAB_ONLY",
 }
-all_pass = all(checks.values())
+checks_failed = sum(1 for ok in checks.values() if not ok)
+all_pass = checks_failed == 0
 out = {
     "audited_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     "run_directory": str(run_dir),
     "checks": checks,
+    "checks_failed": checks_failed,
     "verdict": "PASS_LOCAL_ONLY" if all_pass else "FAIL_CLOSED",
     "phase_3_status": hash_verify_data.get("phase_3_status", "SAFE_HOLD"),
     "delta_maglo_rc": hash_verify_data.get("delta_maglo_rc", "UNKNOWN"),
@@ -62,6 +64,7 @@ print(f"audited_at_utc={audit['audited_at_utc']}")
 print(f"run_directory={audit['run_directory']}")
 for k, v in audit["checks"].items():
     print(f"{k}={'PASS' if v else 'FAIL'}")
+print(f"checks_failed={audit['checks_failed']}")
 print(f"verdict={audit['verdict']}")
 print(f"phase_3_status={audit['phase_3_status']}")
 print(f"delta_maglo_rc={audit['delta_maglo_rc']}")

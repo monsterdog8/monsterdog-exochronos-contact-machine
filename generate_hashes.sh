@@ -14,12 +14,32 @@ fi
 
 mkdir -p replay_outputs
 HASH_FILE="replay_outputs/$(basename "$RUN_DIR")_sha256.txt"
+PY_HASH_FILE="replay_outputs/$(basename "$RUN_DIR")_sha256_py.txt"
 
-sha256sum \
-  "$RUN_DIR/stdout.log" \
-  "$RUN_DIR/environment.json" \
-  "$RUN_DIR/result.json" \
-  "$RUN_DIR/execution_manifest.json" > "$HASH_FILE"
+FILES=(
+  "$RUN_DIR/stdout.log"
+  "$RUN_DIR/environment.json"
+  "$RUN_DIR/result.json"
+  "$RUN_DIR/execution_manifest.json"
+)
+
+sha256sum "${FILES[@]}" > "$HASH_FILE"
+
+python3 - "${FILES[@]}" <<'PY' > "$PY_HASH_FILE"
+import hashlib
+import sys
+from pathlib import Path
+
+for raw_path in sys.argv[1:]:
+    path = Path(raw_path)
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    print(f"{digest}  {raw_path}")
+PY
+
+if ! cmp -s "$HASH_FILE" "$PY_HASH_FILE"; then
+  echo "ERROR: dual-runtime hash recompute mismatch (sha256sum vs python hashlib)." >&2
+  exit 1
+fi
 
 RUN_DIR="$RUN_DIR" HASH_FILE="$HASH_FILE" DELTA_MAGLO_RC="$DELTA_MAGLO_RC" python3 - <<PY > hash_verify.log
 import os

@@ -5,6 +5,14 @@ from pathlib import Path
 
 runs = sorted(Path("real_contact_logs").glob("run_*"))
 run_dir = runs[-1] if runs else None
+hash_verify_path = Path("hash_verify.log")
+dual_runtime_recompute_pass = False
+
+if hash_verify_path.is_file():
+    for line in hash_verify_path.read_text().splitlines():
+        if line.strip().lower() == "dual_runtime_recompute_pass=true":
+            dual_runtime_recompute_pass = True
+            break
 
 hash_verify = {}
 hash_verify_path = Path("hash_verify.log")
@@ -16,7 +24,8 @@ if hash_verify_path.is_file():
         hash_verify[key] = value
 
 required = {
-    "hash_verify.log": Path("hash_verify.log").is_file(),
+    "hash_verify.log": hash_verify_path.is_file(),
+    "dual_runtime_recompute_pass": dual_runtime_recompute_pass,
     "FORENSIC_AUDIT.log": Path("FORENSIC_AUDIT.log").is_file(),
     "run_directory_present": run_dir is not None,
     "checks_failed_zero": hash_verify.get("checks_failed") == "0",
@@ -24,7 +33,8 @@ required = {
     "delta_maglo_local_dual_runtime_recompute_only": hash_verify.get("delta_maglo_verdict") == "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY",
     "global_ceiling_lab_only": hash_verify.get("global_ceiling") == "LAB_ONLY",
 }
-all_ok = all(required.values())
+checks_failed = sum(1 for ok in required.values() if not ok)
+all_ok = checks_failed == 0
 
 report = {
     "generated_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
