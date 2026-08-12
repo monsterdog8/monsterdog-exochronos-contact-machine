@@ -54,7 +54,10 @@ branch = subprocess.check_output(["git", "branch", "--show-current"], text=True)
 out = {
     "phase": 3,
     "mode": "FAIL_CLOSED",
-    "claim_ceiling": "STRUCTURAL_LOCAL_ONLY",
+    "phase3_status": "READY_LOCAL_REPLAY",
+    "claim_ceiling": "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY",
+    "delta_maglo_claim": "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY",
+    "global_claim_ceiling": "LAB_ONLY",
     "observables_only": True,
     "local_only_until_replay": True,
     "executed_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),

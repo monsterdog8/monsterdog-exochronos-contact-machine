@@ -1,0 +1,21 @@
+{
+  "claim_ceiling": "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY",
+  "delta_maglo_claim": "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY",
+  "executed_at_utc": "2026-07-21T11:41:43Z",
+  "global_claim_ceiling": "LAB_ONLY",
+  "host": {
+    "machine": "x86_64",
+    "release": "6.17.0-1020-azure",
+    "system": "Linux"
+  },
+  "local_only_until_replay": true,
+  "mode": "FAIL_CLOSED",
+  "observables_only": true,
+  "phase": 3,
+  "phase3_status": "READY_LOCAL_REPLAY",
+  "repository": {
+    "branch": "codex/phase-3-replay-maglo-rc3-2-1-verification",
+    "head": "24c8f906d0548b21d4baff6db4624e4f08ba0ec7"
+  },
+  "status": "OBSERVED_LOCAL_EXECUTION"
+}

@@ -1,9 +1,14 @@
 {
-  "claim_ceiling": "STRUCTURAL_LOCAL_ONLY",
-  "generated_at_utc": "2026-07-09T00:00:40Z",
+  "checks_failed": 0,
+  "claim_ceiling": "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY",
+  "delta_maglo_claim": "LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY",
+  "generated_at_utc": "2026-07-21T11:42:44Z",
+  "global_claim_ceiling": "LAB_ONLY",
   "mode": "FAIL_CLOSED",
+  "phase3_status": "READY_LOCAL_REPLAY",
   "required_evidence_checks": {
     "FORENSIC_AUDIT.log": true,
+    "dual_runtime_recompute_pass": true,
     "hash_verify.log": true,
     "run_directory_present": true
   },
@@ -12,6 +17,6 @@
     "missing_artifact_risk": "fail_closed_if_detected",
     "simulated_output_risk": "mitigated_by_observable_artifacts"
   },
-  "run_directory": "real_contact_logs/run_20260708_235812",
+  "run_directory": "real_contact_logs/run_20260721_114200",
   "verdict": "PASS_LOCAL_ONLY"
 }

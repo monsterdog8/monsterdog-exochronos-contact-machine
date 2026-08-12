@@ -19,8 +19,12 @@ EXOCHRONOS Phase 3 local execution evidence package + MONSTERBOY ÆGIS X-01 audi
 
 ## Verdict
 - Deployment Status: READY_LOCAL_REPLAY
-- Claim Ceiling: LAB_ONLY
+- Claim Ceiling: LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY
+- Delta MAGLO Claim: LOCAL_DUAL_RUNTIME_RECOMPUTE_ONLY
+- Global Claim Ceiling: LAB_ONLY
 - Constraint: LOCAL_ONLY_UNTIL_REPLAY
+- Replay Verification: DUAL_RUNTIME_RECOMPUTE_PASS
+- checks_failed=0
 - ÆGIS Verdict: PARTIAL_PASS_LOCAL_BUNDLE__PRODUCTION_LOCKED
 - Production Gate: LOCKED (4 artefacts absent)
 
