@@ -75,7 +75,8 @@
   "canonical_target_repository": "monsterdog8/monsterdog-exochronos-contact-machine",
   "canonical_target_base_commit": "c13dce9ba53b407ca816889cbcdf051d06ad9e0e",
   "single_writer_rule": {
-    "enforced": true,
+    "governance_enforced": true,
+    "technical_enforcement": "NOT_PROVEN",
     "designated_writer": "BASE44_SUPERAGENT",
     "v2_role": "AUDITOR_READ_ONLY",
     "spark_role": "CORPUS_SCOUT_READ_ONLY"
