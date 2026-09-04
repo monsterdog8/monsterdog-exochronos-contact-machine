@@ -1,0 +1,92 @@
+{
+  "run_id": "V2_AGENTIC_SCHEMA_BASELINE_0001",
+  "snapshot_timestamp": "2026-09-03T19:17:00-04:00",
+  "supabase_project_ref": "duxzruckwuvbasahmdqb",
+  "status": "CURRENT_STATE_VERIFIED__MIGRATION_PROVENANCE_GAP_OPEN",
+  "tables": {
+    "agent_capabilities": {
+      "rows": 0,
+      "rls": true,
+      "append_only": true
+    },
+    "agent_runs": {
+      "rows": 0,
+      "rls": true,
+      "append_only": true
+    },
+    "run_artifacts": {
+      "rows": 0,
+      "rls": true,
+      "append_only": true
+    },
+    "run_events": {
+      "rows": 0,
+      "rls": true,
+      "append_only": true
+    },
+    "approval_gates": {
+      "rows": 0,
+      "rls": true,
+      "append_only": true
+    },
+    "claim_evaluations": {
+      "rows": 0,
+      "rls": true,
+      "append_only": true
+    },
+    "replay_manifests": {
+      "rows": 0,
+      "rls": true,
+      "append_only": true
+    }
+  },
+  "verified_properties": {
+    "rls_enabled_7_of_7": true,
+    "owner_select_insert_policies_7_of_7": true,
+    "append_only_triggers_7_of_7": true,
+    "foreign_keys_present": true,
+    "sha256_format_checks_present": true,
+    "status_constraints_present": true
+  },
+  "migration_history_observed": [
+    [
+      "20260721023647",
+      "exochronos_core"
+    ],
+    [
+      "20260721023752",
+      "exochronos_fk_indexes"
+    ],
+    [
+      "20260731093954",
+      "nemesis_evidence_continuity_core"
+    ],
+    [
+      "20260805200904",
+      "nemesis_canonical_visibility_governance_v1"
+    ],
+    [
+      "20260805201226",
+      "nemesis_governance_fk_indexes_v1"
+    ]
+  ],
+  "agentic_migration_history_entry_present": false,
+  "migration_provenance_gap": "OPEN",
+  "canonical_target_repository": "monsterdog8/monsterdog-exochronos-contact-machine",
+  "canonical_target_base_commit": "c13dce9ba53b407ca816889cbcdf051d06ad9e0e",
+  "single_writer_rule": {
+    "enforced": true,
+    "designated_writer": "BASE44_SUPERAGENT",
+    "v2_role": "AUDITOR_READ_ONLY",
+    "spark_role": "CORPUS_SCOUT_READ_ONLY"
+  },
+  "artifacts": {
+    "AGENTIC_SCHEMA_BASELINE_ATTRIBUTES.sql": {
+      "sha256": "3876c8d522611db909a46c567b8b573f39e46ea6dc56280803a507764ceeb188"
+    },
+    "SPARK_CORPUS_RECOVERY_0001_HANDOFF.txt": {
+      "sha256": "e67efc9099f6c4d62c331faac6610e881ea0e1cde68bf437611032693ad07d75"
+    }
+  },
+  "claim_ceiling": "CONNECTED_AGENTIC_INFRASTRUCTURE_WITH_UNRESOLVED_SCHEMA_PROVENANCE"
+}
