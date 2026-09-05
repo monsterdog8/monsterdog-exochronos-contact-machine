@@ -19,6 +19,8 @@ from typing import Any
 
 import numpy as np
 
+SIGNAL_ALPHA = 0.01
+
 MODULES = ["CA", "CL", "AI", "SS", "CR", "UF", "KG", "PM", "FR", "SI"]
 
 EDGE_SET = [
@@ -232,7 +234,23 @@ def _check(check_id: str, passed: bool, message: str) -> dict[str, Any]:
     return {"id": check_id, "status": "PASS" if passed else "FAIL", "message": message}
 
 
+def permutation_resolution_capable(n_perm: int) -> bool:
+    """The +1 corrected minimum p must reach the strict p < alpha cutoff."""
+    return n_perm > 0 and 1.0 / (n_perm + 1) < SIGNAL_ALPHA
+
+
 def plugin_eval_payload(P: np.ndarray, config: AuditConfig = AuditConfig()) -> dict[str, Any]:
+    if not permutation_resolution_capable(config.n_perm):
+        return {
+            "status": "INSUFFICIENT_PERMUTATION_RESOLUTION",
+            "signal_tag": "UNASSESSED",
+            "checks": [_check(
+                "exo_v41.permutation.resolution", False,
+                f"INSUFFICIENT_PERMUTATION_RESOLUTION: n_perm={config.n_perm}; "
+                f"requires 1/(n_perm+1) < {SIGNAL_ALPHA} with n_perm > 0",
+            )],
+            "metrics": [],
+        }
     cycle = compute_cycle(P, config)
     perm = permutation_test(P, config)
 
@@ -246,8 +264,8 @@ def plugin_eval_payload(P: np.ndarray, config: AuditConfig = AuditConfig()) -> d
         _check("exo_v41.corr.diagonal_is_one", np.allclose(np.diag(correlation_matrix(P)), 1.0), "diag(R)=1"),
         _check("exo_v41.corr.rank_expected", cycle["corr_rank"] <= 4, f"rank={cycle['corr_rank']} <= 4 for 5 observations"),
         _check("exo_v41.shrink.finite", np.isfinite(cycle["TC_shrink"]), f"TC_shrink={cycle['TC_shrink']:.12f}"),
-        _check("exo_v41.permutation.no_supported_signal", perm["p_value_plus_one"] >= 0.01, f"p={perm['p_value_plus_one']:.6f}"),
-        _check("exo_v41.chaos.no_supported_signal", chaos_perm["p_value_plus_one"] >= 0.01, f"chaos p={chaos_perm['p_value_plus_one']:.6f}"),
+        _check("exo_v41.permutation.no_supported_signal", perm["p_value_plus_one"] >= SIGNAL_ALPHA, f"p={perm['p_value_plus_one']:.6f}"),
+        _check("exo_v41.chaos.no_supported_signal", chaos_perm["p_value_plus_one"] >= SIGNAL_ALPHA, f"chaos p={chaos_perm['p_value_plus_one']:.6f}"),
         _check("exo_v41.literal_v19.non_psd_detected", cycle["literal_v19_min_eigenvalue"] < -1e-10, f"literal min eig={cycle['literal_v19_min_eigenvalue']:.12f}"),
     ]
 
@@ -273,6 +291,19 @@ def self_test() -> None:
     perm = permutation_test(P_C76_REFERENCE, cfg)
     chaos = compute_cycle(logistic_map(P_C76_REFERENCE), cfg)
     chaos_perm = permutation_test(logistic_map(P_C76_REFERENCE), cfg)
+
+    assert not permutation_resolution_capable(99)
+    assert permutation_resolution_capable(100)
+    assert permutation_resolution_capable(2000)
+    for n_perm in (0, -1, 99):
+        blocked = plugin_eval_payload(P_C76_REFERENCE, AuditConfig(n_perm=n_perm))
+        assert blocked["status"] == "INSUFFICIENT_PERMUTATION_RESOLUTION"
+        assert blocked["signal_tag"] == "UNASSESSED"
+        assert blocked["metrics"] == []
+        assert all(c["status"] == "FAIL" for c in blocked["checks"])
+    allowed = plugin_eval_payload(P_C76_REFERENCE, AuditConfig(n_perm=100))
+    assert len(allowed["metrics"]) == 11
+    assert any(c["id"] == "exo_v41.permutation.no_supported_signal" for c in allowed["checks"])
 
     assert len(EDGE_SET) == 25
     assert len(TRIANGLES) == 21

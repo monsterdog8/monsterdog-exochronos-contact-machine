@@ -31,7 +31,8 @@
     "permutation_count": {"type": "number"},
     "signal_tag": {
       "type": "string",
-      "enum": ["SIGNAL", "NOISE", "ARTIFACT_ATTRACTOR", "UNASSESSED"]
+      "enum": ["SIGNAL", "NOISE", "ARTIFACT_ATTRACTOR", "UNASSESSED", "NO_DETECTABLE_SIGNAL", "NO_SUPPORTED_SIGNAL"],
+      "description": "CLAIM <= EVIDENCE: SIGNAL requires evidence crossing the preregistered detection threshold. NO_DETECTABLE_SIGNAL means the performed test did not detect a signal at the specified threshold. NO_SUPPORTED_SIGNAL means available evidence does not support a signal claim. NOISE is a stronger substantive claim and must not be inferred merely from nonsignificance. UNASSESSED means no assessment has been produced, including insufficient permutation resolution. ARTIFACT_ATTRACTOR retains its existing semantics."
     },
     "metric_status": {
       "type": "string",
