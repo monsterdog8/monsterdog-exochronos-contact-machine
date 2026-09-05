@@ -1,0 +1,39 @@
+{
+  "claim_ceiling": "NO_DETECTABLE_SIGNAL",
+  "config": {
+    "lambda": 0.3,
+    "n_permutations": 2000,
+    "permutation_seed": 42,
+    "rho_cap_legacy_only": 0.95
+  },
+  "graph": {
+    "edges": 25,
+    "nodes": 10,
+    "triangles": 21
+  },
+  "lineage": {
+    "C33_C69_RAW_RECOMPUTATION": "NOT_COMPUTABLE",
+    "C82": "HISTORICAL_TRANSITION",
+    "C83_EXECUTION": "BLOCKED_METRIC_PROVENANCE",
+    "SCIENTIFIC_VALIDATION": "NOT_SUPPORTED",
+    "V19_NUMERIC_CONVERGENCE": "INVALIDATED",
+    "V40_SEAL": "SUPERSEDED_BY_V41_AUDIT",
+    "V41_CORRECTED_SHRINKAGE": "LOCAL_RECOMPUTATION_PASS"
+  },
+  "results": {
+    "C_legacy": 0.33232830056255386,
+    "C_shrink": 0.22172940930216634,
+    "H_total": 17.684365084967396,
+    "TC_legacy_corrected": 5.877014995214978,
+    "TC_shrink": 3.9211438241736754,
+    "chaos_C_shrink": 0.18863433347199954,
+    "chaos_permutation_p_plus_one": 0.40679660169915044,
+    "literal_v19_TC_shrink": 4.015980639360151,
+    "literal_v19_min_eigenvalue": -0.0713382086940833,
+    "permutation_p_plus_one": 0.16891554222888555,
+    "permutation_z": 0.9670631593769322
+  },
+  "run_id": "EXOCHRONOS_V41_METRIC_PROVENANCE",
+  "source": "full_precision_C76_C82_parameter_matrix_from_live_backend_transcript",
+  "status": "LOCAL_RECOMPUTATION_PASS"
+}
