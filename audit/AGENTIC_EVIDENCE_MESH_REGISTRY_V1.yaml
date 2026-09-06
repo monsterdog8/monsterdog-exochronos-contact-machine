@@ -1,0 +1,225 @@
+version: "1.0"
+registry_id: "MONSTERDOG_AGENTIC_EVIDENCE_MESH_V1"
+created_from_main_sha: "61bf486d7bc52a90fec072f42214761ffad9f6c8"
+mode:
+  - EVIDENCE_FIRST
+  - FAIL_CLOSED
+  - NO_SELF_VALIDATION
+  - NO_SILENT_RECONCILIATION
+  - NO_UNBOUNDED_WRITES
+  - REPLAY_BEFORE_PROMOTION
+sovereign_rules:
+  - "CLAIM <= EVIDENCE"
+  - "AGENT != AUTHORITY"
+  - "TOOL_ACCESS != VALIDATION"
+  - "CONNECTED != TRUSTED"
+  - "WRITE_CAPABILITY != WRITE_PERMISSION"
+  - "REPLAY != INDEPENDENT_REPLICATION"
+
+purpose: >-
+  Register the external and native work surfaces that may participate in the
+  MONSTERDOG federated agentic evidence/control plane. This manifest does not
+  attest that every surface is connected, authenticated, healthy, or authorized
+  to write. It assigns a default lane and a fail-closed operating policy so that
+  future integrations can be activated without collapsing provenance boundaries.
+
+control_plane:
+  orchestrator: "EXOCHRONOS"
+  adversarial_audit: "NEMESIS"
+  safety_governance: "OMNIAEGIS"
+  stress_testing: "BERZERKER"
+  fusion_layer: "MONSTERDOG"
+  evidence_model: "PROVENANCE -> TEST -> REPLAY -> AUDIT -> CLAIM"
+  canonical_git_repository: "monsterdog8/monsterdog-exochronos-contact-machine"
+  git_write_policy: "BRANCH_AND_PR_ONLY_UNLESS_EXPLICITLY_APPROVED"
+  external_side_effect_policy: "EXPLICIT_GATE_REQUIRED"
+  default_surface_mode: "READ_OR_DRAFT_ONLY"
+  unrestricted_multi_writer: false
+
+handoff_contract:
+  required_when_available:
+    - run_id
+    - source_system
+    - target_system
+    - actor_or_agent
+    - input_refs
+    - input_hashes
+    - output_refs
+    - output_hashes
+    - code_hash
+    - config_hash
+    - dataset_hash
+    - model_or_tool_version
+    - seed
+    - timestamps
+    - claim
+    - claim_ceiling
+    - failed_tests
+    - not_computable_tests
+    - open_questions
+    - requested_action
+  missing_field_value: "NOT_COMPUTABLE"
+
+write_gates:
+  canonical_repository:
+    policy: "PR_REQUIRED"
+    direct_main_write: false
+  databases:
+    policy: "SCHEMA_OR_DATA_WRITE_REQUIRES_EXPLICIT_APPROVAL_AND_PROVENANCE"
+  email_and_messaging:
+    policy: "DRAFT_OR_READ_DEFAULT; SEND_REQUIRES_EXPLICIT_USER_INTENT"
+  deployment:
+    policy: "PREVIEW_OR_DRY_RUN_DEFAULT; PRODUCTION_REQUIRES_EXPLICIT_GATE"
+  documents_and_artifacts:
+    policy: "DERIVED_OUTPUT_ALLOWED; SOURCE_OVERWRITE_REQUIRES_EXPLICIT_GATE"
+
+lanes:
+  project_and_work_management:
+    default_role: "COORDINATION_SURFACE"
+    surfaces:
+      - monday.com
+      - Notion
+      - Linear
+      - Airtable
+      - Slack
+
+  source_and_communications:
+    default_role: "EVIDENCE_SOURCE_OR_HANDOFF"
+    surfaces:
+      - Google Drive
+      - Gmail
+      - Outlook Email
+
+  code_and_repository:
+    default_role: "CODE_OR_REVIEW_SURFACE"
+    surfaces:
+      - GitHub
+      - Codex Process Jobs
+      - OpenAI Developers
+      - Build MCP Apps
+      - NVIDIA Skills
+      - Plugin Eval
+
+  build_and_application_generation:
+    default_role: "BUILD_SURFACE"
+    surfaces:
+      - Vercel
+      - Hercules
+      - Buildy
+      - AppDeploy
+      - Base44
+      - Wix
+      - Lovable
+      - Replit
+      - Netlify
+      - Hostinger
+      - Build Web Apps
+      - Game Studio
+      - Unity Essentials
+
+  runtime_database_and_backend:
+    default_role: "STATE_OR_RUNTIME_SURFACE"
+    surfaces:
+      - Convex
+      - Neon
+      - Supabase
+
+  research_and_scientific_retrieval:
+    default_role: "RESEARCH_SOURCE"
+    surfaces:
+      - Undermind
+      - Elicit
+      - Consensus
+      - Hugging Face
+      - CompText Benchmark
+
+  artifact_and_analysis:
+    default_role: "DERIVED_ARTIFACT_SURFACE"
+    surfaces:
+      - Spreadsheets
+      - Documents
+      - PDF
+      - Presentations
+      - Template Creator
+      - Data Analytics
+
+  geospatial_and_field:
+    default_role: "SPATIAL_OR_FIELD_SURFACE"
+    surfaces:
+      - AnyWhereMap - Navigate+Locate
+      - AllTrails
+
+  media_and_specialist:
+    default_role: "SPECIALIST_SURFACE"
+    surfaces:
+      - PixVerse
+      - Astrologic
+      - OneGate
+
+  secondary_ci_and_mirror:
+    default_role: "NON_CANONICAL_REVIEW_AND_CI_SURFACE"
+    surfaces:
+      - GitLab
+
+surface_contract:
+  registration_status: "DECLARED_OR_AVAILABLE_SURFACE"
+  runtime_connection_status: "NOT_ATTESTED_BY_THIS_MANIFEST"
+  trust_status: "UNTRUSTED_UNTIL_EVIDENCE_BOUND"
+  read_policy: "ALLOW_WHEN_TASK_RELEVANT_AND_AUTHORIZED"
+  write_policy: "DENY_BY_DEFAULT_UNTIL_TASK_SPECIFIC_GATE"
+  promotion_policy: "NO_CLAIM_PROMOTION_FROM_TOOL_OUTPUT_ALONE"
+
+mesh_message_types:
+  - DISCOVER
+  - READ
+  - SEARCH
+  - DRAFT
+  - EXECUTE
+  - VERIFY
+  - ATTEST
+  - REVIEW
+  - HANDOFF
+  - BLOCK
+
+required_evidence_classes:
+  E0: "POINTER_OR_SCREENSHOT_ONLY"
+  E1: "SOURCE_CONTENT"
+  E2: "STRUCTURED_DERIVED_ARTIFACT"
+  E3: "EXECUTION_LOG_OR_MACHINE_OUTPUT"
+  E4: "REPLAYABLE_PACKAGE"
+  E5: "INDEPENDENT_REVIEW"
+  E6: "EXTERNAL_OR_INDEPENDENT_REPLICATION"
+
+claim_firewall:
+  screenshot_can_prove_execution: false
+  hash_match_can_prove_scientific_validity: false
+  successful_tool_call_can_prove_truth: false
+  same_agent_can_independently_replicate_itself: false
+  deployment_success_can_promote_scientific_claim: false
+
+activation_sequence:
+  - "REGISTER_SURFACE"
+  - "VERIFY_CONNECTION"
+  - "ASSIGN_ROLE"
+  - "FREEZE_PERMISSIONS"
+  - "RUN_MINIMAL_READ_TEST"
+  - "RUN_NEGATIVE_CONTROL"
+  - "ENABLE_DRAFT_OR_BRANCH_WRITE_IF_REQUIRED"
+  - "CAPTURE_ARTIFACT_AND_HASH"
+  - "INDEPENDENT_REVIEW"
+  - "PROMOTE_ONLY_WITHIN_CLAIM_CEILING"
+
+current_verdict:
+  mesh_architecture: "REGISTERED_CANDIDATE_CONTROL_PLANE"
+  all_surfaces_connected: "NOT_PROVEN"
+  all_surfaces_write_enabled: false
+  canonical_multi_agent_interop: "PARTIAL"
+  evidence_provenance_model: "ACTIVE_AS_GOVERNANCE_CONTRACT"
+  production_autonomy: "BLOCKED_FAIL_CLOSED"
+
+next_gate:
+  id: "MESH_CONNECTION_ATTESTATION_0001"
+  objective: >-
+    Verify each declared surface one-by-one, record actual connection state,
+    permission mode, read/write capabilities, owner, evidence returned, failure
+    mode, and a reproducible minimal test. No bulk privilege escalation.
