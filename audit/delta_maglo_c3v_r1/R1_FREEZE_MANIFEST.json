@@ -1,0 +1,35 @@
+{
+  "experiment_id": "DELTA_MAGLO_C3V_R1_COMPONENT_ID_SHIFT_U_REPAIR_0001",
+  "scope": "SYNTHETIC_TARGETED_REPAIR_TRIBUNAL_ONLY",
+  "seed_master": 910601,
+  "n_outer": 10,
+  "n_train_per_family": 320,
+  "n_select_per_family": 260,
+  "n_final_per_family": 320,
+  "ridge_alphas": [
+    0.01,
+    0.1,
+    1.0,
+    10.0
+  ],
+  "cid_abs_metric": "worst_final_family_spearman",
+  "cid_abs_threshold": 0.45,
+  "u_primary_metric": "pooled_final_spearman(U,error)",
+  "u_primary_threshold": 0.5,
+  "u_critical_family_rule": "each final family rho(U,error) > 0",
+  "u_nuisance_false_alarm_max_mean_abs_delta": 0.05,
+  "u_severity_monotonicity_min": 0.8,
+  "replay_source_outer_run": 5,
+  "claim_ceiling": "SYNTHETIC_TARGETED_REPAIR_TRIBUNAL_ONLY — no promotion without full C3 retest",
+  "prior_frozen": {
+    "experiment": "DELTA_MAGLO_C3_VECTOR_OOD_SURVIVAL_0003",
+    "verdict": "WORST_FAMILY_FAILURE",
+    "critical_failure_family": "OOD_03_COMPONENT_ID_SHIFT",
+    "observed_performance": 0.3753,
+    "critical_threshold": 0.45,
+    "mean_vector_value_over_best_single": 0.2612,
+    "u0_error_rho": 0.2202,
+    "adversarial_component_corruption_rho": -0.0291,
+    "replay_status": "PASS_LOCAL"
+  }
+}
