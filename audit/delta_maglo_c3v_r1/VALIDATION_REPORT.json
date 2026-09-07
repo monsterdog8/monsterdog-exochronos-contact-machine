@@ -1,0 +1,35 @@
+{
+  "overall_assessment": "Ready to share with caveats",
+  "question": "Can a frozen V0 task-head repair component-ID shift, and can a prospective U1 track error without final-label leakage?",
+  "methodology_review": {
+    "final_selection_blind": true,
+    "u_target_leakage_blocked": true,
+    "outer_runs": 10,
+    "deterministic_replay": true,
+    "claim_ceiling": "synthetic targeted repair only"
+  },
+  "issues_found": [
+    {
+      "severity": "High",
+      "issue": "Synthetic generator semantics are not validated real-world ΔMAGLO component estimators.",
+      "impact": "No scientific or real-world promotion is allowed."
+    },
+    {
+      "severity": "Medium",
+      "issue": "Nuisance false-alarm control uses an external nuisance channel absent from V0.",
+      "impact": "It is a valid but weak nuisance test; a fresh C3 should add nontrivial within-representation nuisance transformations."
+    },
+    {
+      "severity": "Medium",
+      "issue": "U1 selection evaluates several candidates.",
+      "impact": "Candidate multiplicity can create selection optimism; full C3 retest must use the frozen selected mechanism only."
+    }
+  ],
+  "calculation_spot_checks": {
+    "replay_hash_equal": true,
+    "lane_a_gate_uses_worst_final_family_spearman": true,
+    "lane_b_primary_gate_threshold": 0.5,
+    "final_labels_used_only_for_evaluation": true
+  },
+  "notebook_status": "EXECUTED_TOP_TO_BOTTOM"
+}
