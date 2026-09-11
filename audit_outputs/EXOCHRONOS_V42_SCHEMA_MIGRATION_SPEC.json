@@ -1,0 +1,83 @@
+{
+  "run_id": "EXOCHRONOS_V42_SCHEMA_MIGRATION_SPEC",
+  "target": {
+    "platform": "Base44",
+    "app_id": "6a7ab7ce7313ddc99eac2f55",
+    "entity": "ExochronosCycle"
+  },
+  "preconditions": [
+    "V41 audit branch reviewed",
+    "python -m monsterboy_aegis_modules.exochronos_metric_v41 --self-test == PASS",
+    "No historical scalar values are deleted or overwritten"
+  ],
+  "additive_fields": {
+    "parameter_matrix": {
+      "type": "array",
+      "items": {"type": "array", "items": {"type": "number"}},
+      "description": "Raw 10x5 parameter matrix persisted at cycle commit"
+    },
+    "module_entropies": {
+      "type": "array",
+      "items": {"type": "number"},
+      "description": "Per-module entropy vector produced by the frozen formula version"
+    },
+    "H_total": {"type": "number"},
+    "TC_shrink": {"type": "number"},
+    "TC_legacy_corrected": {"type": "number"},
+    "lambda_shrink": {"type": "number"},
+    "p_permutation": {"type": "number"},
+    "z_permutation": {"type": "number"},
+    "permutation_seed": {"type": "number"},
+    "permutation_count": {"type": "number"},
+    "signal_tag": {
+      "type": "string",
+      "enum": ["SIGNAL", "NOISE", "ARTIFACT_ATTRACTOR", "UNASSESSED", "NO_DETECTABLE_SIGNAL", "NO_SUPPORTED_SIGNAL"],
+      "description": "CLAIM <= EVIDENCE: SIGNAL requires evidence crossing the preregistered detection threshold. NO_DETECTABLE_SIGNAL means the performed test did not detect a signal at the specified threshold. NO_SUPPORTED_SIGNAL means available evidence does not support a signal claim. NOISE is a stronger substantive claim and must not be inferred merely from nonsignificance. UNASSESSED means no assessment has been produced, including insufficient permutation resolution. ARTIFACT_ATTRACTOR retains its existing semantics."
+    },
+    "metric_status": {
+      "type": "string",
+      "enum": ["CURRENT", "HISTORICAL", "SUPERSEDED", "INVALIDATED", "NOT_COMPARABLE"]
+    },
+    "superseded_by": {"type": "string"},
+    "code_hash": {"type": "string"},
+    "topology_hash": {"type": "string"},
+    "entropy_version": {"type": "string"},
+    "mi_version": {"type": "string"},
+    "raw_persisted": {"type": "boolean"}
+  },
+  "historical_policy": {
+    "C1_C81": "Leave new raw-derived fields null/absent unless independently recoverable",
+    "C82": {
+      "metric_status": "SUPERSEDED",
+      "superseded_by": "EXOCHRONOS_V41_METRIC_PROVENANCE",
+      "raw_persisted": false,
+      "signal_tag": "UNASSESSED",
+      "note": "Preserve original V40 scalar values unchanged"
+    }
+  },
+  "c83_commit_gate": {
+    "required_non_null": [
+      "parameter_matrix",
+      "module_entropies",
+      "H_total",
+      "TC_shrink",
+      "lambda_shrink",
+      "p_permutation",
+      "z_permutation",
+      "permutation_seed",
+      "permutation_count",
+      "signal_tag",
+      "metric_status",
+      "code_hash",
+      "topology_hash",
+      "entropy_version",
+      "mi_version",
+      "raw_persisted"
+    ],
+    "required_values": {
+      "metric_status": "CURRENT",
+      "raw_persisted": true
+    }
+  },
+  "scientific_rule": "C83 is the first accumulation cycle only if the full raw/provenance gate passes. Thirty cycle numbers do not automatically imply thirty independent observations."
+}
