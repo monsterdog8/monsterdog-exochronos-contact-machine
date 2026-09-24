@@ -1,0 +1,42 @@
+{
+  "package_id": "NEMESIS_TARGET_CORPUS_IMPORT_001",
+  "repository": "monsterdog8/monsterdog-exochronos-contact-machine",
+  "branch": "nemesis/target-corpus-intake-001",
+  "base_main_commit": "131afadc8f483e074abe52b5a90790373f05059c",
+  "exact_binding_commit": "e28eec5f73f612140630f814be2eee965e4407a2",
+  "local_transport_zip": {
+    "name": "NEMESIS_TARGET_CORPUS_IMPORT_001.zip",
+    "size_bytes": 16645532,
+    "sha256": "872a07579ba2a4e6a9c51138885dbf45598a06a99650707b56a7f775a50ea471",
+    "repository_copy_present": false,
+    "status": "LOCAL_VERIFIED_NOT_REPOSITORY_IMPORTED"
+  },
+  "github_exact_blob_bindings": [
+    {
+      "path": "original_sources/ASTRA_RAW_DUEL_001_runner.py",
+      "expected_sha256": "e73f8113200ebc06144f55bc0171b2c01d55ea6a17edd057e3a3ebedf18383bb",
+      "github_blob_sha": "f71709ead19c9a843552815ff9bbc82ab6f38166",
+      "binding_status": "VERIFIED_GIT_BLOB"
+    },
+    {
+      "path": "original_sources/ASTRA_RAW_DUEL_001_G4A_G4B_gate.py",
+      "expected_sha256": "9b815e2801974f8ead2fb48a7968d7f41712115357aa88d7d0e1526cfa8a833e",
+      "github_blob_sha": "4d25fe2088442acaa9087aea4ffda3cdc6fce646",
+      "binding_status": "VERIFIED_GIT_BLOB"
+    },
+    {
+      "path": "original_evidence/ARA_CAB13_SECOND_ENV_PACKET_008.zip",
+      "expected_sha256": "a53b8f8c2f67a8391a86c3b4bf33e57d1db9328159cf5a3ec595f55f88818606",
+      "github_blob_sha": "50cebcad546f362c75525232726265fb2765c485",
+      "binding_status": "VERIFIED_GIT_BLOB"
+    }
+  ],
+  "not_imported_as_primary_bytes": [
+    "original_sources/PIONEER_001_MATH_METRIC_ULTIMATE.py",
+    "original_evidence/ARA_CAB13_RUN_001_EVIDENCE.zip",
+    "original_evidence/ARA_CAB13_X10_004_EVIDENCE.zip",
+    "original_evidence/ARA_CAB13_ENV_MATRIX_006_EVIDENCE.zip",
+    "original_evidence/ARA_CAB13_PORTABLE_REPLAY_007_EVIDENCE.zip"
+  ],
+  "verification_status": "PARTIAL_EXACT_GITHUB_BINDING"
+}
