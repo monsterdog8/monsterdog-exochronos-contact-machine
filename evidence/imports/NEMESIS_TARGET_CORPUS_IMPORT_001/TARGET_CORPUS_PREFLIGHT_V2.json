@@ -1,0 +1,42 @@
+{
+  "repository": "monsterdog8/monsterdog-exochronos-contact-machine",
+  "branch": "nemesis/target-corpus-intake-001",
+  "base_main_commit": "131afadc8f483e074abe52b5a90790373f05059c",
+  "exact_binding_commit": "e28eec5f73f612140630f814be2eee965e4407a2",
+  "target_corpus_status": "TARGET_CORPUS_PRESENT_PARTIAL",
+  "found_primary": [
+    "ASTRA_RAW_DUEL_001_runner.py",
+    "ASTRA_RAW_DUEL_001_G4A_G4B_gate.py",
+    "ARA_CAB13_SECOND_ENV_PACKET_008.zip"
+  ],
+  "found_metadata": [
+    "IMPORT_MANIFEST.json",
+    "SHA256SUMS.txt",
+    "README_IMPORT.md",
+    "POST_IMPORT_VERIFICATION.json"
+  ],
+  "found_unbound_or_not_imported": [
+    "PIONEER_001_MATH_METRIC_ULTIMATE.py",
+    "ARA_CAB13_RUN_001_EVIDENCE.zip",
+    "ARA_CAB13_X10_004_EVIDENCE.zip",
+    "ARA_CAB13_ENV_MATRIX_006_EVIDENCE.zip",
+    "ARA_CAB13_PORTABLE_REPLAY_007_EVIDENCE.zip"
+  ],
+  "missing_primary_benchmark_components": [
+    "canonical 9-task benchmark packet",
+    "9 task hashes bound to that packet",
+    "8 historical backend RAW responses as an identified set",
+    "explicit ninth RAW state",
+    "historical scorer for the 9-task suite",
+    "oracle or answer-key packet",
+    "complete task-to-RAW provenance ledger",
+    "MATH_METRIC_REPORT.json",
+    "MONSTERDOG_REPRO_BENCHMARK frozen packet"
+  ],
+  "raw_chain_009": "NOT_EXECUTED",
+  "oracle_blindness_001": "NOT_EXECUTED",
+  "second_environment_packet": "VERIFIED_PRESENT",
+  "cross_environment_replay": "NOT_EXECUTED",
+  "performance_run": "NOT_EXECUTED",
+  "claim_ceiling": "PRIMARY_ASTRA_SOURCE_AND_CAB13_SECOND_ENV_PACKET_BOUND_IN_GITHUB__BENCHMARK_COMPLETENESS_NOT_PROVEN"
+}
