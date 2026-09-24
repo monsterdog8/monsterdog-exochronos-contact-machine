@@ -60,7 +60,7 @@ def validate_provider_row(row: Dict[str, Any], *, expected_candidate: str,
         if row.get('provider_raw_sha256') != sha_text(raw): reasons.append('PROVIDER_RAW_HASH_MISMATCH')
         try:
             parsed=json.loads(raw)
-            if not isinstance(parsed,dict): reasons.append('PROVIDER_RAW_NOT_OBJECT')
+            if not isinstance(parsed, dict): reasons.append('PROVIDER_RAW_NOT_OBJECT')
             else: raw_obj=parsed
         except Exception:
             reasons.append('PROVIDER_RAW_JSON_INVALID')
@@ -180,4 +180,3 @@ if __name__=='__main__':
     out.write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n')
     print(json.dumps(report,indent=2,ensure_ascii=False))
     raise SystemExit(0 if report['verdict']=='G4A_G4B_LOCAL_GATE_PASS' else 1)
-
