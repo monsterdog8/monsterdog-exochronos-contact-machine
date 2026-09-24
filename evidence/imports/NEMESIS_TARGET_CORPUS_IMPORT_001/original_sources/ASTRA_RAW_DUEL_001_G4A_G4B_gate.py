@@ -180,3 +180,4 @@ if __name__=='__main__':
     out.write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n')
     print(json.dumps(report,indent=2,ensure_ascii=False))
     raise SystemExit(0 if report['verdict']=='G4A_G4B_LOCAL_GATE_PASS' else 1)
+
