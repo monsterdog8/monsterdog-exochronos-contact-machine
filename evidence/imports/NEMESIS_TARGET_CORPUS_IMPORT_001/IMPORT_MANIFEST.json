@@ -1,0 +1,82 @@
+{
+  "package_id": "NEMESIS_TARGET_CORPUS_IMPORT_001",
+  "purpose": "Transport only: preserve and bind original uploaded CAB13/PIONEER/ASTRA artifacts for repository intake. No scientific or performance claim.",
+  "generated_manifest_type": "CARRIER_MANIFEST",
+  "original_files_modified": false,
+  "files": [
+    {
+      "path": "original_evidence/ARA_CAB13_ENV_MATRIX_006_EVIDENCE.zip",
+      "size_bytes": 4764871,
+      "sha256": "f8f8ae697dbffacb5a49cc56bc9f2c78cbe49540ada030e5a543a59f42c2a076",
+      "source_type": "ORIGINAL_UPLOADED_FILE",
+      "zip_entry_count": 82
+    },
+    {
+      "path": "original_evidence/ARA_CAB13_PORTABLE_REPLAY_007_EVIDENCE.zip",
+      "size_bytes": 1816107,
+      "sha256": "2c5fe860233569359327f36ad27c5f4a54845ae0afc8cba559040ee6cd0b00ac",
+      "source_type": "ORIGINAL_UPLOADED_FILE",
+      "zip_entry_count": 32
+    },
+    {
+      "path": "original_evidence/ARA_CAB13_RUN_001_EVIDENCE.zip",
+      "size_bytes": 920909,
+      "sha256": "adb60026f718c34d473eed0b9b778933c0281732c1eb7cc162d334bb7ba1a7f4",
+      "source_type": "ORIGINAL_UPLOADED_FILE",
+      "zip_entry_count": 35
+    },
+    {
+      "path": "original_evidence/ARA_CAB13_SECOND_ENV_PACKET_008.zip",
+      "size_bytes": 18227,
+      "sha256": "a53b8f8c2f67a8391a86c3b4bf33e57d1db9328159cf5a3ec595f55f88818606",
+      "source_type": "ORIGINAL_UPLOADED_FILE",
+      "zip_entry_count": 8
+    },
+    {
+      "path": "original_evidence/ARA_CAB13_X10_004_EVIDENCE.zip",
+      "size_bytes": 9105948,
+      "sha256": "937cd407841797138c9f63e5bfe7ce15e101d9af73a739b4fa43465c5473150e",
+      "source_type": "ORIGINAL_UPLOADED_FILE",
+      "zip_entry_count": 175
+    },
+    {
+      "path": "original_sources/ASTRA_RAW_DUEL_001_G4A_G4B_gate.py",
+      "size_bytes": 8849,
+      "sha256": "9b815e2801974f8ead2fb48a7968d7f41712115357aa88d7d0e1526cfa8a833e",
+      "source_type": "ORIGINAL_UPLOADED_FILE"
+    },
+    {
+      "path": "original_sources/ASTRA_RAW_DUEL_001_runner.py",
+      "size_bytes": 5914,
+      "sha256": "e73f8113200ebc06144f55bc0171b2c01d55ea6a17edd057e3a3ebedf18383bb",
+      "source_type": "ORIGINAL_UPLOADED_FILE"
+    },
+    {
+      "path": "original_sources/PIONEER_001_MATH_METRIC_ULTIMATE.py",
+      "size_bytes": 34347,
+      "sha256": "26212c04830f89135ccb8541227c59d0317fb74a16da64757c5c9a6f34e1fa47",
+      "source_type": "ORIGINAL_UPLOADED_FILE"
+    }
+  ],
+  "present_components": [
+    "PIONEER source script",
+    "ASTRA runner source script",
+    "ASTRA G4A/G4B gate source script",
+    "CAB13 run 001 evidence archive",
+    "CAB13 X10 evidence archive",
+    "CAB13 environment matrix evidence archive",
+    "CAB13 portable replay evidence archive",
+    "CAB13 second-environment packet archive"
+  ],
+  "not_present_in_this_import": [
+    "canonical 9-task benchmark packet",
+    "8 historical backend RAW responses as a separately identified set",
+    "explicit ninth RAW MISSING/FOUND record",
+    "historical scorer for the 9-task suite",
+    "oracle/answer-key packet for that suite",
+    "MATH_METRIC_REPORT.json",
+    "MONSTERDOG_REPRO_BENCHMARK frozen packet",
+    "complete task-to-RAW provenance ledger"
+  ],
+  "claim_ceiling": "SOURCE_AND_EVIDENCE_TRANSPORT_ONLY"
+}
