@@ -1,0 +1,56 @@
+{
+  "experiment_id": "DELTA_MAGLO_C3V_R1_COMPONENT_ID_SHIFT_U_REPAIR_0001",
+  "pipeline_valid": true,
+  "prior_c3_status": "WORST_FAMILY_FAILURE_FROZEN",
+  "representation_modified": false,
+  "lane_a": {
+    "selected_head_mode": "HEAD_A3",
+    "selection_counts": {
+      "HEAD_A3": 7,
+      "HEAD_A4": 1,
+      "HEAD_A1": 1,
+      "HEAD_A2": 1
+    },
+    "component_id_shift_absolute_performance_mean": 0.5287522339085343,
+    "component_id_shift_absolute_performance_min": 0.4730345267043623,
+    "critical_threshold": 0.45,
+    "critical_gate_pass": true,
+    "incremental_value_over_best_single_mean": 0.3834643526792254,
+    "ordinary_family_cost_mean": 0.005783306069117344,
+    "selection_stability": 0.7,
+    "status": "PASS"
+  },
+  "lane_b": {
+    "baseline_u0_error_rho_mean": 0.08831348922971005,
+    "selected_u1_mode": "U1_OOF_ERROR_MODEL",
+    "selection_counts": {
+      "U1_OOF_ERROR_MODEL": 6,
+      "U1_DISTANCE": 2,
+      "U1_COMPOSITE": 2
+    },
+    "u1_error_rho_mean": 0.2555016690104224,
+    "u1_error_rho_min_outer": -0.07068149275266787,
+    "u_improvement_delta_mean": 0.16718817978071238,
+    "worst_family_u_error_rho_mean": 0.2179936205431694,
+    "nuisance_false_alarm_rate_proxy_mean_abs_delta": 0.0,
+    "severity_monotonicity_u_mean": 0.13142857142857142,
+    "target_leakage_detected": false,
+    "selection_stability": 0.6,
+    "status": "FAIL"
+  },
+  "outer_runs": 10,
+  "replay_pass": true,
+  "kill_shots_triggered": [
+    "KILL_R1_B02_or_B03"
+  ],
+  "not_computable": [],
+  "final_verdict": "COMPONENT_ID_SHIFT_REPAIR_ONLY",
+  "next_gate": "UNCERTAINTY_REPAIR_REDESIGN_THEN_FULL_C3",
+  "claim_ceiling": "SYNTHETIC_TARGETED_REPAIR_TRIBUNAL_ONLY — no promotion without full C3 retest",
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.41"
+  }
+}
