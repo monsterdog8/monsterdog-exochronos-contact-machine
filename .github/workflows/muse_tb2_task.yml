@@ -65,10 +65,10 @@ jobs:
         run: |
           set +e
           echo "::add-mask::$META_API_KEY"
-          CMD=".venv/bin/harbor run --dataset terminal-bench@2.0 --task gpt2-codegolf --agent muse-code --n-concurrent 1 --ak max_model_steps=1 --ae META_API_KEY"
-          printf '%s\n' "$CMD" | tee evidence/exact_command.txt
+          printf '%s\n' ".venv/bin/harbor run --dataset terminal-bench@2.0 --task gpt2-codegolf --agent muse-code --n-concurrent 1 --ak max_model_steps=1 --ae META_API_KEY=[REDACTED]" | tee evidence/exact_command.txt
           date -u +"run_started_at_utc=%Y-%m-%dT%H:%M:%SZ" | tee evidence/run_timestamps.txt
-          timeout 900s bash -lc "$CMD" > >(tee evidence/harbor_stdout.txt) 2> >(tee evidence/harbor_stderr.txt >&2)
+          CMD=(.venv/bin/harbor run --dataset terminal-bench@2.0 --task gpt2-codegolf --agent muse-code --n-concurrent 1 --ak max_model_steps=1 --ae "META_API_KEY=$META_API_KEY")
+          timeout 900s "${CMD[@]}" > >(tee evidence/harbor_stdout.txt) 2> >(tee evidence/harbor_stderr.txt >&2)
           RC=$?
           date -u +"run_finished_at_utc=%Y-%m-%dT%H:%M:%SZ" | tee -a evidence/run_timestamps.txt
           echo "$RC" | tee evidence/harbor_process_exit_code.txt
