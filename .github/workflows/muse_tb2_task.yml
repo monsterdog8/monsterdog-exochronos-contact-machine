@@ -2,10 +2,6 @@ name: MUSE_TB2_TASK_001
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/muse_tb2_task.yml'
 
 permissions:
   contents: read
