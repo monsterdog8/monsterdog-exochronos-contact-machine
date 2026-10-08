@@ -1,0 +1,34 @@
+{
+  "schema": "tb2_source_binding_replay_v1",
+  "date": "2026-10-08",
+  "verdict": "PASS",
+  "gate": "TB2_ORACLE_SMOKE_001_SOURCE_BOUND_REPLAY",
+  "run_id": 37802024346,
+  "workflow_commit": "ef39a2d1361ce355a286594d2af2fc8776e55606",
+  "expected": {
+    "git_url": "https://github.com/laude-institute/terminal-bench-2.git",
+    "git_commit_id": "69671fbaac6d67a7ef0dfec016cc38a64ef7a77c",
+    "task": "gpt2-codegolf",
+    "reward": 1
+  },
+  "checks": {
+    "git_url_match": true,
+    "git_commit_match": true,
+    "task_match": true,
+    "exception_null": true,
+    "verifier_present": true,
+    "reward_match": true
+  },
+  "artifact": {
+    "id": 11561102224,
+    "sha256": "45b815ec1b840ce0303a70e983a27338b029bba859431cf15bb3ffe32ff707d2"
+  },
+  "source_drift_status": "RESOLVED_FOR_THIS_GATE_BY_REPIN_AND_REPLAY",
+  "claim_ceiling": "OFFICIAL_HARBOR_ORACLE_SINGLE_TASK_SOURCE_BOUND_PASS",
+  "exclusions": [
+    "NOT_A_MUSE_TASK_RESULT",
+    "NOT_A_FULL_TERMINAL_BENCH_SCORE",
+    "NOT_A_LEADERBOARD_RESULT",
+    "NOT_INDEPENDENT_REPLICATION"
+  ]
+}
