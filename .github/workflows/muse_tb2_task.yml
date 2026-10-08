@@ -1,0 +1,143 @@
+name: MUSE_TB2_TASK_001
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  muse-tb2-task:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONUNBUFFERED: '1'
+      META_API_KEY: ${{ secrets.META_API_KEY }}
+      EXPECTED_TB2_GIT_URL: https://github.com/laude-institute/terminal-bench-2.git
+      EXPECTED_TB2_GIT_COMMIT: 69671fbaac6d67a7ef0dfec016cc38a64ef7a77c
+      EXPECTED_TASK: gpt2-codegolf
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          {
+            echo "gate=MUSE_TB2_TASK_001"
+            echo "github_sha=$GITHUB_SHA"
+            echo "github_run_id=$GITHUB_RUN_ID"
+            echo "source_pin_url=$EXPECTED_TB2_GIT_URL"
+            echo "source_pin_commit=$EXPECTED_TB2_GIT_COMMIT"
+            echo "task_pin=$EXPECTED_TASK"
+            date -u +"started_at_utc=%Y-%m-%dT%H:%M:%SZ"
+          } | tee evidence/run_identity.txt
+
+      - name: Secret reality gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${META_API_KEY:-}" ]; then
+            echo "BLOCKED_MISSING_META_API_KEY" | tee evidence/secret_gate.txt
+            exit 41
+          fi
+          echo "::add-mask::$META_API_KEY"
+          echo "META_API_KEY_PRESENT_NOT_DISCLOSED" | tee evidence/secret_gate.txt
+
+      - name: Docker reality
+        shell: bash
+        run: |
+          set -o pipefail
+          { command -v docker; docker --version; docker version; } 2>&1 | tee evidence/docker_reality.txt
+
+      - name: Install Harbor 0.24.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv .venv
+          .venv/bin/pip install 'harbor==0.24.0' 2>&1 | tee evidence/harbor_install.txt
+          .venv/bin/harbor --version 2>&1 | tee evidence/harbor_version.txt
+
+      - name: Run pinned Muse task
+        shell: bash
+        run: |
+          set +e
+          echo "::add-mask::$META_API_KEY"
+          CMD=".venv/bin/harbor run --dataset terminal-bench@2.0 --task gpt2-codegolf --agent muse-code --n-concurrent 1 --ak max_model_steps=1 --ae META_API_KEY"
+          printf '%s\n' "$CMD" | tee evidence/exact_command.txt
+          date -u +"run_started_at_utc=%Y-%m-%dT%H:%M:%SZ" | tee evidence/run_timestamps.txt
+          timeout 900s bash -lc "$CMD" > >(tee evidence/harbor_stdout.txt) 2> >(tee evidence/harbor_stderr.txt >&2)
+          RC=$?
+          date -u +"run_finished_at_utc=%Y-%m-%dT%H:%M:%SZ" | tee -a evidence/run_timestamps.txt
+          echo "$RC" | tee evidence/harbor_process_exit_code.txt
+          find jobs -maxdepth 8 -type f -print 2>/dev/null | sort | tee evidence/job_files.txt || true
+          exit 0
+
+      - name: Validate source-bound execution and verifier
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY' | tee evidence/execution_gate_verdict.json
+          import json, os, pathlib
+          candidates = sorted(pathlib.Path("jobs").glob("*/*/result.json"))
+          if len(candidates) != 1:
+              print(json.dumps({"verdict":"FAIL_CLOSED","reason":"EXPECTED_EXACTLY_ONE_TRIAL_RESULT","count":len(candidates)}, sort_keys=True))
+              raise SystemExit(51)
+          p = candidates[0]
+          data = json.loads(p.read_text())
+          task_id = data.get("task_id") or {}
+          verifier = data.get("verifier_result")
+          agent_execution = data.get("agent_execution")
+          exception = data.get("exception_info")
+          rewards = (verifier or {}).get("rewards") or {}
+          checks = {
+              "git_url_match": task_id.get("git_url") == os.environ["EXPECTED_TB2_GIT_URL"],
+              "git_commit_match": task_id.get("git_commit_id") == os.environ["EXPECTED_TB2_GIT_COMMIT"],
+              "task_match": data.get("task_name") == os.environ["EXPECTED_TASK"],
+              "exception_null": exception is None,
+              "agent_execution_present": agent_execution is not None,
+              "verifier_present": verifier is not None,
+              "reward_present": "reward" in rewards,
+          }
+          execution_ok = all(checks.values())
+          reward = rewards.get("reward")
+          out = {
+              "verdict": "EXECUTION_GATE_PASS" if execution_ok else "FAIL_CLOSED",
+              "benchmark_reward": reward,
+              "task_success": reward == 1.0 if reward is not None else None,
+              "observed_git_url": task_id.get("git_url"),
+              "observed_git_commit": task_id.get("git_commit_id"),
+              "observed_task": data.get("task_name"),
+              "checks": checks,
+              "claim_ceiling": "MUSE_TB2_SINGLE_TASK_SOURCE_BOUND_EXECUTION_WITH_OFFICIAL_VERIFIER" if execution_ok else "BLOCKED_EXECUTION_OR_PROVENANCE",
+          }
+          print(json.dumps(out, sort_keys=True))
+          if not execution_ok:
+              raise SystemExit(52)
+          PY
+
+      - name: Hash evidence and job outputs
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          find evidence -type f -print0 | sort -z | xargs -0 sha256sum > evidence/EVIDENCE_SHA256SUMS.txt
+          if [ -d jobs ]; then
+            find jobs -type f -print0 | sort -z | xargs -0 sha256sum > evidence/JOBS_SHA256SUMS.txt
+          else
+            printf 'NO_JOBS_DIRECTORY\n' > evidence/JOBS_SHA256SUMS.txt
+          fi
+          date -u +"evidence_sealed_at_utc=%Y-%m-%dT%H:%M:%SZ" > evidence/sealed_at.txt
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: MUSE_TB2_TASK_001_EVIDENCE
+          if-no-files-found: error
+          retention-days: 30
+          path: |
+            evidence/
+            jobs/
