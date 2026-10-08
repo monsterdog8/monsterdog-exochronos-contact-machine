@@ -61,17 +61,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          HELP="$(cat evidence/harbor_run_help.txt)"
-          if grep -q -- '--n-tasks' <<<"$HELP"; then
-            echo 'limit_args=--n-tasks 1' >> "$GITHUB_OUTPUT"
-            echo 'limit_flag=--n-tasks' | tee evidence/limit_resolution.txt
-          elif grep -qE -- '(^|[[:space:]])-l([,[:space:]]|$)|--limit' <<<"$HELP"; then
-            echo 'limit_args=-l 1' >> "$GITHUB_OUTPUT"
-            echo 'limit_flag=-l' | tee evidence/limit_resolution.txt
-          else
-            echo 'NO_SAFE_SINGLE_TASK_LIMIT_FLAG_FOUND' | tee evidence/limit_resolution.txt
-            exit 23
-          fi
+          echo 'limit_args=--n-tasks 1' >> "$GITHUB_OUTPUT"
+          echo 'limit_flag=--n-tasks 1; observed in Harbor 0.24.0 help on workflow run 37798876897' | tee evidence/limit_resolution.txt
 
       - name: Dataset discovery
         shell: bash
