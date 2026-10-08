@@ -1,0 +1,61 @@
+{
+  "record": "EXOCHRONOS_TB2_MUSE_CONTACT_2026_10_08",
+  "doctrine": "CLAIM_LE_EVIDENCE",
+  "tb2_oracle": {
+    "verdict": "PASS",
+    "run_id": 37799104557,
+    "workflow_commit": "c973c254aeb86178f5f778d1a29a14949dddcdeb",
+    "harbor_version": "0.24.0",
+    "task": "gpt2-codegolf",
+    "source_commit": "69671fbaac6d67a7ef0dfec016cc38a64ef7a77c",
+    "task_checksum": "c3dfea370953fe9b6cb53d368f1f242af2833cf1af623849bdaee8fe026b1cf1",
+    "agent": "oracle",
+    "reward": 1,
+    "verifier_executed": true,
+    "exception": null,
+    "artifact_id": 11560072574,
+    "artifact_sha256": "757ef663ce0f29501f1148b0b1195c2a58c0bbd3046d9acf9af8e9165a502026",
+    "claim_ceiling": "OFFICIAL_HARBOR_ORACLE_SINGLE_TASK_EXECUTION_PASS"
+  },
+  "muse_installability": {
+    "verdict": "PASS_INSTALL_ONLY",
+    "run_id": 37799581771,
+    "workflow_commit": "ef612493340873eacf45fd7492051de831744b7b",
+    "muse_version": "1.4.4",
+    "install_only": true,
+    "agent_execution": false,
+    "verifier_executed": false,
+    "exception": null,
+    "artifact_id": 11559743954,
+    "artifact_sha256": "d0511344d8c6b14311c629a451dd66bc14d8d4cda4e0ee5d56fb523c2f6fb888",
+    "claim_ceiling": "MUSE_CODE_1_4_4_INSTALLABLE_IN_HARBOR_TB2_ENVIRONMENT"
+  },
+  "muse_auth_reality": {
+    "verdict": "BLOCKED_MISSING_META_API_KEY",
+    "run_id": 37800100047,
+    "workflow_commit": "94e2715e1c878ea9c9ca1822116ee4b88523ae61",
+    "meta_api_key_present": false,
+    "muse_version": "1.4.4",
+    "exception_type": "ValueError",
+    "exception_message": "META_API_KEY is required. Set it on the host or pass it with --ae META_API_KEY=...",
+    "verifier_executed": false,
+    "model_usage": null,
+    "cost_usd": null,
+    "artifact_id": 11560615478,
+    "artifact_sha256": "acf14839e4d7e6c2d0eb77fdc9de7002ec9376c8367c671967d673ec66614ace"
+  },
+  "nemesis": {
+    "finding": "HARBOR_PROCESS_EXIT_0_DOES_NOT_IMPLY_TRIAL_SUCCESS",
+    "rule": [
+      "HARBOR_PROCESS_EXIT_0 != TRIAL_SUCCESS",
+      "WORKFLOW_GREEN != BENCHMARK_PASS"
+    ]
+  },
+  "matrix": {
+    "adapter_exists": "1/50",
+    "official_runner_before": "0/50",
+    "official_runner_after": "1/50"
+  },
+  "next_single_gate": "MUSE_TB2_TASK_001",
+  "prerequisite": "META_API_KEY supplied through authorized managed secret mechanism"
+}
