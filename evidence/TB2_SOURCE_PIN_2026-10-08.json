@@ -1,0 +1,21 @@
+{
+  "schema": "tb2_source_pin_v1",
+  "dataset": "terminal-bench@2.0",
+  "source": "terminal-bench",
+  "git_url": "https://github.com/laude-institute/terminal-bench-2.git",
+  "git_commit_id": "69671fbaac6d67a7ef0dfec016cc38a64ef7a77c",
+  "observed_task": "gpt2-codegolf",
+  "observed_task_checksum": "c3dfea370953fe9b6cb53d368f1f242af2833cf1af623849bdaee8fe026b1cf1",
+  "provenance": {
+    "github_actions_run_id": 37799104557,
+    "workflow_commit": "c973c254aeb86178f5f778d1a29a14949dddcdeb",
+    "artifact_id": 11560072574,
+    "artifact_sha256": "757ef663ce0f29501f1148b0b1195c2a58c0bbd3046d9acf9af8e9165a502026"
+  },
+  "supersedes": {
+    "git_url": "https://github.com/harbor-framework/terminal-bench-2",
+    "git_commit_prefix": "2fd12b88",
+    "reason": "SOURCE_DRIFT_OBSERVED; runtime Harbor dataset resolved to laude-institute/terminal-bench-2 at 69671fba..."
+  },
+  "claim_ceiling": "SOURCE_PIN_OBSERVED_AND_FROZEN_NOT_YET_REPLAY_VALIDATED"
+}
