@@ -86,6 +86,51 @@ jobs:
           find jobs -maxdepth 5 -type f -print 2>/dev/null | sort | tee evidence/job_files.txt || true
           exit "$RC"
 
+      - name: Validate source binding and scientific PASS
+        shell: bash
+        env:
+          EXPECTED_TB2_GIT_URL: https://github.com/laude-institute/terminal-bench-2.git
+          EXPECTED_TB2_GIT_COMMIT: 69671fbaac6d67a7ef0dfec016cc38a64ef7a77c
+          EXPECTED_TASK: gpt2-codegolf
+          EXPECTED_REWARD: "1.0"
+        run: |
+          set -euo pipefail
+          python3 - <<'PY' | tee evidence/source_binding_verdict.json
+          import json, os, pathlib, sys
+          candidates = sorted(pathlib.Path("jobs").glob("*/*/result.json"))
+          if len(candidates) != 1:
+              print(json.dumps({"verdict":"FAIL_CLOSED","reason":"EXPECTED_EXACTLY_ONE_TRIAL_RESULT","count":len(candidates)}, sort_keys=True))
+              raise SystemExit(31)
+          p = candidates[0]
+          data = json.loads(p.read_text())
+          task_id = data.get("task_id") or {}
+          verifier = data.get("verifier_result")
+          rewards = (verifier or {}).get("rewards") or {}
+          reward = rewards.get("reward")
+          checks = {
+              "git_url_match": task_id.get("git_url") == os.environ["EXPECTED_TB2_GIT_URL"],
+              "git_commit_match": task_id.get("git_commit_id") == os.environ["EXPECTED_TB2_GIT_COMMIT"],
+              "task_match": data.get("task_name") == os.environ["EXPECTED_TASK"],
+              "exception_null": data.get("exception_info") is None,
+              "verifier_present": verifier is not None,
+              "reward_match": reward == float(os.environ["EXPECTED_REWARD"]),
+          }
+          verdict = "PASS" if all(checks.values()) else "FAIL_CLOSED"
+          out = {
+              "verdict": verdict,
+              "result_path": str(p),
+              "observed_git_url": task_id.get("git_url"),
+              "observed_git_commit": task_id.get("git_commit_id"),
+              "observed_task": data.get("task_name"),
+              "observed_reward": reward,
+              "checks": checks,
+              "claim_ceiling": "OFFICIAL_HARBOR_ORACLE_SINGLE_TASK_SOURCE_BOUND_PASS" if verdict == "PASS" else "BLOCKED_SOURCE_OR_RESULT_MISMATCH",
+          }
+          print(json.dumps(out, sort_keys=True))
+          if verdict != "PASS":
+              raise SystemExit(32)
+          PY
+
       - name: Hash evidence and job outputs
         if: always()
         shell: bash
