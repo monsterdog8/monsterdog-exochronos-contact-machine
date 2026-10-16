@@ -1,0 +1,17 @@
+{
+  "policy_version": "v3e.1.0",
+  "audience": "monsterdog.pep.v3e.local",
+  "trust_root_fingerprint": "93751626fad457475aee30e488bc50aa8823486dde6c0e2e6584f1cd88a5d766",
+  "allowed_issuers": [
+    "monsterdog.core.v3e"
+  ],
+  "allowlist": [
+    {
+      "subject": "agent-alpha",
+      "action": "marker.create",
+      "resource": "effect/marker-P-*.json"
+    }
+  ],
+  "max_ttl_seconds": 300,
+  "max_issued_at_skew_seconds": 60
+}

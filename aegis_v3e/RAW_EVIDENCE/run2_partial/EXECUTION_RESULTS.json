@@ -1,0 +1,1127 @@
+{
+ "mission": "AEGIS_V3E_INDEPENDENT_WITNESS_ATTESTATION_005",
+ "tests_total": 18,
+ "tests_pass_local": 16,
+ "chain_head": "bd98d7a5ffa439a04bbc5822a93185a83cad006c9e992a7b2dd0e3d1a0a7b76c",
+ "results": [
+  {
+   "id": "A1",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "http": 200,
+    "effect_claim": {},
+    "markers_before": [],
+    "markers_after": [
+     "marker-P-V3E.json"
+    ],
+    "raw_marker": {
+     "present": true,
+     "raw_copy": "RAW_EVIDENCE/markers/A1_marker-P-V3E.json",
+     "sha256": "e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43",
+     "bytes": 283
+    },
+    "precomputed": {
+     "sha256": "e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43",
+     "size": 283
+    },
+    "witness": {
+     "run_id": "W-A1-ALLOW-001",
+     "verdict": "VALID",
+     "exit": 0,
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-A1-ALLOW-001\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:22Z\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=1 asserted=1\nfinished_utc=2026-10-16T23:07:22Z\nWITNESS_VERDICT=VALID\n"
+    }
+   },
+   "summary": "ALLOW -> 1 marqueur unique, octets pré-calculés, confirmé par témoin indépendant"
+  },
+  {
+   "id": "B1-X1",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "http": 422,
+    "body": {
+     "detail": [
+      {
+       "type": "extra_forbidden",
+       "loc": [
+        "body",
+        "system_eval"
+       ],
+       "msg": "Extra inputs are not permitted",
+       "input": "root"
+      }
+     ]
+    },
+    "markers_before": [
+     "marker-P-V3E.json"
+    ],
+    "markers_after": [
+     "marker-P-V3E.json"
+    ],
+    "witness": {
+     "run_id": "W-B1_x1",
+     "verdict": "VALID",
+     "exit": 0,
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-B1_x1\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:22Z\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=1 asserted=1\nfinished_utc=2026-10-16T23:07:22Z\nWITNESS_VERDICT=VALID\n"
+    }
+   },
+   "summary": "B1_x1: 4xx sans effet, témoin confirme l'absence (rc=422)"
+  },
+  {
+   "id": "B2-X2",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "http": 403,
+    "body": {
+     "detail": {
+      "code": "ACTION_FORBIDDEN",
+      "action": "admin.delete"
+     }
+    },
+    "markers_before": [
+     "marker-P-V3E.json"
+    ],
+    "markers_after": [
+     "marker-P-V3E.json"
+    ],
+    "witness": {
+     "run_id": "W-B2_x2",
+     "verdict": "VALID",
+     "exit": 0,
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-B2_x2\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:22Z\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=1 asserted=1\nfinished_utc=2026-10-16T23:07:22Z\nWITNESS_VERDICT=VALID\n"
+    }
+   },
+   "summary": "B2_x2: 4xx sans effet, témoin confirme l'absence (rc=403)"
+  },
+  {
+   "id": "B3-X3",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "http": 403,
+    "body": {
+     "detail": {
+      "code": "INVALID_SIGNATURE"
+     }
+    },
+    "markers_before": [
+     "marker-P-V3E.json"
+    ],
+    "markers_after": [
+     "marker-P-V3E.json"
+    ],
+    "witness": {
+     "run_id": "W-B3_x3",
+     "verdict": "VALID",
+     "exit": 0,
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-B3_x3\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:23Z\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=1 asserted=1\nfinished_utc=2026-10-16T23:07:23Z\nWITNESS_VERDICT=VALID\n"
+    }
+   },
+   "summary": "B3_x3: 4xx sans effet, témoin confirme l'absence (rc=403)"
+  },
+  {
+   "id": "B4-X4",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "http": 403,
+    "body": {
+     "detail": {
+      "code": "INVALID_SIGNATURE"
+     }
+    },
+    "markers_before": [
+     "marker-P-V3E.json"
+    ],
+    "markers_after": [
+     "marker-P-V3E.json"
+    ],
+    "witness": {
+     "run_id": "W-B4_x4",
+     "verdict": "VALID",
+     "exit": 0,
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-B4_x4\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:23Z\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=1 asserted=1\nfinished_utc=2026-10-16T23:07:23Z\nWITNESS_VERDICT=VALID\n"
+    }
+   },
+   "summary": "B4_x4: 4xx sans effet, témoin confirme l'absence (rc=403)"
+  },
+  {
+   "id": "B5-X6-resource",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "http": 403,
+    "body": {
+     "detail": {
+      "code": "RESOURCE_FORBIDDEN",
+      "resource": "reports/steal.txt"
+     }
+    },
+    "markers_before": [
+     "marker-P-V3E.json"
+    ],
+    "markers_after": [
+     "marker-P-V3E.json"
+    ],
+    "witness": {
+     "run_id": "W-B5_x6",
+     "verdict": "VALID",
+     "exit": 0,
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-B5_x6\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:23Z\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=1 asserted=1\nfinished_utc=2026-10-16T23:07:23Z\nWITNESS_VERDICT=VALID\n"
+    }
+   },
+   "summary": "B5_x6: 4xx sans effet, témoin confirme l'absence (rc=403)"
+  },
+  {
+   "id": "B6-X7-revoked",
+   "status": "FAIL",
+   "evidence": {
+    "http": 503,
+    "body": {
+     "detail": {
+      "code": "PEP_POLICY_INVALID:ALLOWLIST"
+     }
+    },
+    "markers_before": [
+     "marker-P-V3E.json"
+    ],
+    "markers_after": [
+     "marker-P-V3E.json"
+    ],
+    "witness": {
+     "run_id": "W-B7_x7",
+     "verdict": "VALID",
+     "exit": 0,
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-B7_x7\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:24Z\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=1 asserted=1\nfinished_utc=2026-10-16T23:07:24Z\nWITNESS_VERDICT=VALID\n"
+    }
+   },
+   "summary": "B7_x7: 4xx sans effet, témoin confirme l'absence (rc=503)"
+  },
+  {
+   "id": "C1-replay",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "http": 403,
+    "body": {
+     "detail": {
+      "code": "NONCE_REUSED"
+     }
+    },
+    "markers": [
+     "marker-P-V3E.json"
+    ],
+    "witness": {
+     "run_id": "W-C1-REPLAY",
+     "verdict": "VALID",
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-C1-REPLAY\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:25Z\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=1 asserted=1\nfinished_utc=2026-10-16T23:07:25Z\nWITNESS_VERDICT=VALID\n"
+    }
+   },
+   "summary": "rejeu du permis consommé refusé (rc=403), marqueur unique intact"
+  },
+  {
+   "id": "C2-concurrency",
+   "status": "FAIL",
+   "evidence": {
+    "http_codes": [
+     403,
+     403,
+     403,
+     403,
+     403,
+     403,
+     403,
+     403
+    ],
+    "markers_before": [
+     "marker-P-V3E.json"
+    ],
+    "markers_after": [
+     "marker-P-V3E.json"
+    ],
+    "new_markers": [],
+    "witness": {
+     "run_id": "W-C2-CONCURRENCY",
+     "verdict": "VALID",
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-C2-CONCURRENCY\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:26Z\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=1 asserted=1\nfinished_utc=2026-10-16T23:07:26Z\nWITNESS_VERDICT=VALID\n"
+    }
+   },
+   "summary": "8 clients simultanés -> exactement 1 effet (200x0), témoin confirme"
+  },
+  {
+   "id": "C3-restart",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "http": 403,
+    "body": {
+     "detail": {
+      "code": "NONCE_REUSED"
+     }
+    },
+    "markers": [
+     "marker-P-V3E.json"
+    ],
+    "witness": {
+     "run_id": "W-C3-RESTART",
+     "verdict": "VALID",
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-C3-RESTART\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:27Z\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=1 asserted=1\nfinished_utc=2026-10-16T23:07:27Z\nWITNESS_VERDICT=VALID\n"
+    }
+   },
+   "summary": "rejeu après redémarrage refusé (rc=403)"
+  },
+  {
+   "id": "D1-D3",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "D1_touch_effect": {
+     "rc": 1,
+     "stderr": "touch: cannot touch '/tmp/aegis_v3e_sandbox/effect/marker-AGENT-FORGED.json': Permission denied\n"
+    },
+    "D2_open_registry": {
+     "rc": 1,
+     "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nsqlite3.OperationalError: unable to open database file\n"
+    },
+    "D3_touch_config": {
+     "rc": 1,
+     "stderr": "touch: cannot touch '/tmp/aegis_v3e_sandbox/config/evil.json': Permission denied\n"
+    },
+    "forged_marker_absent": true
+   },
+   "summary": "UID agent : EACCES effect/config + registre illisible (rc != 0)"
+  },
+  {
+   "id": "E-C1",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "fault_point": "before_consume_commit",
+    "crash_exit": 73,
+    "observed_state": "NO_CONSUMPTION",
+    "expected_state": "NO_CONSUMPTION",
+    "marker_present": false,
+    "witness_post_crash": {
+     "run_id": "W-E-C1",
+     "verdict": "VALID",
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-E-C1\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:28Z\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=1 asserted=1\nfinished_utc=2026-10-16T23:07:28Z\nWITNESS_VERDICT=VALID\n"
+    },
+    "witness_post_retry": {
+     "run_id": "W-E-C1-POST",
+     "verdict": "VALID",
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-E-C1-POST\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:29Z\nFILE name=marker-P-V3E-C1.json sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 size=282 expect_sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 expect_size=282 verdict=OK\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=2 asserted=2\nfinished_utc=2026-10-16T23:07:29Z\nWITNESS_VERDICT=VALID\n"
+    },
+    "retry_http": 200,
+    "retry_body": {
+     "status": "AUTHORIZED",
+     "permit_consumed": true,
+     "action_attempted": true,
+     "effect_status": "MATERIALIZED_LOCAL",
+     "effect_confirmed": false,
+     "transaction": "COMMITTED",
+     "note": "MATERIALIZED_LOCAL!=WITNESS_CONFIRMED; HTTP_200!=EFFECT_PROOF"
+    },
+    "marker_count_after_retry": 1,
+    "post_crash_db": {
+     "exit_code": 0,
+     "stderr": "",
+     "rows": {
+      "consumed_permits": {
+       "columns": [
+        "nonce",
+        "permit_id",
+        "subject",
+        "action",
+        "resource",
+        "consumed_at",
+        "status",
+        "chain_digest"
+       ],
+       "rows": [
+        [
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E.json",
+         1760650000.0,
+         "EFFECT_MATERIALIZED",
+         "5fa3bd52ed64c70d2116562da93aac20ccac63d65f60f89d4cd1c36fd642603a"
+        ]
+       ]
+      },
+      "effect_journal": {
+       "columns": [
+        "nonce",
+        "permit_id",
+        "subject",
+        "action",
+        "resource",
+        "effect_mode",
+        "effect_at"
+       ],
+       "rows": [
+        [
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E.json",
+         "MATERIALIZED_LOCAL",
+         1760650000.0
+        ]
+       ]
+      },
+      "events": {
+       "columns": [
+        "event_id",
+        "ts",
+        "nonce",
+        "permit_id",
+        "event_type",
+        "detail"
+       ],
+       "rows": [
+        [
+         1,
+         1760650000.0,
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "PERMIT_CONSUMED",
+         "status=PENDING"
+        ],
+        [
+         2,
+         1760650000.0,
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "ACTION_ATTEMPTED",
+         "marker.create:effect/marker-P-V3E.json"
+        ],
+        [
+         3,
+         1760650000.0,
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "EFFECT_MATERIALIZED",
+         "effect_mode=MATERIALIZED_LOCAL"
+        ]
+       ]
+      },
+      "sqlite_sequence": {
+       "columns": [
+        "name",
+        "seq"
+       ],
+       "rows": [
+        [
+         "events",
+         3
+        ]
+       ]
+      }
+     }
+    }
+   },
+   "summary": "crash @before_consume_commit exit 73 -> état NO_CONSUMPTION (attendu NO_CONSUMPTION) ; réessai rc=200"
+  },
+  {
+   "id": "E-C2",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "fault_point": "after_consume_commit",
+    "crash_exit": 73,
+    "observed_state": "CONSUMED_NO_ATTEMPT",
+    "expected_state": "CONSUMED_NO_ATTEMPT",
+    "marker_present": false,
+    "witness_post_crash": {
+     "run_id": "W-E-C2",
+     "verdict": "VALID",
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-E-C2\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:30Z\nFILE name=marker-P-V3E-C1.json sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 size=282 expect_sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 expect_size=282 verdict=OK\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=2 asserted=2\nfinished_utc=2026-10-16T23:07:30Z\nWITNESS_VERDICT=VALID\n"
+    },
+    "witness_post_retry": {
+     "run_id": "W-E-C2-POST",
+     "verdict": "VALID",
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-E-C2-POST\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:30Z\nFILE name=marker-P-V3E-C1.json sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 size=282 expect_sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 expect_size=282 verdict=OK\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=2 asserted=2\nfinished_utc=2026-10-16T23:07:30Z\nWITNESS_VERDICT=VALID\n"
+    },
+    "retry_http": 403,
+    "retry_body": {
+     "detail": {
+      "code": "NONCE_REUSED"
+     }
+    },
+    "marker_count_after_retry": 0,
+    "post_crash_db": {
+     "exit_code": 0,
+     "stderr": "",
+     "rows": {
+      "consumed_permits": {
+       "columns": [
+        "nonce",
+        "permit_id",
+        "subject",
+        "action",
+        "resource",
+        "consumed_at",
+        "status",
+        "chain_digest"
+       ],
+       "rows": [
+        [
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E.json",
+         1760650000.0,
+         "EFFECT_MATERIALIZED",
+         "5fa3bd52ed64c70d2116562da93aac20ccac63d65f60f89d4cd1c36fd642603a"
+        ],
+        [
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E-C1.json",
+         1760650000.0,
+         "EFFECT_MATERIALIZED",
+         "531ff427d22574f75282521034b3df5971d24790a3f4e73ddebabb5c29e270d4"
+        ],
+        [
+         "nonce-v3e-c2",
+         "P-V3E-C2",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E-C2.json",
+         1760650000.0,
+         "PENDING",
+         "ad6d0eb29dbb3b8be736b5b1792eec2340f0f29ebd81e7c8ae42bf8ae9b34adf"
+        ]
+       ]
+      },
+      "effect_journal": {
+       "columns": [
+        "nonce",
+        "permit_id",
+        "subject",
+        "action",
+        "resource",
+        "effect_mode",
+        "effect_at"
+       ],
+       "rows": [
+        [
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E.json",
+         "MATERIALIZED_LOCAL",
+         1760650000.0
+        ],
+        [
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E-C1.json",
+         "MATERIALIZED_LOCAL",
+         1760650000.0
+        ]
+       ]
+      },
+      "events": {
+       "columns": [
+        "event_id",
+        "ts",
+        "nonce",
+        "permit_id",
+        "event_type",
+        "detail"
+       ],
+       "rows": [
+        [
+         1,
+         1760650000.0,
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "PERMIT_CONSUMED",
+         "status=PENDING"
+        ],
+        [
+         2,
+         1760650000.0,
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "ACTION_ATTEMPTED",
+         "marker.create:effect/marker-P-V3E.json"
+        ],
+        [
+         3,
+         1760650000.0,
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "EFFECT_MATERIALIZED",
+         "effect_mode=MATERIALIZED_LOCAL"
+        ],
+        [
+         4,
+         1760650000.0,
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "PERMIT_CONSUMED",
+         "status=PENDING"
+        ],
+        [
+         5,
+         1760650000.0,
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "ACTION_ATTEMPTED",
+         "marker.create:effect/marker-P-V3E-C1.json"
+        ],
+        [
+         6,
+         1760650000.0,
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "EFFECT_MATERIALIZED",
+         "effect_mode=MATERIALIZED_LOCAL"
+        ],
+        [
+         7,
+         1760650000.0,
+         "nonce-v3e-c2",
+         "P-V3E-C2",
+         "PERMIT_CONSUMED",
+         "status=PENDING"
+        ]
+       ]
+      },
+      "sqlite_sequence": {
+       "columns": [
+        "name",
+        "seq"
+       ],
+       "rows": [
+        [
+         "events",
+         7
+        ]
+       ]
+      }
+     }
+    }
+   },
+   "summary": "crash @after_consume_commit exit 73 -> état CONSUMED_NO_ATTEMPT (attendu CONSUMED_NO_ATTEMPT) ; réessai rc=403"
+  },
+  {
+   "id": "E-C3",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "fault_point": "after_attempt",
+    "crash_exit": 73,
+    "observed_state": "ATTEMPTED_NO_EFFECT",
+    "expected_state": "ATTEMPTED_NO_EFFECT",
+    "marker_present": false,
+    "witness_post_crash": {
+     "run_id": "W-E-C3",
+     "verdict": "VALID",
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-E-C3\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:31Z\nFILE name=marker-P-V3E-C1.json sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 size=282 expect_sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 expect_size=282 verdict=OK\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=2 asserted=2\nfinished_utc=2026-10-16T23:07:31Z\nWITNESS_VERDICT=VALID\n"
+    },
+    "witness_post_retry": {
+     "run_id": "W-E-C3-POST",
+     "verdict": "VALID",
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-E-C3-POST\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:32Z\nFILE name=marker-P-V3E-C1.json sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 size=282 expect_sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 expect_size=282 verdict=OK\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=2 asserted=2\nfinished_utc=2026-10-16T23:07:32Z\nWITNESS_VERDICT=VALID\n"
+    },
+    "retry_http": 403,
+    "retry_body": {
+     "detail": {
+      "code": "NONCE_REUSED"
+     }
+    },
+    "marker_count_after_retry": 0,
+    "post_crash_db": {
+     "exit_code": 0,
+     "stderr": "",
+     "rows": {
+      "consumed_permits": {
+       "columns": [
+        "nonce",
+        "permit_id",
+        "subject",
+        "action",
+        "resource",
+        "consumed_at",
+        "status",
+        "chain_digest"
+       ],
+       "rows": [
+        [
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E.json",
+         1760650000.0,
+         "EFFECT_MATERIALIZED",
+         "5fa3bd52ed64c70d2116562da93aac20ccac63d65f60f89d4cd1c36fd642603a"
+        ],
+        [
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E-C1.json",
+         1760650000.0,
+         "EFFECT_MATERIALIZED",
+         "531ff427d22574f75282521034b3df5971d24790a3f4e73ddebabb5c29e270d4"
+        ],
+        [
+         "nonce-v3e-c2",
+         "P-V3E-C2",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E-C2.json",
+         1760650000.0,
+         "PENDING",
+         "ad6d0eb29dbb3b8be736b5b1792eec2340f0f29ebd81e7c8ae42bf8ae9b34adf"
+        ],
+        [
+         "nonce-v3e-c3",
+         "P-V3E-C3",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E-C3.json",
+         1760650000.0,
+         "PENDING",
+         "07387b91f859dbb7e43beecca492275fcc38f4f4ce7a22f5a4e2f09e26082c0a"
+        ]
+       ]
+      },
+      "effect_journal": {
+       "columns": [
+        "nonce",
+        "permit_id",
+        "subject",
+        "action",
+        "resource",
+        "effect_mode",
+        "effect_at"
+       ],
+       "rows": [
+        [
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E.json",
+         "MATERIALIZED_LOCAL",
+         1760650000.0
+        ],
+        [
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E-C1.json",
+         "MATERIALIZED_LOCAL",
+         1760650000.0
+        ]
+       ]
+      },
+      "events": {
+       "columns": [
+        "event_id",
+        "ts",
+        "nonce",
+        "permit_id",
+        "event_type",
+        "detail"
+       ],
+       "rows": [
+        [
+         1,
+         1760650000.0,
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "PERMIT_CONSUMED",
+         "status=PENDING"
+        ],
+        [
+         2,
+         1760650000.0,
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "ACTION_ATTEMPTED",
+         "marker.create:effect/marker-P-V3E.json"
+        ],
+        [
+         3,
+         1760650000.0,
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "EFFECT_MATERIALIZED",
+         "effect_mode=MATERIALIZED_LOCAL"
+        ],
+        [
+         4,
+         1760650000.0,
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "PERMIT_CONSUMED",
+         "status=PENDING"
+        ],
+        [
+         5,
+         1760650000.0,
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "ACTION_ATTEMPTED",
+         "marker.create:effect/marker-P-V3E-C1.json"
+        ],
+        [
+         6,
+         1760650000.0,
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "EFFECT_MATERIALIZED",
+         "effect_mode=MATERIALIZED_LOCAL"
+        ],
+        [
+         7,
+         1760650000.0,
+         "nonce-v3e-c2",
+         "P-V3E-C2",
+         "PERMIT_CONSUMED",
+         "status=PENDING"
+        ],
+        [
+         8,
+         1760650000.0,
+         "nonce-v3e-c3",
+         "P-V3E-C3",
+         "PERMIT_CONSUMED",
+         "status=PENDING"
+        ],
+        [
+         9,
+         1760650000.0,
+         "nonce-v3e-c3",
+         "P-V3E-C3",
+         "ACTION_ATTEMPTED",
+         "marker.create:effect/marker-P-V3E-C3.json"
+        ]
+       ]
+      },
+      "sqlite_sequence": {
+       "columns": [
+        "name",
+        "seq"
+       ],
+       "rows": [
+        [
+         "events",
+         9
+        ]
+       ]
+      }
+     }
+    }
+   },
+   "summary": "crash @after_attempt exit 73 -> état ATTEMPTED_NO_EFFECT (attendu ATTEMPTED_NO_EFFECT) ; réessai rc=403"
+  },
+  {
+   "id": "E-C4",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "fault_point": "after_effect",
+    "crash_exit": 73,
+    "observed_state": "EFFECT_PRESENT_DB_INCOMPLETE",
+    "expected_state": "EFFECT_PRESENT_DB_INCOMPLETE",
+    "marker_present": true,
+    "witness_post_crash": {
+     "run_id": "W-E-C4",
+     "verdict": "VALID",
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-E-C4\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:33Z\nFILE name=marker-P-V3E-C1.json sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 size=282 expect_sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 expect_size=282 verdict=OK\nFILE name=marker-P-V3E-C4.json sha256=060d7cd482328a77203dd6fddcc9e250aed2021f8cb79d6dfc687fd79ff45440 size=282 expect_sha256=060d7cd482328a77203dd6fddcc9e250aed2021f8cb79d6dfc687fd79ff45440 expect_size=282 verdict=OK\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=3 asserted=3\nfinished_utc=2026-10-16T23:07:33Z\nWITNESS_VERDICT=VALID\n"
+    },
+    "witness_post_retry": {
+     "run_id": "W-E-C4-POST",
+     "verdict": "VALID",
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-E-C4-POST\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:07:34Z\nFILE name=marker-P-V3E-C1.json sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 size=282 expect_sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 expect_size=282 verdict=OK\nFILE name=marker-P-V3E-C4.json sha256=060d7cd482328a77203dd6fddcc9e250aed2021f8cb79d6dfc687fd79ff45440 size=282 expect_sha256=060d7cd482328a77203dd6fddcc9e250aed2021f8cb79d6dfc687fd79ff45440 expect_size=282 verdict=OK\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=3 asserted=3\nfinished_utc=2026-10-16T23:07:34Z\nWITNESS_VERDICT=VALID\n"
+    },
+    "retry_http": 403,
+    "retry_body": {
+     "detail": {
+      "code": "NONCE_REUSED"
+     }
+    },
+    "marker_count_after_retry": 1,
+    "post_crash_db": {
+     "exit_code": 0,
+     "stderr": "",
+     "rows": {
+      "consumed_permits": {
+       "columns": [
+        "nonce",
+        "permit_id",
+        "subject",
+        "action",
+        "resource",
+        "consumed_at",
+        "status",
+        "chain_digest"
+       ],
+       "rows": [
+        [
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E.json",
+         1760650000.0,
+         "EFFECT_MATERIALIZED",
+         "5fa3bd52ed64c70d2116562da93aac20ccac63d65f60f89d4cd1c36fd642603a"
+        ],
+        [
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E-C1.json",
+         1760650000.0,
+         "EFFECT_MATERIALIZED",
+         "531ff427d22574f75282521034b3df5971d24790a3f4e73ddebabb5c29e270d4"
+        ],
+        [
+         "nonce-v3e-c2",
+         "P-V3E-C2",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E-C2.json",
+         1760650000.0,
+         "PENDING",
+         "ad6d0eb29dbb3b8be736b5b1792eec2340f0f29ebd81e7c8ae42bf8ae9b34adf"
+        ],
+        [
+         "nonce-v3e-c3",
+         "P-V3E-C3",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E-C3.json",
+         1760650000.0,
+         "PENDING",
+         "07387b91f859dbb7e43beecca492275fcc38f4f4ce7a22f5a4e2f09e26082c0a"
+        ],
+        [
+         "nonce-v3e-c4",
+         "P-V3E-C4",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E-C4.json",
+         1760650000.0,
+         "PENDING",
+         "3b8d68df39f84548efe4b98f7e7f1ac018221d5cd9eb30b84b9b9c4810f96354"
+        ]
+       ]
+      },
+      "effect_journal": {
+       "columns": [
+        "nonce",
+        "permit_id",
+        "subject",
+        "action",
+        "resource",
+        "effect_mode",
+        "effect_at"
+       ],
+       "rows": [
+        [
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E.json",
+         "MATERIALIZED_LOCAL",
+         1760650000.0
+        ],
+        [
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "agent-alpha",
+         "marker.create",
+         "effect/marker-P-V3E-C1.json",
+         "MATERIALIZED_LOCAL",
+         1760650000.0
+        ]
+       ]
+      },
+      "events": {
+       "columns": [
+        "event_id",
+        "ts",
+        "nonce",
+        "permit_id",
+        "event_type",
+        "detail"
+       ],
+       "rows": [
+        [
+         1,
+         1760650000.0,
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "PERMIT_CONSUMED",
+         "status=PENDING"
+        ],
+        [
+         2,
+         1760650000.0,
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "ACTION_ATTEMPTED",
+         "marker.create:effect/marker-P-V3E.json"
+        ],
+        [
+         3,
+         1760650000.0,
+         "nonce-v3e-allow-001",
+         "P-V3E",
+         "EFFECT_MATERIALIZED",
+         "effect_mode=MATERIALIZED_LOCAL"
+        ],
+        [
+         4,
+         1760650000.0,
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "PERMIT_CONSUMED",
+         "status=PENDING"
+        ],
+        [
+         5,
+         1760650000.0,
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "ACTION_ATTEMPTED",
+         "marker.create:effect/marker-P-V3E-C1.json"
+        ],
+        [
+         6,
+         1760650000.0,
+         "nonce-v3e-c1",
+         "P-V3E-C1",
+         "EFFECT_MATERIALIZED",
+         "effect_mode=MATERIALIZED_LOCAL"
+        ],
+        [
+         7,
+         1760650000.0,
+         "nonce-v3e-c2",
+         "P-V3E-C2",
+         "PERMIT_CONSUMED",
+         "status=PENDING"
+        ],
+        [
+         8,
+         1760650000.0,
+         "nonce-v3e-c3",
+         "P-V3E-C3",
+         "PERMIT_CONSUMED",
+         "status=PENDING"
+        ],
+        [
+         9,
+         1760650000.0,
+         "nonce-v3e-c3",
+         "P-V3E-C3",
+         "ACTION_ATTEMPTED",
+         "marker.create:effect/marker-P-V3E-C3.json"
+        ],
+        [
+         10,
+         1760650000.0,
+         "nonce-v3e-c4",
+         "P-V3E-C4",
+         "PERMIT_CONSUMED",
+         "status=PENDING"
+        ],
+        [
+         11,
+         1760650000.0,
+         "nonce-v3e-c4",
+         "P-V3E-C4",
+         "ACTION_ATTEMPTED",
+         "marker.create:effect/marker-P-V3E-C4.json"
+        ]
+       ]
+      },
+      "sqlite_sequence": {
+       "columns": [
+        "name",
+        "seq"
+       ],
+       "rows": [
+        [
+         "events",
+         11
+        ]
+       ]
+      }
+     }
+    }
+   },
+   "summary": "crash @after_effect exit 73 -> état EFFECT_PRESENT_DB_INCOMPLETE (attendu EFFECT_PRESENT_DB_INCOMPLETE) ; réessai rc=403"
+  },
+  {
+   "id": "V1-tamper",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "attack": "1 octet altéré dans une copie du marqueur",
+    "expected": "witness INVALID (exit 1)",
+    "observed": {
+     "verdict": "INVALID",
+     "exit": 1,
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-V1-TAMPERED\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/attacks/v1_tamper/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_v1.tsv\nstarted_utc=2026-10-16T23:07:34Z\nFILE name=marker-P-V3E.json sha256=5f2ccfb0ff8bb7cf5ab579df4cfd66daa8f8b51fafa4bdd8ae23c49cbb10f204 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=MISMATCH\nscanned=1 asserted=1\nfinished_utc=2026-10-16T23:07:34Z\nWITNESS_VERDICT=INVALID\n"
+    },
+    "result": "REFUSED_AS_REQUIRED"
+   },
+   "summary": "altération d'octet -> témoin refuse"
+  },
+  {
+   "id": "V4-rebuild",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "attack": "registre reconstruit (DELETE) + ancien permis signé rejoué",
+    "expected": "aucun second effet (plancher O_EXCL / refusal) ; comparé aux ancres (reçus)",
+    "observed": {
+     "http": 502,
+     "body": {
+      "detail": {
+       "code": "EFFECT_UNCONFIRMED"
+      }
+     },
+     "markers_before": [
+      "marker-P-V3E-C1.json",
+      "marker-P-V3E-C4.json",
+      "marker-P-V3E.json"
+     ],
+     "markers_after": [
+      "marker-P-V3E-C1.json",
+      "marker-P-V3E-C4.json",
+      "marker-P-V3E.json"
+     ]
+    },
+    "result": "NO_SECOND_EFFECT"
+   },
+   "summary": "registre reconstruit + rejeu permis -> rc=502, aucun second effet=True"
+  },
+  {
+   "id": "V5-unavailable",
+   "status": "PASS_LOCAL",
+   "evidence": {
+    "attack": "témoin lancé sans répertoire d'effet (indisponible)",
+    "expected": "UNAVAILABLE -> UNKNOWN/HOLD, jamais CONFIRMED",
+    "observed": {
+     "verdict": "UNAVAILABLE",
+     "exit": 3,
+     "raw": "WITNESS_REPORT v3e/1\nrun_id=W-V5-UNAVAILABLE\nWITNESS_VERDICT=UNAVAILABLE\nreason=effect_dir_missing\n"
+    },
+    "result": "UNKNOWN_HOLD_AS_REQUIRED"
+   },
+   "summary": "témoin indisponible -> UNAVAILABLE/HOLD"
+  }
+ ]
+}

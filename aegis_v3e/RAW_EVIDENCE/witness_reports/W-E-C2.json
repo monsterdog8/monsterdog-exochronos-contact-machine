@@ -1,0 +1,8 @@
+{
+ "run_id": "W-E-C2",
+ "tag": "w",
+ "exit_code": 0,
+ "raw_stdout": "WITNESS_REPORT v3e/1\nrun_id=W-E-C2\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:13:36Z\nFILE name=marker-P-V3E-C1.json sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 size=282 expect_sha256=75811ecc4a9d91705b957077922175f4cf51515418a8e637a6036e39bb425268 expect_size=282 verdict=OK\nFILE name=marker-P-V3E-C12.json sha256=65dba40f9ebcdc991686a37b0fff5fd098be96cbe7fb2a641f535c450f7a4afe size=289 expect_sha256=65dba40f9ebcdc991686a37b0fff5fd098be96cbe7fb2a641f535c450f7a4afe expect_size=289 verdict=OK\nFILE name=marker-P-V3E.json sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=OK\nscanned=3 asserted=3\nfinished_utc=2026-10-16T23:13:36Z\nWITNESS_VERDICT=VALID\n",
+ "raw_stderr": "",
+ "verdict": "VALID"
+}

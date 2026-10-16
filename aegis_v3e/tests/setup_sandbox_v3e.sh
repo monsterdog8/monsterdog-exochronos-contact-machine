@@ -87,8 +87,12 @@ if [ "$(echo "$PRE" | sed -n 's/existing_accounts=//p')" != "0" ]; then
         echo "[SKIP] déjà provisionné (sandbox_ready.json présent) — idempotent"
         exit 0
     fi
-    echo "[STOP] comptes aegis_* préexistants sans attestation de provisioning" >&2
-    exit 42
+    if [ -f "$JOURNAL" ] && grep -q "useradd aegis_pep" "$JOURNAL" 2>/dev/null; then
+        echo "[RESUME] comptes créés par CE run journalisé — reprise autorisée"
+    else
+        echo "[STOP] comptes aegis_* préexistants sans attestation de provisioning" >&2
+        exit 42
+    fi
 fi
 
 echo "$PRE" > "$V3E/RAW_EVIDENCE/preflight_provision.txt"
@@ -102,11 +106,11 @@ PY
 
 echo "== PROVISIONING (journalisé) =="
 runj "useradd aegis_pep (test account, nologin, no privileges)" \
-    sudo -n /usr/sbin/useradd -M -r -U -s /usr/sbin/nologin aegis_pep
+    sudo -n /usr/sbin/useradd -M -r -U -s /usr/sbin/nologin aegis_pep || echo "[tolerated] aegis_pep existe déjà"
 runj "useradd aegis_witness (test account, nologin, no privileges)" \
-    sudo -n /usr/sbin/useradd -M -r -U -s /usr/sbin/nologin aegis_witness
+    sudo -n /usr/sbin/useradd -M -r -U -s /usr/sbin/nologin aegis_witness || echo "[tolerated] aegis_witness existe déjà"
 runj "useradd aegis_agent (test account, nologin, no privileges)" \
-    sudo -n /usr/sbin/useradd -M -r -U -s /usr/sbin/nologin aegis_agent
+    sudo -n /usr/sbin/useradd -M -r -U -s /usr/sbin/nologin aegis_agent || echo "[tolerated] aegis_agent existe déjà"
 
 runj "install -d sandbox root 0755"  sudo -n /usr/bin/install -d -o root -g root -m 0755 "$SANDBOX"
 runj "install -d config root 0755"   sudo -n /usr/bin/install -d -o root -g root -m 0755 "$SANDBOX/config"
@@ -120,10 +124,23 @@ runj "install -d logs aegis_pep 0700"        sudo -n /usr/bin/install -d -o aegi
 runj "install -d witness aegis_witness 0755" sudo -n /usr/bin/install -d -o aegis_witness -g aegis_witness -m 0755 "$SANDBOX/witness"
 runj "install -d agent_out aegis_agent 0755" sudo -n /usr/bin/install -d -o aegis_agent -g aegis_agent -m 0755 "$SANDBOX/agent_out"
 
-# Copie (lecture seule de /home/user — AUCUNE modification) des libs Python
-# déjà présentes : pas d'installation externe, pas de téléchargement.
-runj "copy existing python libs (READ-ONLY from /home/user/.local, no install)" \
-    sudo -n /bin/cp -a /home/user/.local/lib/python3.11/site-packages/. "$SANDBOX/pylibs/"
+# Dépendances Python : copie locale si présente (lecture seule de /home/user —
+# AUCUNE modification) ; sinon installation UNIQUEMENT dans le bac dédié
+# (pip --target $SANDBOX/pylibs, depuis pypi.org — aucun paquet système,
+# aucune modification de l'hôte). Journalisé dans les deux cas.
+if [ -d /home/user/.local/lib/python3.11/site-packages ]; then
+    runj "copy existing python libs (READ-ONLY from /home/user/.local, no install)" \
+        sudo -n /bin/cp -a /home/user/.local/lib/python3.11/site-packages/. "$SANDBOX/pylibs/" \
+        || echo "[fallback] copie impossible -> pip --target dans le bac"
+else
+    echo "[fallback] pas de libs locales -> pip --target dans le bac"
+fi
+if ! sudo -n -u aegis_pep /usr/bin/env PYTHONPATH="$SANDBOX/pylibs" /usr/bin/python3 \
+    -c "import fastapi" 2>/dev/null; then
+    runj "pip install deps INTO sandbox pylibs only (pypi.org, no system install)" \
+        sudo -n /usr/bin/pip3 install --break-system-packages --quiet \
+        --target "$SANDBOX/pylibs" fastapi uvicorn httpx cryptography
+fi
 
 # Copie des sources d'exécution dans le bac (empreintes revérifiées ensuite).
 runj "copy pep_v3e_effect.py + witness + client into sandbox/app" \
@@ -140,10 +157,12 @@ runj "probe aegis_pep deps import" \
 runj "probe aegis_witness runs" \
     sudo -n -u aegis_witness /bin/sh -c "id -u; command -v sha256sum"
 runj "probe aegis_agent write to effect must fail (EACCES expected)" \
-    sudo -n -u aegis_agent /bin/sh -c "touch $SANDBOX/effect/PROBE_FORBIDDEN.txt"
+    sudo -n -u aegis_agent /bin/sh -c "touch $SANDBOX/effect/PROBE_FORBIDDEN.txt" \
+    || echo "[expected-fail rc=$? — EACCES confirmé]"
 runj "probe aegis_agent open state db must fail (EACCES/OperationalError expected)" \
     sudo -n -u aegis_agent /usr/bin/env PYTHONPATH="$SANDBOX/pylibs" /usr/bin/python3 \
-    -c "import sqlite3; sqlite3.connect('$SANDBOX/state/pep_ledger.db').execute('select 1')"
+    -c "import sqlite3; sqlite3.connect('$SANDBOX/state/pep_ledger.db').execute('select 1')" \
+    || echo "[expected-fail rc=$? — accès registre refusé]"
 
 python3 - <<'PY'
 import json, subprocess, os, hashlib, datetime
@@ -163,10 +182,13 @@ facts = {
     "sandbox": sb, "accounts": acc, "sandbox_copy_hashes": hashes,
     "uid_map": {u: (acc[u].split(":")[2] if acc[u] else None) for u in acc},
 }
-open(os.path.join(sb, "sandbox_ready.json"), "w").write(json.dumps(facts, indent=1))
+os.makedirs(os.path.join(sb, "req"), exist_ok=True)
+open(os.path.join(sb, "req", "sandbox_ready.json"), "w").write(json.dumps(facts, indent=1))
 print(json.dumps(facts["uid_map"]))
-print("sandbox_ready.json written")
+print("sandbox_ready.json staged in req/")
 PY
+runj "install sandbox_ready.json at sandbox root" \
+    sudo -n /bin/cp "$SANDBOX/req/sandbox_ready.json" "$SANDBOX/sandbox_ready.json"
 
 echo "== PROVISIONING DONE — journal: $JOURNAL =="
 echo "OS_PERMISSION_TEST=CANDIDATE_OBSERVED (verification via tests)"

@@ -272,12 +272,14 @@ def main() -> int:
                           **permit_args)
     negative("B5-X6-resource", {"original_request": req_x5, "permit": p_x5}, "B5_x6", True)
 
-    # X7 — révocation : politique sans agent-alpha
+    # X7 — révocation : politique sans agent-alpha (allowlist NON vide — une
+    # allowlist vide est rejetée par le PEP à la lecture : 503 PEP_POLICY_INVALID,
+    # fail-closed observé en run2 ; la fixture affine le refus par sujet 4xx)
     pol_orig = pol.read_bytes()
     pol_obj = json.loads(pol_orig)
     pol_revoked = dict(pol_obj)
     pol_revoked["allowlist"] = [
-        r for r in pol_obj["allowlist"] if r.get("subject") != "agent-alpha"
+        {"subject": "agent-beta", "action": "report.read", "resource": "reports/*"}
     ]
     stage = Path("/tmp/aegis_v3e_stage")
     stage.mkdir(exist_ok=True)
@@ -317,8 +319,8 @@ def main() -> int:
     conc_out: List[Dict[str, Any]] = []
     lock = threading.Lock()
 
-    def one_post(i: int) -> None:
-        o = H.agent_post(H.server_base, envelope, f"C2_conc_{i}")
+    def one_post(i: int, payload: Dict[str, Any]) -> None:
+        o = H.agent_post(H.server_base, payload, f"C2_conc_{i}")
         with lock:
             conc_out.append(o)
 
@@ -327,7 +329,7 @@ def main() -> int:
                           orig_request=req_c2, **permit_args)
     env_c2 = {"original_request": req_c2, "permit": p_c2}
     before = marker_names()
-    threads = [threading.Thread(target=one_post, args=(i,)) for i in range(8)]
+    threads = [threading.Thread(target=one_post, args=(i, env_c2)) for i in range(8)]
     [t.start() for t in threads]
     [t.join() for t in threads]
     after = marker_names()
@@ -407,7 +409,7 @@ def main() -> int:
                                             "AEGIS_FAULT_EXIT_CODE": "73"})
         s_f.start()
         H.server_base = s_f.base_url
-        out_crash = H.agent_post(env_c, f"E_{cid}_crash")
+        out_crash = agent_post(env_c, f"E_{cid}_crash")
         time.sleep(0.3)
         crash_exit = s_f.proc.poll() if s_f.proc else None
         s_f.stop()
@@ -417,12 +419,13 @@ def main() -> int:
         # état composite déduit des faits observés (registre + marqueur) :
         # marqueur présent -> effet réel mais DB incomplète (C4)
         rows = (snap.get("rows") or {})
+        # correspondance EXACTE par colonne (P-V3E-C1 ne doit pas matcher P-V3E-C12)
         consumed = any(
-            fx["permit_id"] in json.dumps(r)
+            len(r) > 1 and r[1] == fx["permit_id"]
             for r in (rows.get("consumed_permits", {}) or {}).get("rows", [])
         )
         attempted = any(
-            fx["permit_id"] in json.dumps(r) and "ATTEMPT" in json.dumps(r).upper()
+            len(r) > 4 and r[3] == fx["permit_id"] and "ATTEMPT" in str(r[4]).upper()
             for r in (rows.get("events", {}) or {}).get("rows", [])
         )
         if marker_present:

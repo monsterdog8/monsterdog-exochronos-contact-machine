@@ -1,0 +1,66 @@
+[
+ {
+  "status_code": 403,
+  "body": {
+   "detail": {
+    "code": "NONCE_REUSED"
+   }
+  }
+ },
+ {
+  "status_code": 403,
+  "body": {
+   "detail": {
+    "code": "NONCE_REUSED"
+   }
+  }
+ },
+ {
+  "status_code": 403,
+  "body": {
+   "detail": {
+    "code": "NONCE_REUSED"
+   }
+  }
+ },
+ {
+  "status_code": 403,
+  "body": {
+   "detail": {
+    "code": "NONCE_REUSED"
+   }
+  }
+ },
+ {
+  "status_code": 403,
+  "body": {
+   "detail": {
+    "code": "NONCE_REUSED"
+   }
+  }
+ },
+ {
+  "status_code": 403,
+  "body": {
+   "detail": {
+    "code": "NONCE_REUSED"
+   }
+  }
+ },
+ {
+  "status_code": 403,
+  "body": {
+   "detail": {
+    "code": "NONCE_REUSED"
+   }
+  }
+ },
+ {
+  "status_code": 403,
+  "body": {
+   "detail": {
+    "code": "NONCE_REUSED"
+   }
+  }
+ }
+]

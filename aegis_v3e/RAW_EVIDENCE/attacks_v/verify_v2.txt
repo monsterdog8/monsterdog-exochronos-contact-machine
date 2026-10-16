@@ -1,0 +1,7 @@
+check=FREEZE_ANCHOR ok sha256=5a4aee5c06df8981bdbe537a7466655758b93d6b3fbf1ff648c107518e9dd8d7
+check=RECEIPT_CHAIN ok entries=22 head=872afb6fb45289fc...
+check=RAW_MARKER_BYTES ok count=5
+problem: witness report W-A1-ALLOW-001.json: source hash mismatch
+problem: report W-A1-ALLOW-001.json: claimed {'name': 'marker-P-V3E.json', 'sha256': '0000000000000000000000000000000000000000000000000000000000000000', 'size': '283', 'expect_sha256': '0000000000000000000000000000000000000000000000000000000000000000', 'expect_size': '283', 'verdict': 'OK'} but RAW bytes give e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43/283
+VERIFY_VERDICT=REFUSED
+reason=bundle verification refused

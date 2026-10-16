@@ -1,0 +1,9 @@
+date_utc=2026-10-16T23:04:43Z
+uid=1001 gid=1001
+hostname=e2b.local
+kernel=6.1.158+
+rootfs=/dev/vda
+existing_accounts=3
+sandbox_exists=1
+tmp_writable=1
+home_mode=700

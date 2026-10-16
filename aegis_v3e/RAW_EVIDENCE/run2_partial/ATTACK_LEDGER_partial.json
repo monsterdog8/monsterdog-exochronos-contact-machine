@@ -1,0 +1,57 @@
+{
+ "V1": {
+  "attack": "1 octet altéré dans une copie du marqueur",
+  "expected": "witness INVALID (exit 1)",
+  "observed": {
+   "verdict": "INVALID",
+   "exit": 1,
+   "raw": "WITNESS_REPORT v3e/1\nrun_id=W-V1-TAMPERED\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/attacks/v1_tamper/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_v1.tsv\nstarted_utc=2026-10-16T23:07:34Z\nFILE name=marker-P-V3E.json sha256=5f2ccfb0ff8bb7cf5ab579df4cfd66daa8f8b51fafa4bdd8ae23c49cbb10f204 size=283 expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283 verdict=MISMATCH\nscanned=1 asserted=1\nfinished_utc=2026-10-16T23:07:34Z\nWITNESS_VERDICT=INVALID\n"
+  },
+  "result": "REFUSED_AS_REQUIRED"
+ },
+ "V2": {
+  "attack": "rapport de témoin substitué (faux VALID)",
+  "expected": "verify_bundle REFUSED (recalcul depuis octets RAW)",
+  "observed": "see verify_v2.json (executed at verification stage)",
+  "result": "PENDING_VERIFY"
+ },
+ "V3": {
+  "attack": "EXPERIMENT_FREEZE.json remplacé (rollback manifeste)",
+  "expected": "verify_bundle REFUSED (empreinte != ancre git)",
+  "observed": "see verify_v3.json",
+  "result": "PENDING_VERIFY"
+ },
+ "V4": {
+  "attack": "registre reconstruit (DELETE) + ancien permis signé rejoué",
+  "expected": "aucun second effet (plancher O_EXCL / refusal) ; comparé aux ancres (reçus)",
+  "observed": {
+   "http": 502,
+   "body": {
+    "detail": {
+     "code": "EFFECT_UNCONFIRMED"
+    }
+   },
+   "markers_before": [
+    "marker-P-V3E-C1.json",
+    "marker-P-V3E-C4.json",
+    "marker-P-V3E.json"
+   ],
+   "markers_after": [
+    "marker-P-V3E-C1.json",
+    "marker-P-V3E-C4.json",
+    "marker-P-V3E.json"
+   ]
+  },
+  "result": "NO_SECOND_EFFECT"
+ },
+ "V5": {
+  "attack": "témoin lancé sans répertoire d'effet (indisponible)",
+  "expected": "UNAVAILABLE -> UNKNOWN/HOLD, jamais CONFIRMED",
+  "observed": {
+   "verdict": "UNAVAILABLE",
+   "exit": 3,
+   "raw": "WITNESS_REPORT v3e/1\nrun_id=W-V5-UNAVAILABLE\nWITNESS_VERDICT=UNAVAILABLE\nreason=effect_dir_missing\n"
+  },
+  "result": "UNKNOWN_HOLD_AS_REQUIRED"
+ }
+}

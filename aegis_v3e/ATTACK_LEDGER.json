@@ -1,0 +1,57 @@
+{
+  "mission": "AEGIS_V3E_INDEPENDENT_WITNESS_ATTESTATION_005",
+  "schema": "aegis-attack-ledger/1",
+  "principle": "CLAIM <= EVIDENCE — un seul reçu d'effet vérifiable sans me croire",
+  "attestation_negative_controls": {
+    "V1": {
+      "attack": "altération d'un octet d'une copie du marqueur (XOR 0x01 au milieu)",
+      "expected": "le témoin indépendant refuse (INVALID, exit 1)",
+      "observed": "WITNESS_VERDICT=INVALID, exit 1, ligne MISMATCH avec sha256 observé vs attendu",
+      "evidence": "RAW_EVIDENCE/witness_reports/W-V1-TAMPERED.json",
+      "result": "REFUSED_AS_REQUIRED"
+    },
+    "V2": {
+      "attack": "substitution complète du rapport du témoin par un faux VALID (hash 0000…, euid 0)",
+      "expected": "le vérificateur externe refuse (recalcul depuis les octets RAW)",
+      "observed": "VERIFY_VERDICT=REFUSED exit 1 : claimed 0000… but RAW bytes give e123024a…/283",
+      "evidence": "RAW_EVIDENCE/attacks_v/verify_v2.txt",
+      "result": "REFUSED_AS_REQUIRED"
+    },
+    "V3": {
+      "attack": "remplacement du manifeste gelé (rollback de tête de chaîne / horodatage)",
+      "expected": "refus par l'ancre indépendante (hash != ancre git pré-réservée)",
+      "observed": "VERIFY_VERDICT=REFUSED exit 1 : freeze hash 2fee5f85… != anchor 5a4aee5c…",
+      "evidence": "RAW_EVIDENCE/attacks_v/verify_v3.txt",
+      "result": "REFUSED_AS_REQUIRED"
+    },
+    "V4": {
+      "attack": "ancien permis signé + registre entièrement reconstitué (DELETE consumed_permits/events/effect_journal par uid aegis_pep) puis rejeu",
+      "expected": "aucun second effet ; comparaison aux ancres indépendantes (octets RAW, reçus chaînés)",
+      "observed": "rc=502 EFFECT_UNCONFIRMED ; marqueurs inchangés (plancher O_EXCL : le marqueur d'origine existe) ; la reconstruction ne recrée jamais l'effet",
+      "evidence": "RAW_EVIDENCE/agent_receipts/out_V4_rebuilt_registry_replay.json ; RAW_EVIDENCE/db_states/FINAL.json",
+      "result": "NO_SECOND_EFFECT",
+      "note": "la reconstruction par un UID privilégié reste hors garantie (root hors périmètre) ; ici c'est le pep-uid lui-même qui reconstruit — plancher O_EXCL + reçus indépendants"
+    },
+    "V5": {
+      "attack": "témoin indisponible (répertoire d'effet absent)",
+      "expected": "UNAVAILABLE/UNKNOWN/HOLD — jamais CONFIRMED par défaut",
+      "observed": "WITNESS_VERDICT=UNAVAILABLE exit 3, reason=effect_dir_missing",
+      "evidence": "RAW_EVIDENCE/witness_reports/W-V5-UNAVAILABLE.json",
+      "result": "UNKNOWN_HOLD_AS_REQUIRED"
+    }
+  },
+  "control_families": {
+    "A_ALLOW_UNIQUE_EFFECT": "A1 : 200, 1 marqueur unique, octets=pré-calculés (e123024a…/283), confirmé par témoin euid 997",
+    "B_FORBIDDEN_ZERO_EFFECT": "B1-B6 : 422/403 x6, aucun marqueur, témoin confirme l'absence à chaque fois",
+    "C_NO_SECOND_EFFECT": "C1 rejeu 403 NONCE_REUSED ; C2 8 concurrents -> exactement 1x200 ; C3 rejeu après restart 403",
+    "D_AGENT_UID_EACCES": "D1 touch effect EACCES ; D2 registre OperationalError/EACCES ; D3 touch config EACCES",
+    "E_CRASH_COMPOSITE": "C1 NO_CONSUMPTION->réessai 200 (1 effet) ; C2 CONSUMED_NO_ATTEMPT ; C3 ATTEMPTED_NO_EFFECT ; C4 EFFECT_PRESENT_DB_INCOMPLETE (marqueur présent, DB incomplète) ; crash_exit=73 partout"
+  },
+  "audit_notes": [
+    "run1 (archivé RAW_EVIDENCE/first_attempt_failed/) : POST A1 réel mais reçu non écrit (bug chemin out) — conservé comme premier essai/échec exigé",
+    "run2 (archivé RAW_EVIDENCE/run2_partial/) : fixture C2 fermait sur l'enveloppe A1 consommée (NONCE_REUSED x8) ; allowlist vide -> 503 PEP_POLICY_INVALID (fail-closed, zéro effet) — fixture affinée sans changer le critère",
+    "run3 (archivé RAW_EVIDENCE/run3_reset_failure/) : mv du registre raté (test -e utilisateur sur dossier 0700) + collision de sous-chaîne P-V3E-C1 dans P-V3E-C12 dans la déduction — corrigés (match exact par colonne)",
+    "run4 = exécution DÉCISIVE 18/18, EXIT=0, aucun changement d'exigence de sécurité entre les runs"
+  ],
+  "chain_head_decisive_run": "872afb6fb45289fc9e7f93d49945ab742800cd3b28a9fb8e0c1b07a182966796"
+}

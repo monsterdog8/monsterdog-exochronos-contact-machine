@@ -1,0 +1,9 @@
+{
+ "status_code": 403,
+ "body": {
+  "detail": {
+   "code": "RESOURCE_FORBIDDEN",
+   "resource": "reports/steal.txt"
+  }
+ }
+}

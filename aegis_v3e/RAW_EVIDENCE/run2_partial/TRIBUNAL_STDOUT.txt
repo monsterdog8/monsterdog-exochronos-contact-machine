@@ -1,0 +1,21 @@
+[PASS_LOCAL] A1: ALLOW -> 1 marqueur unique, octets pré-calculés, confirmé par témoin indépendant
+[PASS_LOCAL] B1-X1: B1_x1: 4xx sans effet, témoin confirme l'absence (rc=422)
+[PASS_LOCAL] B2-X2: B2_x2: 4xx sans effet, témoin confirme l'absence (rc=403)
+[PASS_LOCAL] B3-X3: B3_x3: 4xx sans effet, témoin confirme l'absence (rc=403)
+[PASS_LOCAL] B4-X4: B4_x4: 4xx sans effet, témoin confirme l'absence (rc=403)
+[PASS_LOCAL] B5-X6-resource: B5_x6: 4xx sans effet, témoin confirme l'absence (rc=403)
+[FAIL] B6-X7-revoked: B7_x7: 4xx sans effet, témoin confirme l'absence (rc=503)
+[PASS_LOCAL] C1-replay: rejeu du permis consommé refusé (rc=403), marqueur unique intact
+[FAIL] C2-concurrency: 8 clients simultanés -> exactement 1 effet (200x0), témoin confirme
+[PASS_LOCAL] C3-restart: rejeu après redémarrage refusé (rc=403)
+[PASS_LOCAL] D1-D3: UID agent : EACCES effect/config + registre illisible (rc != 0)
+[PASS_LOCAL] E-C1: crash @before_consume_commit exit 73 -> état NO_CONSUMPTION (attendu NO_CONSUMPTION) ; réessai rc=200
+[PASS_LOCAL] E-C2: crash @after_consume_commit exit 73 -> état CONSUMED_NO_ATTEMPT (attendu CONSUMED_NO_ATTEMPT) ; réessai rc=403
+[PASS_LOCAL] E-C3: crash @after_attempt exit 73 -> état ATTEMPTED_NO_EFFECT (attendu ATTEMPTED_NO_EFFECT) ; réessai rc=403
+[PASS_LOCAL] E-C4: crash @after_effect exit 73 -> état EFFECT_PRESENT_DB_INCOMPLETE (attendu EFFECT_PRESENT_DB_INCOMPLETE) ; réessai rc=403
+[PASS_LOCAL] V1-tamper: altération d'octet -> témoin refuse
+[PASS_LOCAL] V4-rebuild: registre reconstruit + rejeu permis -> rc=502, aucun second effet=True
+[PASS_LOCAL] V5-unavailable: témoin indisponible -> UNAVAILABLE/HOLD
+
+TOTAL: 16/18 PASS_LOCAL
+chain_head: bd98d7a5ffa439a04bbc5822a93185a83cad006c9e992a7b2dd0e3d1a0a7b76c

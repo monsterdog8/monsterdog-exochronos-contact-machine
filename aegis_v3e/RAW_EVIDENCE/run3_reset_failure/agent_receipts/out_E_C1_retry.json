@@ -1,0 +1,12 @@
+{
+ "status_code": 200,
+ "body": {
+  "status": "AUTHORIZED",
+  "permit_consumed": true,
+  "action_attempted": true,
+  "effect_status": "MATERIALIZED_LOCAL",
+  "effect_confirmed": false,
+  "transaction": "COMMITTED",
+  "note": "MATERIALIZED_LOCAL!=WITNESS_CONFIRMED; HTTP_200!=EFFECT_PROOF"
+ }
+}

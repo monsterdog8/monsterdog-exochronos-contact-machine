@@ -34,3 +34,10 @@ Runs with fewer than 100 permutations emit
 A nonsignificant, resolution-capable result supports only a bounded
 no-detectable/no-supported-signal conclusion, never NOISE by itself.
 These checks are local audit evidence, not scientific validation.
+
+## AEGIS V3E
+
+Témoin indépendant et attestation (mission `AEGIS_V3E_INDEPENDENT_WITNESS_ATTESTATION_005`)
+dans [`aegis_v3e/`](aegis_v3e/REPORT_FR.md) : manifeste gelé puis ancré avant exécution,
+témoin POSIX sh distinct de l'auteur de conception, paquet RAW portable, attaques
+d'attestation V1-V5, `REPLAY.sh` et verdict borné. `CLAIM <= EVIDENCE`.

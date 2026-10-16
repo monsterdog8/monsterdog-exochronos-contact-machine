@@ -37,6 +37,7 @@ STATE = SANDBOX / "state"
 WITNESS = SANDBOX / "witness"
 LOGS = SANDBOX / "logs"
 REQ = SANDBOX / "req"
+AGENT_OUT = SANDBOX / "agent_out"
 APP = SANDBOX / "app"
 PYLIBS = SANDBOX / "pylibs"
 
@@ -261,7 +262,7 @@ def ensure_run_dirs() -> None:
 def agent_post(base_url: str, payload: Dict[str, Any], tag: str) -> Dict[str, Any]:
     ensure_run_dirs()
     req_path = REQ / f"req_{tag}.json"
-    out_path = REQ / f"out_{tag}.json"
+    out_path = AGENT_OUT / f"out_{tag}.json"  # dossier writable par aegis_agent
     req_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
     run_priv(f"rm stale agent out {tag}", ["rm", "-f", str(out_path)])
     cmd = [
@@ -281,7 +282,7 @@ def agent_post(base_url: str, payload: Dict[str, Any], tag: str) -> Dict[str, An
 
 def agent_get(base_url: str, tag: str, path: str = "/v1/health") -> Dict[str, Any]:
     ensure_run_dirs()
-    out_path = REQ / f"out_{tag}.json"
+    out_path = AGENT_OUT / f"out_{tag}.json"
     cmd = [
         "sudo", "-n", "-u", "aegis_agent",
         "env", f"PYTHONPATH={RUN_ENV_PYTHONPATH}",

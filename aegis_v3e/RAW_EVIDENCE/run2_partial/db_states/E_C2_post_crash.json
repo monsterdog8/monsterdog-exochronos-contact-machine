@@ -1,0 +1,161 @@
+{
+ "exit_code": 0,
+ "stderr": "",
+ "rows": {
+  "consumed_permits": {
+   "columns": [
+    "nonce",
+    "permit_id",
+    "subject",
+    "action",
+    "resource",
+    "consumed_at",
+    "status",
+    "chain_digest"
+   ],
+   "rows": [
+    [
+     "nonce-v3e-allow-001",
+     "P-V3E",
+     "agent-alpha",
+     "marker.create",
+     "effect/marker-P-V3E.json",
+     1760650000.0,
+     "EFFECT_MATERIALIZED",
+     "5fa3bd52ed64c70d2116562da93aac20ccac63d65f60f89d4cd1c36fd642603a"
+    ],
+    [
+     "nonce-v3e-c1",
+     "P-V3E-C1",
+     "agent-alpha",
+     "marker.create",
+     "effect/marker-P-V3E-C1.json",
+     1760650000.0,
+     "EFFECT_MATERIALIZED",
+     "531ff427d22574f75282521034b3df5971d24790a3f4e73ddebabb5c29e270d4"
+    ],
+    [
+     "nonce-v3e-c2",
+     "P-V3E-C2",
+     "agent-alpha",
+     "marker.create",
+     "effect/marker-P-V3E-C2.json",
+     1760650000.0,
+     "PENDING",
+     "ad6d0eb29dbb3b8be736b5b1792eec2340f0f29ebd81e7c8ae42bf8ae9b34adf"
+    ]
+   ]
+  },
+  "effect_journal": {
+   "columns": [
+    "nonce",
+    "permit_id",
+    "subject",
+    "action",
+    "resource",
+    "effect_mode",
+    "effect_at"
+   ],
+   "rows": [
+    [
+     "nonce-v3e-allow-001",
+     "P-V3E",
+     "agent-alpha",
+     "marker.create",
+     "effect/marker-P-V3E.json",
+     "MATERIALIZED_LOCAL",
+     1760650000.0
+    ],
+    [
+     "nonce-v3e-c1",
+     "P-V3E-C1",
+     "agent-alpha",
+     "marker.create",
+     "effect/marker-P-V3E-C1.json",
+     "MATERIALIZED_LOCAL",
+     1760650000.0
+    ]
+   ]
+  },
+  "events": {
+   "columns": [
+    "event_id",
+    "ts",
+    "nonce",
+    "permit_id",
+    "event_type",
+    "detail"
+   ],
+   "rows": [
+    [
+     1,
+     1760650000.0,
+     "nonce-v3e-allow-001",
+     "P-V3E",
+     "PERMIT_CONSUMED",
+     "status=PENDING"
+    ],
+    [
+     2,
+     1760650000.0,
+     "nonce-v3e-allow-001",
+     "P-V3E",
+     "ACTION_ATTEMPTED",
+     "marker.create:effect/marker-P-V3E.json"
+    ],
+    [
+     3,
+     1760650000.0,
+     "nonce-v3e-allow-001",
+     "P-V3E",
+     "EFFECT_MATERIALIZED",
+     "effect_mode=MATERIALIZED_LOCAL"
+    ],
+    [
+     4,
+     1760650000.0,
+     "nonce-v3e-c1",
+     "P-V3E-C1",
+     "PERMIT_CONSUMED",
+     "status=PENDING"
+    ],
+    [
+     5,
+     1760650000.0,
+     "nonce-v3e-c1",
+     "P-V3E-C1",
+     "ACTION_ATTEMPTED",
+     "marker.create:effect/marker-P-V3E-C1.json"
+    ],
+    [
+     6,
+     1760650000.0,
+     "nonce-v3e-c1",
+     "P-V3E-C1",
+     "EFFECT_MATERIALIZED",
+     "effect_mode=MATERIALIZED_LOCAL"
+    ],
+    [
+     7,
+     1760650000.0,
+     "nonce-v3e-c2",
+     "P-V3E-C2",
+     "PERMIT_CONSUMED",
+     "status=PENDING"
+    ]
+   ]
+  },
+  "sqlite_sequence": {
+   "columns": [
+    "name",
+    "seq"
+   ],
+   "rows": [
+    [
+     "events",
+     7
+    ]
+   ]
+  }
+ }
+}

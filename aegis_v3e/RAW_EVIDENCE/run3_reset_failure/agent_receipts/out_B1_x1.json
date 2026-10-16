@@ -1,0 +1,16 @@
+{
+ "status_code": 422,
+ "body": {
+  "detail": [
+   {
+    "type": "extra_forbidden",
+    "loc": [
+     "body",
+     "system_eval"
+    ],
+    "msg": "Extra inputs are not permitted",
+    "input": "root"
+   }
+  ]
+ }
+}

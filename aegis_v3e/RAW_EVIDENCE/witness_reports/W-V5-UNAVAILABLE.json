@@ -1,0 +1,8 @@
+{
+ "run_id": "W-V5-UNAVAILABLE",
+ "tag": "v5",
+ "exit_code": 3,
+ "raw_stdout": "WITNESS_REPORT v3e/1\nrun_id=W-V5-UNAVAILABLE\nWITNESS_VERDICT=UNAVAILABLE\nreason=effect_dir_missing\n",
+ "raw_stderr": "",
+ "verdict": "UNAVAILABLE"
+}

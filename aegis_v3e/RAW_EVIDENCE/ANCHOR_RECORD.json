@@ -1,0 +1,10 @@
+{
+  "kind": "pre-registration external anchor",
+  "freeze_sha256": "5a4aee5c06df8981bdbe537a7466655758b93d6b3fbf1ff648c107518e9dd8d7",
+  "anchor_commit": "c6a64294dfc7de550c9abace31de7084b317a9b2",
+  "anchor_remote": "https://github.com/monsterdog8/monsterdog-exochronos-contact-machine",
+  "anchor_server_timestamp_utc": "2026-10-16T22:59:50Z",
+  "verified_via": "gh api repos/monsterdog8/monsterdog-exochronos-contact-machine/commits/<sha>",
+  "witness_source_sha256": "ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb",
+  "note": "manifeste gelé puis poussé AVANT toute exécution de test (corrige V3D-003)"
+}

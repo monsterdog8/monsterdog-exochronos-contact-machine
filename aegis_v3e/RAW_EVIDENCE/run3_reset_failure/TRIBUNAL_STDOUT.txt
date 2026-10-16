@@ -1,0 +1,29 @@
+[FAIL] A1: ALLOW -> 1 marqueur unique, octets pré-calculés, confirmé par témoin indépendant
+[FAIL] B1-X1: B1_x1: 4xx sans effet, témoin confirme l'absence (rc=422)
+[FAIL] B2-X2: B2_x2: 4xx sans effet, témoin confirme l'absence (rc=403)
+[FAIL] B3-X3: B3_x3: 4xx sans effet, témoin confirme l'absence (rc=403)
+[FAIL] B4-X4: B4_x4: 4xx sans effet, témoin confirme l'absence (rc=403)
+[FAIL] B5-X6-resource: B5_x6: 4xx sans effet, témoin confirme l'absence (rc=403)
+[FAIL] B6-X7-revoked: B7_x7: 4xx sans effet, témoin confirme l'absence (rc=403)
+[FAIL] C1-replay: rejeu du permis consommé refusé (rc=403), marqueur unique intact
+[FAIL] C2-concurrency: 8 clients simultanés -> exactement 1 effet (200x1), témoin confirme
+[FAIL] C3-restart: rejeu après redémarrage refusé (rc=403)
+[PASS_LOCAL] D1-D3: UID agent : EACCES effect/config + registre illisible (rc != 0)
+[FAIL] E-C1: crash @before_consume_commit exit 73 -> état ATTEMPTED_NO_EFFECT (attendu NO_CONSUMPTION) ; réessai rc=200
+[FAIL] E-C2: crash @after_consume_commit exit 73 -> état CONSUMED_NO_ATTEMPT (attendu CONSUMED_NO_ATTEMPT) ; réessai rc=403
+[FAIL] E-C3: crash @after_attempt exit 73 -> état ATTEMPTED_NO_EFFECT (attendu ATTEMPTED_NO_EFFECT) ; réessai rc=403
+[FAIL] E-C4: crash @after_effect exit 73 -> état EFFECT_PRESENT_DB_INCOMPLETE (attendu EFFECT_PRESENT_DB_INCOMPLETE) ; réessai rc=403
+Traceback (most recent call last):
+  File "/home/user/monsterdog-exochronos-contact-machine/aegis_v3e/tests/run_v3e_tribunal.py", line 617, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/user/monsterdog-exochronos-contact-machine/aegis_v3e/tests/run_v3e_tribunal.py", line 502, in main
+    data = bytearray(marker_src.read_bytes())
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/pathlib.py", line 1051, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/pathlib.py", line 1045, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/aegis_v3e_sandbox/effect/marker-P-V3E.json'

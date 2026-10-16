@@ -1,0 +1,8 @@
+{
+ "run_id": "W-B3_x3",
+ "tag": "w",
+ "exit_code": 1,
+ "raw_stdout": "WITNESS_REPORT v3e/1\nrun_id=W-B3_x3\neuid=997\nwitness_source_sha256=ec7da55cd40cb26a2192f2cb357c008f56a4b85429afa254dd942374cc4443fb\neffect_dir=/tmp/aegis_v3e_sandbox/effect\nassertion_file=/tmp/aegis_v3e_sandbox/req/assert_w.tsv\nstarted_utc=2026-10-16T23:10:13Z\nMISSING name=marker-P-V3E.json expect_sha256=e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43 expect_size=283\nscanned=0 asserted=1\nfinished_utc=2026-10-16T23:10:13Z\nWITNESS_VERDICT=INVALID\n",
+ "raw_stderr": "",
+ "verdict": "INVALID"
+}

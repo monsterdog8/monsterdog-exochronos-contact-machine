@@ -1,0 +1,21 @@
+{
+ "original_request": {
+  "subject": "agent-alpha",
+  "action": "marker.create",
+  "resource": "effect/marker-P-V3E.json"
+ },
+ "permit": {
+  "permit_id": "P-V3E",
+  "issuer": "monsterdog.core.v3e",
+  "subject": "agent-alpha",
+  "action": "marker.create",
+  "resource": "effect/marker-P-V3E.json",
+  "audience": "monsterdog.pep.v3e.local",
+  "policy_version": "v3e.1.0",
+  "nonce": "nonce-v3e-allow-001",
+  "issued_at": 1760649990.0,
+  "expires_at": 1760650290.0,
+  "request_hash": "928f9b38ad3b1150c0737329fd11c81fbebf4ff488669a6829c5d27e8291d140",
+  "signature": "4ef2a9bab0bd6c8aa81fcae8b1bbd5882f5404e2ecbf65324fb4c5be1125bd1b58bf97a10adc83ff8e67ad0c670b6bfe1954e9a5deabdf02c3ed82550bc6d00b"
+ }
+}

@@ -1,0 +1,8 @@
+{
+ "status_code": 503,
+ "body": {
+  "detail": {
+   "code": "PEP_POLICY_INVALID:ALLOWLIST"
+  }
+ }
+}

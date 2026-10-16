@@ -1,0 +1,25 @@
+== sandbox ==
+total 20
+drwxr-xr-x  2  996  995 4096 Oct 16 23:07 agent_out
+drwxr-xr-x  2    0    0  128 Oct 16 23:03 app
+drwxr-xr-x  4    0    0   60 Oct 16 23:10 archive
+drwxr-xr-x  3 1001 1001   60 Oct 16 23:07 attacks
+drwxr-xr-x  2    0    0  128 Oct 16 23:04 config
+drwxr-xr-x  2  999  997  128 Oct 16 23:10 effect
+drwx------  2  999  997 4096 Oct 16 23:07 logs
+drwxr-xr-x 43    0    0 4096 Oct 16 23:03 pylibs
+drwxr-xr-x  2 1001 1001 4096 Oct 16 23:07 req
+-rw-r--r--  1    0    0  731 Oct 16 23:04 sandbox_ready.json
+drwx------  2  999  997  128 Oct 16 23:07 state
+drwxr-xr-x  2  997  996   60 Oct 16 23:00 witness
+
+== config ==
+total 5
+-rw-r--r-- 1 0 0 430 Oct 16 23:07 pep_policy_v3e.json
+-rw-r--r-- 1 0 0  32 Oct 16 23:04 pep_public.key
+-rw-r--r-- 1 0 0  65 Oct 16 23:04 trust_root.pin
+
+== effect ==
+total 0
+
+== state ==

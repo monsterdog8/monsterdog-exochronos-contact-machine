@@ -35,11 +35,10 @@ if [ -d "$SANDBOX/effect" ]; then
         sudo -n mv "$f" "$ARCH/" || true
     done
 fi
-if [ -e "$SANDBOX/state/pep_ledger.db" ]; then
-    sudo -n mv "$SANDBOX/state/pep_ledger.db" "$ARCH/" 2>/dev/null || true
-    sudo -n mv "$SANDBOX/state/pep_ledger.db-wal" "$ARCH/" 2>/dev/null || true
-    sudo -n mv "$SANDBOX/state/pep_ledger.db-shm" "$ARCH/" 2>/dev/null || true
-fi
+# NB : state/ est 0700 aegis_pep — ne JAMAIS tester -e en utilisateur ici.
+sudo -n mv "$SANDBOX/state/pep_ledger.db" "$ARCH/" 2>/dev/null || true
+sudo -n mv "$SANDBOX/state/pep_ledger.db-wal" "$ARCH/" 2>/dev/null || true
+sudo -n mv "$SANDBOX/state/pep_ledger.db-shm" "$ARCH/" 2>/dev/null || true
 python3 - "$ARCH" "$V3E/PROVISION_JOURNAL.jsonl" <<'PY'
 import json, sys, datetime
 entry = {"ts_utc": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),

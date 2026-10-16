@@ -1,0 +1,57 @@
+{
+  "mission": "AEGIS_V3E_INDEPENDENT_WITNESS_ATTESTATION_005",
+  "schema": "aegis-verdict/1",
+  "date_utc": "2026-10-16T23:20:00Z",
+  "principle": "CLAIM <= EVIDENCE",
+  "EXECUTION_ENVIRONMENT": {
+    "status": "OBSERVED",
+    "detail": "conteneur éphémère E2B (hostname e2b.local, /dev/vda, recyclé entre sessions observé) ; 3 UID de test sans privilège (aegis_pep 999, aegis_witness 997, aegis_agent 996) ; provisioning root MINIMAL opt-in, préflighté, journalisé commande par commande (PROVISION_JOURNAL.jsonl + RAW_EVIDENCE/privileged_journal.jsonl) ; aucune modification de /home ni des dépôts ; aucune suppression récursive ; aucun chmod global ; dépendances Python installées uniquement dans /tmp/aegis_v3e_sandbox/pylibs (pypi.org) après échec de la copie locale (environnement recyclé)"
+  },
+  "RAW_ARTIFACTS_OBSERVED": {
+    "status": "OBSERVED",
+    "detail": "RAW_EVIDENCE/ portable : octets exacts des marqueurs (markers/), rapports bruts du témoin (witness_reports/), stdout/stderr+exit codes (agent_receipts/, TRIBUNAL_STDOUT.txt, privileged_journal.jsonl), ACL/UID (acl_uids.txt), permis signés sans clé privée (permits/), politique+hash+clé publique+pin (policy/), nonce/permit_id, états SQLite (db_states/), versions des codes (versions/), premier essai et échecs (first_attempt_failed/, run2_partial/, run3_reset_failure/), chaîne de reçus (receipts_chain.jsonl, 22 entrées, head 872afb6f…)"
+  },
+  "PROCESS_ISOLATION": {
+    "status": "OBSERVED",
+    "detail": "PEP en uid 999, témoin en uid 997, client en uid 996 ; registre 0700 pep, config root:root 0644, effect 0755 pep-owned ; sondes de provisioning journalisées (EACCES confirmés)"
+  },
+  "AUTHOR_INDEPENDENCE": {
+    "status": "PARTIAL_NOT_FULL",
+    "detail": "témoin indépendant de CONCEPTION (POSIX sh + coreutils, zéro code partagé avec le PEP Python ni avec effect_witness.py V3D, source épinglée ec7da55c…) et vérificateur externe en troisième implémentation ; MAIS écrit par la même instance d'auteur (aucune revue par un runner/instance tierce disponible) — UID_SEPARATION != AUTHOR_INDEPENDENCE",
+    "ceiling": "AUTHOR_INSTANCE_SEPARATED = NOT_PROVEN"
+  },
+  "ACTION_EFFECT": {
+    "status": "OBSERVED",
+    "detail": "un seul effet réel autorisé : marker.create exclusif (O_CREAT|O_EXCL + fsync fichier + fsync répertoire parent) ; marqueur marker-P-V3E.json = 283 octets, sha256 e123024a5523152eb3bc4c14d65bdf259efa269eb37283311f2913ba2ea25c43, égal aux octets PRÉ-CALCULÉS avant exécution ; confirmé par le témoin indépendant (euid 997) relu et rehashé ; concurrence 8 clients -> exactement 1 effet ; replays/restarts -> 0 second effet"
+  },
+  "ACL_ENFORCEMENT": {
+    "status": "OBSERVED",
+    "detail": "uid aegis_agent : EACCES sur effect/ et config/ ; registre SQLite illisible (OperationalError/EACCES) ; famille D exécutée car autorisation ciblée obtenue (sinon BLOCKED_ENVIRONMENT)"
+  },
+  "REPLAY_PERSISTENCE": {
+    "status": "OBSERVED",
+    "detail": "rejeu du permis consommé -> 403 NONCE_REUSED (C1/C3) ; crash C1 -> réessai réussit exactement une fois ; registre reconstruit + rejeu -> 502, aucun second effet (plancher O_EXCL) ; REPLAY.sh fourni (archivage par mv, jamais de suppression) ; persistance process-crash observée"
+  },
+  "POWER_LOSS_DURABILITY": {
+    "status": "NOT_EXECUTED",
+    "detail": "fsync(fichier) + fsync(répertoire parent) effectués (correctif V3D-004) ; AUCUN essai de coupure électrique — interdiction de déclarer POWER_LOSS_SAFE ; O_EXCL != POWER_LOSS_DURABILITY ; marqueur observé != preuve de durabilité au reboot"
+  },
+  "NEGATIVE_CONTROLS": {
+    "status": "OBSERVED",
+    "detail": "V1 altération d'octet -> REFUSED ; V2 substitution de rapport -> REFUSED ; V3 rollback de manifeste -> REFUSED par ancre git ; V4 registre reconstitué + ancien permis -> AUCUN second effet ; V5 témoin indisponible -> UNKNOWN/HOLD ; voir ATTACK_LEDGER.json"
+  },
+  "pre_registration_anchor": {
+    "status": "OBSERVED",
+    "detail": "EXPERIMENT_FREEZE.json gelé (sha256 5a4aee5c06df8981bdbe537a7466655758b93d6b3fbf1ff648c107518e9dd8d7) puis poussé AVANT toute exécution : commit c6a64294dfc7de550c9abace31de7084b317a9b2 horodaté serveur GitHub 2026-10-16T22:59:50Z (corrige V3D-003)"
+  },
+  "verification": {
+    "bundle": "VERIFY_VERDICT=VERIFIED (exit 0) : ancre OK, chaîne 22 entrées OK, 5 copies RAW de marqueurs recalculées, rapports du témoin concordants",
+    "decisive_suite": "18/18 PASS_LOCAL, EXIT=0 (run4)",
+    "v3c_v3d_preservation": "aegis_v3c/ et aegis_v3d/ inchangés (sha256sum -c : tous OK)"
+  },
+  "CLAIM_CEILING": "LOCAL_SINGLE_ACTION_REAL_EFFECT_WITNESSED_BY_DESIGN_SEPARATED_WITNESS_WITH_ANCHORED_PREREGISTRATION",
+  "PUBLIC_DEPLOYMENT": "BLOCKED",
+  "TRUTH_STATUS": "OPEN",
+  "SINGLE_NEXT_GATE": "AEGIS_V3F_AUTHOR_SEPARATED_WITNESS_AND_POWER_LOSS_006",
+  "global_verdict": "LOCAL_REAL_EFFECT_ATTESTED_WITHIN_OBSERVED_SCOPE — un seul reçu d'effet qu'un tiers peut recalculer sans me croire (octets RAW + témoin minimal + vérificateur + ancre) ; plafond maintenu : auteur non séparé, root et coupure électrique hors garantie, déploiement public bloqué"
+}
