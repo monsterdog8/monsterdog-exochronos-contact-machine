@@ -1,0 +1,28 @@
+/home/user/.venv-aegis/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+========== PARTIE A — N01-N05 sur V3C PRÉSERVÉ ==========
+[REPRODUCED              ] N01 (V3C) Champ JSON externe system_eval sur requête légitime
+    observed: {"status_code": 200, "body": {"status": "AUTHORIZED", "permit_consumed": true, "action_attempted": true, "effect_status": "SIMULATED_LOCAL_ONLY", "effect_confirmed": false, "transaction": "COMMITTED", "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"}}
+[REPRODUCED              ] N02 (V3C) Deux permis, même permit_id, nonces distincts
+    observed: {"first": 200, "second": 200}
+[REPRODUCED              ] N03 (V3C) Révocation de politique après démarrage
+    observed: {"before_change": 200, "after_revocation": 200}
+[REPRODUCED              ] N04 (V3C) Remplacement conjoint clé publique + pin + politique
+    observed: {"status_code": 200, "body": {"status": "AUTHORIZED", "permit_consumed": true, "action_attempted": true, "effect_status": "SIMULATED_LOCAL_ONLY", "effect_confirmed": false, "transaction": "COMMITTED", "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"}}
+[REPRODUCED              ] N05 (V3C) Rollback simulé du registre (DELETE des 3 tables)
+    observed: {"first": 200, "replay_after_rollback": 200}
+
+========== PARTIE B — N01-N05 sur V3D (bac OS) ==========
+[FIXED                   ] N01 (V3D) Champ JSON externe system_eval (extra=forbid)
+    observed: {"status_code": 422, "body": {"detail": [{"type": "extra_forbidden", "loc": ["body", "system_eval"], "msg": "Extra inputs are not permitted", "input": "__import__('os').system('id')"}]}}
+[FIXED                   ] N02 (V3D) Même permit_id, nonces distincts
+    observed: {"first": 200, "second": 403, "second_code": "PERMIT_ID_REUSED"}
+[FIXED                   ] N03 (V3D) Révocation administrative de politique
+    observed: {"before": 200, "after_revocation": 403, "after_code": "ACTION_FORBIDDEN", "policy_restored": true}
+[SCOPE_MOVED_TO_OS       ] N04 (V3D) Remplacement conjoint clé+pin+politique tenté par l'agent non fiable
+    observed: {"write_key": {"rc": 0, "stdout": "EACCES", "stderr": ""}, "write_pin": {"rc": 0, "stdout": "EACCES", "stderr": ""}, "write_policy": {"rc": 0, "stdout": "EACCES", "stderr": ""}, "pep_health_after": {"trust_root": "OK", "policy_loaded": true, "policy_version": "v3d.1.0", "clock_mode": "SYSTEM"}}
+[LAYERED                 ] N05 (V3D) Rollback du registre : agent vs propriétaire privilégié
+    observed: {"first": 200, "agent_rollback_attempt": {"rc": 0, "stdout": "OperationalError", "stderr": ""}, "agent_state_dir_list": {"rc": 0, "stdout": "EACCES", "stderr": ""}, "replay_after_agent_rollback": {"status": 403, "code": "NONCE_REUSED"}, "chain_floor_before_privileged_rollback": "b5400ae63e2df10206ce415ca8d837c824f763a464de264862a81704eba18758", "chain_head_after_privileged_rollback": "cb164645071573cec14a536bb9f5fca1
+
+written: /home/user/monsterdog-exochronos-contact-machine/aegis_v3d/results/N01_N05_RESULTS.json
+V3C: 5/5 REPRODUCED | V3D: 5/5 qualifiés

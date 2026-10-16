@@ -1,2 +1,11 @@
 __pycache__/
 *.pyc
+.venv/
+aegis_v3c/bench_workspace/
+*.db
+*.db-wal
+*.db-shm
+aegis_v3d/tests/keys/
+aegis_v3d/results/policy_stage.json
+aegis_v3d/results/n_v3c_workspace/
+aegis_v3d/results/n_v3c_evil_config/

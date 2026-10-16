@@ -1,0 +1,127 @@
+{
+  "mission_id": "AEGIS_V3C_PIN_POLICY_SQLITE_INTEGRATION_003",
+  "gates": {
+    "GATE_TRUST_ROOT_PIN": {
+      "scenario_ids": [
+        "T13",
+        "T14",
+        "F03",
+        "F10",
+        "A05"
+      ],
+      "verdict": "PASS_LOCAL"
+    },
+    "GATE_PEP_POLICY_AUTHZ": {
+      "scenario_ids": [
+        "T08",
+        "T09",
+        "T10",
+        "T20",
+        "F04",
+        "A14",
+        "A15"
+      ],
+      "verdict": "PASS_LOCAL"
+    },
+    "GATE_NONCE_PERSISTENCE": {
+      "scenario_ids": [
+        "T02",
+        "T19",
+        "A01",
+        "A02"
+      ],
+      "verdict": "PASS_LOCAL"
+    },
+    "GATE_CONCURRENCY": {
+      "scenario_ids": [
+        "T03",
+        "A03",
+        "A04",
+        "F07"
+      ],
+      "verdict": "PASS_LOCAL"
+    },
+    "GATE_TEMPORAL_SEMANTICS": {
+      "scenario_ids": [
+        "T04",
+        "T22",
+        "T23",
+        "T24",
+        "F06"
+      ],
+      "verdict": "PASS_LOCAL"
+    },
+    "GATE_CRYPTO_BINDING": {
+      "scenario_ids": [
+        "T05",
+        "T06",
+        "T17",
+        "A07",
+        "A08",
+        "A11",
+        "F02"
+      ],
+      "verdict": "PASS_LOCAL"
+    },
+    "GATE_STRICT_PARSING": {
+      "scenario_ids": [
+        "T07",
+        "T15",
+        "T16",
+        "A06",
+        "A10",
+        "A12",
+        "A13",
+        "A16",
+        "F05"
+      ],
+      "verdict": "PASS_LOCAL"
+    },
+    "GATE_BURN_ON_TAMPER": {
+      "scenario_ids": [
+        "T11",
+        "T12",
+        "A09"
+      ],
+      "verdict": "PASS_LOCAL"
+    },
+    "GATE_EFFECT_SEMANTICS": {
+      "scenario_ids": [
+        "T18",
+        "F09"
+      ],
+      "verdict": "PASS_LOCAL"
+    },
+    "GATE_CRASH_RECOVERY": {
+      "scenario_ids": [
+        "T21",
+        "F08"
+      ],
+      "verdict": "PASS_LOCAL"
+    },
+    "GATE_REAL_OS_PERMISSIONS": {
+      "scenario_ids": [],
+      "verdict": "NOT_EXECUTED",
+      "note": "interdit par l'ordre de mission (aucune cible OS réelle)"
+    },
+    "GATE_PRODUCTION_DEPLOYMENT": {
+      "scenario_ids": [],
+      "verdict": "NOT_EXECUTED",
+      "note": "interdit par l'ordre de mission (aucune publication, aucun réseau externe)"
+    }
+  },
+  "adversarial_scenarios": 50,
+  "local_repetitions_this_file": 1,
+  "claim_ceiling": "LOCAL_EXECUTED_SIMULATOR",
+  "next_gate": "AEGIS_V3D_REAL_EFFECT_WITNESS_004",
+  "unresolved_counter_examples": [
+    "CE-1 split-brain multi-nœud (SQLite n'est pas un consensus distribué)",
+    "CE-2 chaîne Core de vérité des claims (PEP n'est pas un oracle ; refusé à la frontière)",
+    "CE-3 confiance dans la source d'horloge (NTP) en production",
+    "CE-4 amorçage du pin/policy (compromission totale de la configuration)",
+    "CE-5 récupération des états PENDING (réconciliation métier non implémentée)",
+    "CE-6 rotation de clé sans interruption"
+  ],
+  "truth_status": "OPEN",
+  "claim_rule": "CLAIM <= EVIDENCE"
+}

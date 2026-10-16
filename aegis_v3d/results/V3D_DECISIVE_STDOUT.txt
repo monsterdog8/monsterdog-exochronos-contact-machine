@@ -1,0 +1,58 @@
+== V3D S_MAIN up http://127.0.0.1:42463 (uid PEP=aegis_pep) ==
+[PASS] D01  ALLOW signé : PEP écrit le marqueur ; témoin séparé confirme octets + digest
+        expected: 200 (non probant) + WITNESS CONFIRMED (content_digest valide, digest témoin == relecture admin)
+        observed: {"http": {"status_code": 200, "body": {"status": "AUTHORIZED", "permit_consumed": true, "action_attempted": true, "effect_status": "MATERIALIZED_LOCAL", "effect_confirmed": false, "transaction": "COMMITTED", "note": "MATERIALIZED_LOCAL!=WITNESS_CONFIRMED; HTTP_200!=EFFECT_PROOF"}}, "witness_confirmed": [{"filename": "marker-P-D1.json", "confirmed": true}], "witness_sha256": "796b5b94c7a4b69dcfc8b514c25742bf0f71af5c676358cebf5a81d8c6e3a4bd", "admin_resha256
+[PASS] D02  X1 signature invalide
+        expected: 403 INVALID_SIGNATURE ; aucun marqueur
+        observed: {"http": {"status_code": 403, "body": {"detail": {"code": "INVALID_SIGNATURE"}}}}
+[PASS] D03  X2 signature par clé substituée
+        expected: 403 INVALID_SIGNATURE ; aucun marqueur
+        observed: {"http": {"status_code": 403, "body": {"detail": {"code": "INVALID_SIGNATURE"}}}}
+[PASS] D04  X3 action admin.delete signée
+        expected: 403 ACTION_FORBIDDEN ; aucun marqueur
+        observed: {"http": {"status_code": 403, "body": {"detail": {"code": "ACTION_FORBIDDEN", "action": "admin.delete"}}}}
+[PASS] D05  X4 chemins non autorisés (traversée, hors périmètre, désalignés)
+        expected: 4xx avant effet dans les 4 cas ; aucun marqueur créé
+        observed: {"cases": [{"pid": "P-X4A", "resource": "etc/passwd", "want": "RESOURCE_FORBIDDEN", "got_status": 403, "got_code": "RESOURCE_FORBIDDEN", "case_ok": true}, {"pid": "P-X4B", "resource": "effect/../escape.json", "want": "INVALID_FIELD_FORMAT", "got_status": 400, "got_code": "INVALID_FIELD_FORMAT", "case_ok": true}, {"pid": "P-X4C", "resource": "effect/marker-P-OTHER.json", "want": "EFFECT_PATH_FORBIDDEN", "got_status": 403, "got_code": "EFFECT_PATH_FORBIDDEN"
+[PASS] D06  X5 permis expiré
+        expected: 403 PERMIT_EXPIRED ; aucun marqueur
+        observed: {"http": {"status_code": 403, "body": {"detail": {"code": "PERMIT_EXPIRED"}}}}
+[PASS] D07  Témoin : absence de tout marqueur négatif
+        expected: 8 fichiers confirmés absents par lecture OS du témoin
+        observed: {"expected_absent_ok": {"marker-P-X1.json": true, "marker-P-X2.json": true, "marker-P-X3.json": true, "marker-P-X4A.json": true, "marker-P-X4B.json": true, "marker-P-X4C.json": true, "marker-P-X4D.json": true, "marker-P-X5.json": true}, "listing": ["marker-P-D1.json"]}
+[PASS] D08  X6 champ wrapper system_eval (enveloppe fermée)
+        expected: 422 (extra=forbid) ; aucun marqueur
+        observed: {"http_status": 422}
+[PASS] D09  X7 même permit_id, second nonce
+        expected: 1er 200 ; 2e 403 PERMIT_ID_REUSED ; un seul marqueur
+        observed: {"first": 200, "second": 403, "second_code": "PERMIT_ID_REUSED"}
+[PASS] D10  X8 révocation administrative effective à la requête suivante
+        expected: avant 200 ; après révocation 403 ACTION_FORBIDDEN
+        observed: {"before": 200, "after": 403, "after_code": "ACTION_FORBIDDEN", "policy_restored": true}
+[PASS] D11  X9/X10 frontière OS : écriture/suppression directe et rollback par l'agent
+        expected: refus OS sur création, suppression et registre (PermissionError/OperationalError) ; marqueur D1 intact
+        observed: {"create_marker": {"rc": 0, "stdout": "EACCES", "stderr": ""}, "delete_marker": {"rc": 0, "stdout": "EACCES", "stderr": ""}, "registry_delete": {"rc": 0, "stdout": "OperationalError", "stderr": ""}, "marker_P_D1_still_present": true}
+[PASS] D12  Concurrence 8 clients : un seul effet matériel
+        expected: 1×200 + 7×403 NONCE_REUSED ; exactement 1 EFFECT_MATERIALIZED ; témoin CONFIRMED
+        observed: {"status_codes": [403, 403, 200, 403, 403, 403, 403, 403], "events": ["PERMIT_CONSUMED", "ACTION_ATTEMPTED", "EFFECT_MATERIALIZED"], "witness": [{"filename": "marker-P-D12.json", "confirmed": true}]}
+[PASS] D13  Rejeu après redémarrage du processus PEP
+        expected: 403 NONCE_REUSED ; aucun second marqueur (effect_listing stable)
+        observed: {"replay": 403, "code": "NONCE_REUSED", "marker_count": 3}
+[PASS] D14  C1 crash AVANT COMMIT : rien consommé ; le réessai produit exactement un effet
+        expected: crash exit 73 ; état pré-réessai NO_CONSUMPTION ; RETRY_200 ; marqueur avant réessai absent
+        observed: {"fault_point": "before_consume_commit", "crash_exit_code": 73, "client_error": null, "pre": {"events": [], "db_status": null, "marker_present": false, "composite_state": "NO_CONSUMPTION", "witness_absent_ok": {"marker-P-C1.json": true}}, "retry": {"status": 200, "code": null}, "post": {"events": ["PERMIT_CONSUMED", "ACTION_ATTEMPTED", "EFFECT_MATERIALIZED"], "marker_present": true, "composite_state": "CONFIRMED", "witness_ok": true}}
+[PASS] D15  C2 crash APRÈS COMMIT, avant tentative : PENDING ; fail-closed ; aucun effet
+        expected: crash exit 73 ; état pré-réessai CONSUMED_NO_ATTEMPT ; RETRY_NONCE_REUSED ; marqueur avant réessai absent
+        observed: {"fault_point": "after_consume_commit", "crash_exit_code": 73, "client_error": null, "pre": {"events": ["PERMIT_CONSUMED"], "db_status": "PENDING", "marker_present": false, "composite_state": "CONSUMED_NO_ATTEMPT", "witness_absent_ok": {"marker-P-C2.json": true}}, "retry": {"status": 403, "code": "NONCE_REUSED"}, "post": {"events": ["PERMIT_CONSUMED"], "marker_present": false, "composite_state": "CONSUMED_NO_ATTEMPT", "witness_ok": true}}
+[PASS] D16  C3 crash APRÈS tentative, avant effet : ATTEMPTED ; aucun marqueur ; fail-closed
+        expected: crash exit 73 ; état pré-réessai ATTEMPTED_NO_EFFECT ; RETRY_NONCE_REUSED ; marqueur avant réessai absent
+        observed: {"fault_point": "after_attempt", "crash_exit_code": 73, "client_error": null, "pre": {"events": ["PERMIT_CONSUMED", "ACTION_ATTEMPTED"], "db_status": "PENDING", "marker_present": false, "composite_state": "ATTEMPTED_NO_EFFECT", "witness_absent_ok": {"marker-P-C3.json": true}}, "retry": {"status": 403, "code": "NONCE_REUSED"}, "post": {"events": ["PERMIT_CONSUMED", "ACTION_ATTEMPTED"], "marker_present": false, "composite_state": "ATTEMPTED_NO_EFFECT", "witn
+[PASS] D17  C4 crash APRÈS effet, avant statut : fenêtre COMMIT→effet ; témoin PRÉSENT, DB incomplète
+        expected: crash exit 73 ; état pré-réessai EFFECT_PRESENT_DB_INCOMPLETE ; RETRY_NONCE_REUSED ; marqueur avant réessai présent
+        observed: {"fault_point": "after_effect", "crash_exit_code": 73, "client_error": null, "pre": {"events": ["PERMIT_CONSUMED", "ACTION_ATTEMPTED"], "db_status": "PENDING", "marker_present": true, "composite_state": "EFFECT_PRESENT_DB_INCOMPLETE", "witness_absent_ok": {}}, "retry": {"status": 403, "code": "NONCE_REUSED"}, "post": {"events": ["PERMIT_CONSUMED", "ACTION_ATTEMPTED"], "marker_present": true, "composite_state": "EFFECT_PRESENT_DB_INCOMPLETE", "witness_ok": 
+[PASS] D18  RAW_WITNESS : digest témoin == relecture indépendante admin sur tous les marqueurs
+        expected: concordance SHA-256 pour 100% des fichiers observés ; aucun canal API utilisé
+        observed: {"digest_rows": [{"file": "marker-P-C1.json", "witness_sha256": "824e21daef94841e31d2776a1f7cb6cf369b83b2328de481013a760ec763def9", "admin_sha256": "824e21daef94841e31d2776a1f7cb6cf369b83b2328de481013a760ec763def9", "agree": true}, {"file": "marker-P-C4.json", "witness_sha256": "0817958e32845f80e661d18cff70cdc5d0318003bc8018129a0adb7ec0101517", "admin_sha256": "0817958e32845f80e661d18cff70cdc5d0318003bc8018129a0adb7ec0101517", "agree": true}, {"file": "mar
+
+== SUMMARY: 18/18 PASS_LOCAL ==
+written: /home/user/monsterdog-exochronos-contact-machine/aegis_v3d/results/V3D_DECISIVE_RESULTS.json

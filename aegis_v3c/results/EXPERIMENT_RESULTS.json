@@ -1,0 +1,1188 @@
+{
+  "mission_id": "AEGIS_V3C_PIN_POLICY_SQLITE_INTEGRATION_003",
+  "tag": "run1",
+  "started_at": "2026-10-16T20:57:58Z",
+  "finished_at": "2026-10-16T20:58:05Z",
+  "duration_s": 7.176,
+  "environment": {
+    "python": "3.11.2 (main, Apr  8 2026, 01:58:00) [GCC 12.2.0]",
+    "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+    "fastapi": "0.143.3",
+    "cryptography": "50.0.2",
+    "httpx": "0.28.1",
+    "mode": "LOCAL_LOOPBACK_HTTP_127.0.0.1 + ASGI_IN_PROCESS_UNIT"
+  },
+  "methodology_note": "OBSERVED est produit par ce runner ; EXPECTED est figé dans le code du runner avant exécution. Répétition même hôte = non indépendant.",
+  "scenarios": [
+    {
+      "id": "T01",
+      "family": "NEMESIS_T01_T24",
+      "title": "Premier permis valide",
+      "expected_v3c": "200 + corps honnête (permit_consumed=True, effect_confirmed=False, pas de executed)",
+      "observed": {
+        "status_code": 200,
+        "body": {
+          "status": "AUTHORIZED",
+          "permit_consumed": true,
+          "action_attempted": true,
+          "effect_status": "SIMULATED_LOCAL_ONLY",
+          "effect_confirmed": false,
+          "transaction": "COMMITTED",
+          "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T02",
+      "family": "NEMESIS_T01_T24",
+      "title": "Même nonce après relance du processus",
+      "expected_v3c": "403 NONCE_REUSED avant ET après redémarrage (registre durable)",
+      "observed": {
+        "before_restart": {
+          "status_code": 403,
+          "body": {
+            "detail": {
+              "code": "NONCE_REUSED"
+            }
+          }
+        },
+        "after_restart": {
+          "status_code": 403,
+          "body": {
+            "detail": {
+              "code": "NONCE_REUSED"
+            }
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T03",
+      "family": "NEMESIS_T01_T24",
+      "title": "8 interpréteurs simultanés, même permis",
+      "expected_v3c": "exactement 1×200 et 7×403 NONCE_REUSED",
+      "observed": {
+        "status_codes": [
+          200,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403
+        ],
+        "accepted": 1,
+        "nonce_reused": 7
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T04",
+      "family": "NEMESIS_T01_T24",
+      "title": "Expiration dépassée",
+      "expected_v3c": "403 PERMIT_EXPIRED",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "PERMIT_EXPIRED"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T05",
+      "family": "NEMESIS_T01_T24",
+      "title": "Audience incorrecte",
+      "expected_v3c": "403 WRONG_AUDIENCE",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "WRONG_AUDIENCE"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T06",
+      "family": "NEMESIS_T01_T24",
+      "title": "Signature altérée",
+      "expected_v3c": "403 INVALID_SIGNATURE",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "INVALID_SIGNATURE"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T07",
+      "family": "NEMESIS_T01_T24",
+      "title": "Signature non hexadécimale (entrée hostile)",
+      "expected_v3c": "4xx contrôlé INVALID_FIELD_FORMAT (jamais 500)",
+      "observed": {
+        "status_code": 400,
+        "body": {
+          "detail": {
+            "code": "INVALID_FIELD_FORMAT",
+            "field": "signature"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T08",
+      "family": "NEMESIS_T01_T24",
+      "title": "Action admin.delete correctement signée (régression V3)",
+      "expected_v3c": "403 ACTION_FORBIDDEN — allowlist PEP indépendante",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "ACTION_FORBIDDEN",
+            "action": "admin.delete"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T09",
+      "family": "NEMESIS_T01_T24",
+      "title": "Issuer non autorisé (régression V3)",
+      "expected_v3c": "403 ISSUER_FORBIDDEN",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "ISSUER_FORBIDDEN"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T10",
+      "family": "NEMESIS_T01_T24",
+      "title": "Ancienne policy_version (régression V3)",
+      "expected_v3c": "403 POLICY_VERSION_MISMATCH",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "POLICY_VERSION_MISMATCH"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T11",
+      "family": "NEMESIS_T01_T24",
+      "title": "Req. altérée puis vraie (anti burn-on-tamper, régression V3)",
+      "expected_v3c": "403 REQUEST_TAMPERED puis 200 — le nonce n'est PAS brûlé",
+      "observed": {
+        "tampered": {
+          "status_code": 403,
+          "body": {
+            "detail": {
+              "code": "REQUEST_TAMPERED"
+            }
+          }
+        },
+        "original_afterward": {
+          "status_code": 200,
+          "body": {
+            "status": "AUTHORIZED",
+            "permit_consumed": true,
+            "action_attempted": true,
+            "effect_status": "SIMULATED_LOCAL_ONLY",
+            "effect_confirmed": false,
+            "transaction": "COMMITTED",
+            "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T12",
+      "family": "NEMESIS_T01_T24",
+      "title": "Action modifiée sans re-signature",
+      "expected_v3c": "403 REQUEST_TAMPERED",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "REQUEST_TAMPERED"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T13",
+      "family": "NEMESIS_T01_T24",
+      "title": "Clé publique substituée + permis signé par le substituant (régression V3)",
+      "expected_v3c": "503 PEP_TRUST_ROOT_PIN_MISMATCH (fail-closed) — jamais 200",
+      "observed": {
+        "health": {
+          "health": {
+            "trust_root": "PEP_TRUST_ROOT_PIN_MISMATCH",
+            "policy_loaded": true,
+            "policy_version": "v3c.1.0",
+            "clock_mode": "SYSTEM"
+          }
+        },
+        "execute": {
+          "status_code": 503,
+          "body": {
+            "detail": {
+              "code": "PEP_TRUST_ROOT_PIN_MISMATCH"
+            }
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T14",
+      "family": "NEMESIS_T01_T24",
+      "title": "Clé publique manquante",
+      "expected_v3c": "503 PEP_TRUST_ROOT_UNAVAILABLE (fail-closed contrôlé)",
+      "observed": {
+        "health": {
+          "health": {
+            "trust_root": "PEP_TRUST_ROOT_UNAVAILABLE",
+            "policy_loaded": true,
+            "policy_version": "v3c.1.0",
+            "clock_mode": "SYSTEM"
+          }
+        },
+        "execute": {
+          "status_code": 503,
+          "body": {
+            "detail": {
+              "code": "PEP_TRUST_ROOT_UNAVAILABLE"
+            }
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T15",
+      "family": "NEMESIS_T01_T24",
+      "title": "Expiration de type chaîne (entrée hostile)",
+      "expected_v3c": "400 INVALID_FIELD_TYPE (jamais 500)",
+      "observed": {
+        "status_code": 400,
+        "body": {
+          "detail": {
+            "code": "INVALID_FIELD_TYPE",
+            "field": "expires_at"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T16",
+      "family": "NEMESIS_T01_T24",
+      "title": "Claim erroné mais signé (PEP ≠ oracle de vérité)",
+      "expected_v3c": "400 PERMIT_SCHEMA_VIOLATION — contenu non attesté refusé à la frontière",
+      "observed": {
+        "status_code": 400,
+        "body": {
+          "detail": {
+            "code": "PERMIT_SCHEMA_VIOLATION",
+            "expected": [
+              "action",
+              "audience",
+              "expires_at",
+              "issued_at",
+              "issuer",
+              "nonce",
+              "permit_id",
+              "policy_version",
+              "request_hash",
+              "resource",
+              "signature",
+              "subject"
+            ]
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T17",
+      "family": "NEMESIS_T01_T24",
+      "title": "Nonce modifié sans re-signature",
+      "expected_v3c": "403 INVALID_SIGNATURE",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "INVALID_SIGNATURE"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T18",
+      "family": "NEMESIS_T01_T24",
+      "title": "Aucun effet externe réel — pas d'executed=true trompeur",
+      "expected_v3c": "événements distincts PERMIT_CONSUMED/ACTION_ATTEMPTED/EFFECT_SIMULATED ; effect_confirmed=False ; 0 canal d'effet externe dans le code",
+      "observed": {
+        "response": {
+          "status_code": 200,
+          "body": {
+            "status": "AUTHORIZED",
+            "permit_consumed": true,
+            "action_attempted": true,
+            "effect_status": "SIMULATED_LOCAL_ONLY",
+            "effect_confirmed": false,
+            "transaction": "COMMITTED",
+            "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"
+          }
+        },
+        "events_for_nonce": [
+          "PERMIT_CONSUMED",
+          "ACTION_ATTEMPTED",
+          "EFFECT_SIMULATED"
+        ],
+        "forbidden_symbols_in_pep": []
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T19",
+      "family": "NEMESIS_T01_T24",
+      "title": "Deuxième paire 1er/2e appel après un second redémarrage",
+      "expected_v3c": "nouveau permis 200 ; ancien nonce toujours 403 NONCE_REUSED",
+      "observed": {
+        "new_permit": {
+          "status_code": 200,
+          "body": {
+            "status": "AUTHORIZED",
+            "permit_consumed": true,
+            "action_attempted": true,
+            "effect_status": "SIMULATED_LOCAL_ONLY",
+            "effect_confirmed": false,
+            "transaction": "COMMITTED",
+            "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"
+          }
+        },
+        "old_nonce_replay": {
+          "status_code": 403,
+          "body": {
+            "detail": {
+              "code": "NONCE_REUSED"
+            }
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T20",
+      "family": "NEMESIS_T01_T24",
+      "title": "Version politique absente (régression V3)",
+      "expected_v3c": "400 PERMIT_SCHEMA_VIOLATION",
+      "observed": {
+        "status_code": 400,
+        "body": {
+          "detail": {
+            "code": "PERMIT_SCHEMA_VIOLATION",
+            "expected": [
+              "action",
+              "audience",
+              "expires_at",
+              "issued_at",
+              "issuer",
+              "nonce",
+              "permit_id",
+              "policy_version",
+              "request_hash",
+              "resource",
+              "signature",
+              "subject"
+            ]
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T21",
+      "family": "NEMESIS_T01_T24",
+      "title": "Crash injecté après COMMIT du nonce",
+      "expected_v3c": "exit 73 ; état PENDING ; seul PERMIT_CONSUMED ; réessai 403 NONCE_REUSED (fail-closed)",
+      "observed": {
+        "crash_exit_code": 73,
+        "client_error": "RemoteProtocolError('Server disconnected without sending a response.')",
+        "db_row": [
+          [
+            "N-T21-2e7a4d3f",
+            "P-T21",
+            "agent-alpha",
+            "report.read",
+            "reports/q3",
+            1792184281.7173285,
+            "PENDING"
+          ]
+        ],
+        "events": [
+          "PERMIT_CONSUMED"
+        ],
+        "retry": {
+          "status_code": 403,
+          "body": {
+            "detail": {
+              "code": "NONCE_REUSED"
+            }
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T22",
+      "family": "NEMESIS_T01_T24",
+      "title": "Borne d'expiration exclusive (now == expires_at => BLOCK)",
+      "expected_v3c": "à expires_at exactement : 403 PERMIT_EXPIRED ; juste avant : 200",
+      "observed": {
+        "at_exact_boundary": {
+          "status_code": 403,
+          "body": {
+            "detail": {
+              "code": "PERMIT_EXPIRED"
+            }
+          }
+        },
+        "strictly_before": {
+          "status_code": 200,
+          "body": {
+            "status": "AUTHORIZED",
+            "permit_consumed": true,
+            "action_attempted": true,
+            "effect_status": "SIMULATED_LOCAL_ONLY",
+            "effect_confirmed": false,
+            "transaction": "COMMITTED",
+            "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"
+          }
+        },
+        "fixed_now": 1780000000.0
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T23",
+      "family": "NEMESIS_T01_T24",
+      "title": "issued_at +24 heures (régression V3)",
+      "expected_v3c": "403 FUTURE_ISSUED_AT",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "FUTURE_ISSUED_AT"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "T24",
+      "family": "NEMESIS_T01_T24",
+      "title": "TTL approximatif 1 an (régression V3)",
+      "expected_v3c": "403 TTL_EXCEEDED (borne max_ttl_seconds)",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "TTL_EXCEEDED"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "F01",
+      "family": "FIXTURES_F01_F10",
+      "title": "canonical_hash : indépendance d'ordre des clés, sensibilité au contenu",
+      "expected_v3c": "h(ordre1)==h(ordre2) ; h(contenu différent)!=h",
+      "observed": {
+        "h_order1": "eb6310a3bdc0819a821654549ae26c44b6ddd0ca3ee277544fd1d3f5b65cb4bc",
+        "h_order2": "eb6310a3bdc0819a821654549ae26c44b6ddd0ca3ee277544fd1d3f5b65cb4bc",
+        "h_other_content": "1c00eb02d1a42c14259718f7a20ae22a57c047f5401633fc3df0111d96aa4260"
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "F02",
+      "family": "FIXTURES_F01_F10",
+      "title": "Roundtrip Ed25519 sur corps canonique",
+      "expected_v3c": "valide accepté ; corps altéré => signature invalide",
+      "observed": {
+        "valid_signature_ok": true,
+        "tampered_body_rejected": true
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "F03",
+      "family": "FIXTURES_F01_F10",
+      "title": "load_trust : clé + pin fichier + politique concordants",
+      "expected_v3c": "TrustState OK avec empreinte SHA-256 exacte",
+      "observed": {
+        "ok": true,
+        "code": "OK",
+        "fingerprint": "27c3eec935322bdd6b73c83323aeb03c066d1d370218351f3460fad5cb6d8dfd"
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "F04",
+      "family": "FIXTURES_F01_F10",
+      "title": "Allowlist PEP : sujet/action exacts, ressource en motif fnmatch",
+      "expected_v3c": "5 cas : 2×200 attendus, 3×403 attendus",
+      "observed": {
+        "cases": [
+          {
+            "case": [
+              "agent-alpha",
+              "report.read",
+              "reports/q3"
+            ],
+            "want": 200,
+            "got": 200
+          },
+          {
+            "case": [
+              "agent-alpha",
+              "report.read",
+              "secrets/other"
+            ],
+            "want": 403,
+            "got": 403
+          },
+          {
+            "case": [
+              "agent-beta",
+              "email.send",
+              "outbox/digest"
+            ],
+            "want": 403,
+            "got": 403
+          },
+          {
+            "case": [
+              "agent-gamma",
+              "report.read",
+              "reports/q3"
+            ],
+            "want": 403,
+            "got": 403
+          },
+          {
+            "case": [
+              "agent-beta",
+              "report.read",
+              "reports/public/x"
+            ],
+            "want": 200,
+            "got": 200
+          }
+        ]
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "F05",
+      "family": "FIXTURES_F01_F10",
+      "title": "Schéma strict : champ manquant ou supplémentaire",
+      "expected_v3c": "400 PERMIT_SCHEMA_VIOLATION dans les deux cas (jamais 500)",
+      "observed": {
+        "missing_field": {
+          "status_code": 400,
+          "body": {
+            "detail": {
+              "code": "PERMIT_SCHEMA_VIOLATION",
+              "expected": [
+                "action",
+                "audience",
+                "expires_at",
+                "issued_at",
+                "issuer",
+                "nonce",
+                "permit_id",
+                "policy_version",
+                "request_hash",
+                "resource",
+                "signature",
+                "subject"
+              ]
+            }
+          }
+        },
+        "extra_field": {
+          "status_code": 400,
+          "body": {
+            "detail": {
+              "code": "PERMIT_SCHEMA_VIOLATION",
+              "expected": [
+                "action",
+                "audience",
+                "expires_at",
+                "issued_at",
+                "issuer",
+                "nonce",
+                "permit_id",
+                "policy_version",
+                "request_hash",
+                "resource",
+                "signature",
+                "subject"
+              ]
+            }
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "F06",
+      "family": "FIXTURES_F01_F10",
+      "title": "Bornes temporelles : exclusive expire, skew, TTL (horloge figée)",
+      "expected_v3c": "5 cas : expired/future/ttl bloqués, deux cas limites valides",
+      "observed": {
+        "cases": [
+          {
+            "issued_at": 970.0,
+            "expires_at": 1000.0,
+            "want": "PERMIT_EXPIRED",
+            "got": "PERMIT_EXPIRED"
+          },
+          {
+            "issued_at": 970.0,
+            "expires_at": 1000.5,
+            "want": "200",
+            "got": 200
+          },
+          {
+            "issued_at": 1061.0,
+            "expires_at": 1161.0,
+            "want": "FUTURE_ISSUED_AT",
+            "got": "FUTURE_ISSUED_AT"
+          },
+          {
+            "issued_at": 1060.0,
+            "expires_at": 1160.0,
+            "want": "200",
+            "got": 200
+          },
+          {
+            "issued_at": 900.0,
+            "expires_at": 1301.0,
+            "want": "TTL_EXCEEDED",
+            "got": "TTL_EXCEEDED"
+          }
+        ],
+        "fixed_now": 1000.0,
+        "skew": 60.0,
+        "ttl": 300.0
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "F07",
+      "family": "FIXTURES_F01_F10",
+      "title": "Ledger : PRIMARY KEY nonce = arbitre d'unicité",
+      "expected_v3c": "2e consommation du même nonce => NonceReused",
+      "observed": {
+        "second_consume": "NonceReused"
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "F08",
+      "family": "FIXTURES_F01_F10",
+      "title": "Événements : ordre PERMIT_CONSUMED < ACTION_ATTEMPTED < EFFECT_SIMULATED",
+      "expected_v3c": "séquence exacte sur un execute complet",
+      "observed": {
+        "status_code": 200,
+        "events": [
+          "PERMIT_CONSUMED",
+          "ACTION_ATTEMPTED",
+          "EFFECT_SIMULATED"
+        ]
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "F09",
+      "family": "FIXTURES_F01_F10",
+      "title": "Contrat de réponse : aucun executed=true, effect_confirmed=False",
+      "expected_v3c": "champs exacts {status, permit_consumed, action_attempted, effect_status, effect_confirmed, transaction, note}",
+      "observed": {
+        "body": {
+          "status": "AUTHORIZED",
+          "permit_consumed": true,
+          "action_attempted": true,
+          "effect_status": "SIMULATED_LOCAL_ONLY",
+          "effect_confirmed": false,
+          "transaction": "COMMITTED",
+          "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "F10",
+      "family": "FIXTURES_F01_F10",
+      "title": "Fail-closed : pin substitué => aucun execute possible",
+      "expected_v3c": "503 + health.trust_root != OK",
+      "observed": {
+        "execute": {
+          "status_code": 503,
+          "body": {
+            "detail": {
+              "code": "PEP_TRUST_ROOT_PIN_MISMATCH"
+            }
+          }
+        },
+        "health": {
+          "trust_root": "PEP_TRUST_ROOT_PIN_MISMATCH",
+          "policy_loaded": true,
+          "policy_version": "v3c.1.0",
+          "clock_mode": "SYSTEM"
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A01",
+      "family": "ATTACKS_A01_A16",
+      "title": "Rejeu dans le même processus",
+      "expected_v3c": "1er 200 ; 2e 403 NONCE_REUSED",
+      "observed": {
+        "first": {
+          "status_code": 200,
+          "body": {
+            "status": "AUTHORIZED",
+            "permit_consumed": true,
+            "action_attempted": true,
+            "effect_status": "SIMULATED_LOCAL_ONLY",
+            "effect_confirmed": false,
+            "transaction": "COMMITTED",
+            "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"
+          }
+        },
+        "second": {
+          "status_code": 403,
+          "body": {
+            "detail": {
+              "code": "NONCE_REUSED"
+            }
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A02",
+      "family": "ATTACKS_A01_A16",
+      "title": "Rejeu après mort+renaissance du processus serveur",
+      "expected_v3c": "403 NONCE_REUSED (durabilité SQLite)",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "NONCE_REUSED"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A03",
+      "family": "ATTACKS_A01_A16",
+      "title": "Pression concurrente : 16 interpréteurs, même permis",
+      "expected_v3c": "exactement 1×200 et 15×403 NONCE_REUSED",
+      "observed": {
+        "status_codes": [
+          403,
+          403,
+          200,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403,
+          403
+        ],
+        "accepted": 1,
+        "nonce_reused": 15
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A04",
+      "family": "ATTACKS_A01_A16",
+      "title": "Collision de nonce entre deux permis distincts (signés)",
+      "expected_v3c": "1er 200 ; 2e 403 NONCE_REUSED même avec signature valide",
+      "observed": {
+        "first": {
+          "status_code": 200,
+          "body": {
+            "status": "AUTHORIZED",
+            "permit_consumed": true,
+            "action_attempted": true,
+            "effect_status": "SIMULATED_LOCAL_ONLY",
+            "effect_confirmed": false,
+            "transaction": "COMMITTED",
+            "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"
+          }
+        },
+        "second": {
+          "status_code": 403,
+          "body": {
+            "detail": {
+              "code": "NONCE_REUSED"
+            }
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A05",
+      "family": "ATTACKS_A01_A16",
+      "title": "Permis signé par la clé attaquante (clé légitime en place)",
+      "expected_v3c": "403 INVALID_SIGNATURE — la signature valide d'une clé non épinglée ne vaut rien",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "INVALID_SIGNATURE"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A06",
+      "family": "ATTACKS_A01_A16",
+      "title": "Permis sans champ signature",
+      "expected_v3c": "400 PERMIT_SCHEMA_VIOLATION",
+      "observed": {
+        "status_code": 400,
+        "body": {
+          "detail": {
+            "code": "PERMIT_SCHEMA_VIOLATION",
+            "expected": [
+              "action",
+              "audience",
+              "expires_at",
+              "issued_at",
+              "issuer",
+              "nonce",
+              "permit_id",
+              "policy_version",
+              "request_hash",
+              "resource",
+              "signature",
+              "subject"
+            ]
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A07",
+      "family": "ATTACKS_A01_A16",
+      "title": "Usurpation d'issuer + signature valide sous clé non épinglée",
+      "expected_v3c": "403 INVALID_SIGNATURE (la clé non épinglée ne vérifie rien)",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "INVALID_SIGNATURE"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A08",
+      "family": "ATTACKS_A01_A16",
+      "title": "Altération de expires_at après signature",
+      "expected_v3c": "403 INVALID_SIGNATURE",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "INVALID_SIGNATURE"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A09",
+      "family": "ATTACKS_A01_A16",
+      "title": "Altération de la requête : rejet SANS brûler le nonce",
+      "expected_v3c": "403 REQUEST_TAMPERED puis la requête légitime obtient encore 200",
+      "observed": {
+        "tampered": {
+          "status_code": 403,
+          "body": {
+            "detail": {
+              "code": "REQUEST_TAMPERED"
+            }
+          }
+        },
+        "legit_afterward": {
+          "status_code": 200,
+          "body": {
+            "status": "AUTHORIZED",
+            "permit_consumed": true,
+            "action_attempted": true,
+            "effect_status": "SIMULATED_LOCAL_ONLY",
+            "effect_confirmed": false,
+            "transaction": "COMMITTED",
+            "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A10",
+      "family": "ATTACKS_A01_A16",
+      "title": "Confusion de types (bool/null/chaîne sur les horodatages)",
+      "expected_v3c": "400 INVALID_FIELD_TYPE dans tous les cas (jamais 500)",
+      "observed": {
+        "cases": [
+          {
+            "field": "issued_at",
+            "bad_value": "True",
+            "observed": {
+              "status_code": 400,
+              "body": {
+                "detail": {
+                  "code": "INVALID_FIELD_TYPE",
+                  "field": "issued_at"
+                }
+              }
+            }
+          },
+          {
+            "field": "expires_at",
+            "bad_value": "'123'",
+            "observed": {
+              "status_code": 400,
+              "body": {
+                "detail": {
+                  "code": "INVALID_FIELD_TYPE",
+                  "field": "expires_at"
+                }
+              }
+            }
+          },
+          {
+            "field": "issued_at",
+            "bad_value": "None",
+            "observed": {
+              "status_code": 400,
+              "body": {
+                "detail": {
+                  "code": "INVALID_FIELD_TYPE",
+                  "field": "issued_at"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A11",
+      "family": "ATTACKS_A01_A16",
+      "title": "Canonisation : ordre JSON neutre, homoglyphe non transmissible, hash contraignant",
+      "expected_v3c": "JSON réordonné => 200 ; rejeu => 403 NONCE_REUSED ; homoglyphe => 4xx ; ressource ASCII différente => 403 REQUEST_TAMPERED",
+      "observed": {
+        "reordered_json": {
+          "status_code": 200,
+          "body": {
+            "status": "AUTHORIZED",
+            "permit_consumed": true,
+            "action_attempted": true,
+            "effect_status": "SIMULATED_LOCAL_ONLY",
+            "effect_confirmed": false,
+            "transaction": "COMMITTED",
+            "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"
+          }
+        },
+        "replay": {
+          "status_code": 403,
+          "body": {
+            "detail": {
+              "code": "NONCE_REUSED"
+            }
+          }
+        },
+        "homoglyph_resource": {
+          "status_code": 400,
+          "body": {
+            "detail": {
+              "code": "INVALID_FIELD_FORMAT",
+              "field": "resource"
+            }
+          }
+        },
+        "different_ascii_resource": {
+          "status_code": 403,
+          "body": {
+            "detail": {
+              "code": "REQUEST_TAMPERED"
+            }
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A12",
+      "family": "ATTACKS_A01_A16",
+      "title": "Injection SQL dans le nonce",
+      "expected_v3c": "400 INVALID_FIELD_FORMAT (charset nonce) ; table intacte",
+      "observed": {
+        "response": {
+          "status_code": 400,
+          "body": {
+            "detail": {
+              "code": "INVALID_FIELD_FORMAT",
+              "field": "nonce"
+            }
+          }
+        },
+        "table_still_queryable": true
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A13",
+      "family": "ATTACKS_A01_A16",
+      "title": "Traversée de chemin dans la ressource",
+      "expected_v3c": "400 INVALID_FIELD_FORMAT ('..' refusé) avant tout le reste",
+      "observed": {
+        "status_code": 400,
+        "body": {
+          "detail": {
+            "code": "INVALID_FIELD_FORMAT",
+            "field": "resource"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A14",
+      "family": "ATTACKS_A01_A16",
+      "title": "Usurpation de sujet (root) signée",
+      "expected_v3c": "403 SUBJECT_FORBIDDEN — la signature ne crée pas de droits",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "SUBJECT_FORBIDDEN",
+            "subject": "root"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A15",
+      "family": "ATTACKS_A01_A16",
+      "title": "Rétrogradation de policy_version signée",
+      "expected_v3c": "403 POLICY_VERSION_MISMATCH",
+      "observed": {
+        "status_code": 403,
+        "body": {
+          "detail": {
+            "code": "POLICY_VERSION_MISMATCH"
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "A16",
+      "family": "ATTACKS_A01_A16",
+      "title": "Champ surdimensionné et structure profonde",
+      "expected_v3c": "réponses 4xx contrôlées sur champ géant ; pas de crash serveur",
+      "observed": {
+        "oversized_field": {
+          "status_code": 400,
+          "body": {
+            "detail": {
+              "code": "INVALID_FIELD_FORMAT",
+              "field": "resource"
+            }
+          }
+        },
+        "deep_nesting": {
+          "status_code": 400,
+          "body": {
+            "detail": {
+              "code": "REQUEST_SCHEMA_VIOLATION",
+              "expected": [
+                "action",
+                "resource",
+                "subject"
+              ]
+            }
+          }
+        }
+      },
+      "verdict": "PASS_LOCAL"
+    }
+  ],
+  "summary": {
+    "total": 50,
+    "pass": 50,
+    "fail": 0
+  },
+  "db_status_counts": {
+    "EFFECT_SIMULATED": 11,
+    "PENDING": 1
+  },
+  "db_event_counts": {
+    "PERMIT_CONSUMED": 12,
+    "ACTION_ATTEMPTED": 11,
+    "EFFECT_SIMULATED": 11
+  }
+}

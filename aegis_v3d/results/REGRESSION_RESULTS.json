@@ -1,0 +1,24 @@
+{
+  "mission": "AEGIS_V3D_REAL_EFFECT_WITNESS_004",
+  "suite": "V3C_REGRESSIONS",
+  "finished_at": "2026-10-16T22:08:02Z",
+  "v3c_vs_v3c": {
+    "runner_exit": 0,
+    "summary": {
+      "total": 50,
+      "pass": 50,
+      "fail": 0
+    },
+    "log": "/home/user/monsterdog-exochronos-contact-machine/aegis_v3d/results/regression_v3c_vs_v3c_stdout.txt"
+  },
+  "v3c_vs_v3d": {
+    "runner_exit": 0,
+    "summary": {
+      "total": 50,
+      "pass": 50,
+      "fail": 0
+    },
+    "log": "/home/user/monsterdog-exochronos-contact-machine/aegis_v3d/results/regression_v3c_vs_v3d_stdout.txt"
+  },
+  "verdict": "PASS_LOCAL"
+}

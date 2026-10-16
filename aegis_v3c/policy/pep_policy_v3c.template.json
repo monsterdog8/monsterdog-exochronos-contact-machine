@@ -1,0 +1,13 @@
+{
+  "policy_version": "v3c.1.0",
+  "audience": "monsterdog.pep.v3c.local",
+  "trust_root_fingerprint": "REPLACE_WITH_SHA256_OF_RAW_ED25519_PUBLIC_KEY_BYTES",
+  "allowed_issuers": ["monsterdog.core.v3c"],
+  "allowlist": [
+    {"subject": "agent-alpha", "action": "report.read", "resource": "reports/*"},
+    {"subject": "agent-alpha", "action": "email.send", "resource": "outbox/digest"},
+    {"subject": "agent-beta", "action": "report.read", "resource": "reports/public/*"}
+  ],
+  "max_ttl_seconds": 300,
+  "max_issued_at_skew_seconds": 60
+}

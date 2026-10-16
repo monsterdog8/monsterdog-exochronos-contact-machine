@@ -1,0 +1,176 @@
+/home/user/.venv-aegis/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+===== (a) suite V3C historique vs code V3C PRÉSERVÉ =====
+{"runner_exit": 0, "summary": {"total": 50, "pass": 50, "fail": 0}, "log": "/home/user/monsterdog-exochronos-contact-machine/aegis_v3d/results/regression_v3c_vs_v3c_stdout.txt"}
+
+===== (b) suite V3C historique vs PEP V3D =====
+== S_MAIN up on http://127.0.0.1:40751 (workspace=v3d_reg_vs_v3d) ==
+[PASS] T01    Premier permis valide
+         expected: 200 + corps honnête (permit_consumed=True, effect_confirmed=False, pas de executed)
+         observed: {"status_code": 200, "body": {"status": "AUTHORIZED", "permit_consumed": true, "action_attempted": true, "effect_status": "SIMULATED_LOCAL_ONLY", "effect_confirmed": false, "transaction": "COMMITTED", "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"}}
+[PASS] T02    Même nonce après relance du processus
+         expected: 403 NONCE_REUSED avant ET après redémarrage (registre durable)
+         observed: {"before_restart": {"status_code": 403, "body": {"detail": {"code": "NONCE_REUSED"}}}, "after_restart": {"status_code": 403, "body": {"detail": {"code": "NONCE_REUSED"}}}}
+[PASS] T03    8 interpréteurs simultanés, même permis
+         expected: exactement 1×200 et 7×403 NONCE_REUSED
+         observed: {"status_codes": [403, 403, 403, 403, 403, 403, 403, 200], "accepted": 1, "nonce_reused": 7}
+[PASS] T04    Expiration dépassée
+         expected: 403 PERMIT_EXPIRED
+         observed: {"status_code": 403, "body": {"detail": {"code": "PERMIT_EXPIRED"}}}
+[PASS] T05    Audience incorrecte
+         expected: 403 WRONG_AUDIENCE
+         observed: {"status_code": 403, "body": {"detail": {"code": "WRONG_AUDIENCE"}}}
+[PASS] T06    Signature altérée
+         expected: 403 INVALID_SIGNATURE
+         observed: {"status_code": 403, "body": {"detail": {"code": "INVALID_SIGNATURE"}}}
+[PASS] T07    Signature non hexadécimale (entrée hostile)
+         expected: 4xx contrôlé INVALID_FIELD_FORMAT (jamais 500)
+         observed: {"status_code": 400, "body": {"detail": {"code": "INVALID_FIELD_FORMAT", "field": "signature"}}}
+[PASS] T08    Action admin.delete correctement signée (régression V3)
+         expected: 403 ACTION_FORBIDDEN — allowlist PEP indépendante
+         observed: {"status_code": 403, "body": {"detail": {"code": "ACTION_FORBIDDEN", "action": "admin.delete"}}}
+[PASS] T09    Issuer non autorisé (régression V3)
+         expected: 403 ISSUER_FORBIDDEN
+         observed: {"status_code": 403, "body": {"detail": {"code": "ISSUER_FORBIDDEN"}}}
+[PASS] T10    Ancienne policy_version (régression V3)
+         expected: 403 POLICY_VERSION_MISMATCH
+         observed: {"status_code": 403, "body": {"detail": {"code": "POLICY_VERSION_MISMATCH"}}}
+[PASS] T11    Req. altérée puis vraie (anti burn-on-tamper, régression V3)
+         expected: 403 REQUEST_TAMPERED puis 200 — le nonce n'est PAS brûlé
+         observed: {"tampered": {"status_code": 403, "body": {"detail": {"code": "REQUEST_TAMPERED"}}}, "original_afterward": {"status_code": 200, "body": {"status": "AUTHORIZED", "permit_consumed": true, "action_attempted": true, "effect_status": "SIMULATED_LOCAL_ONLY", "effect_confirmed": false, "transaction": "COMMITTED", "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"}}}
+[PASS] T12    Action modifiée sans re-signature
+         expected: 403 REQUEST_TAMPERED
+         observed: {"status_code": 403, "body": {"detail": {"code": "REQUEST_TAMPERED"}}}
+[PASS] T13    Clé publique substituée + permis signé par le substituant (régression V3)
+         expected: 503 PEP_TRUST_ROOT_PIN_MISMATCH (fail-closed) — jamais 200
+         observed: {"health": {"health": {"trust_root": "PEP_TRUST_ROOT_PIN_MISMATCH", "policy_loaded": true, "policy_version": "v3c.1.0", "clock_mode": "SYSTEM"}}, "execute": {"status_code": 503, "body": {"detail": {"code": "PEP_TRUST_ROOT_PIN_MISMATCH"}}}}
+[PASS] T14    Clé publique manquante
+         expected: 503 PEP_TRUST_ROOT_UNAVAILABLE (fail-closed contrôlé)
+         observed: {"health": {"health": {"trust_root": "PEP_TRUST_ROOT_UNAVAILABLE", "policy_loaded": true, "policy_version": "v3c.1.0", "clock_mode": "SYSTEM"}}, "execute": {"status_code": 503, "body": {"detail": {"code": "PEP_TRUST_ROOT_UNAVAILABLE"}}}}
+[PASS] T15    Expiration de type chaîne (entrée hostile)
+         expected: 400 INVALID_FIELD_TYPE (jamais 500)
+         observed: {"status_code": 400, "body": {"detail": {"code": "INVALID_FIELD_TYPE", "field": "expires_at"}}}
+[PASS] T16    Claim erroné mais signé (PEP ≠ oracle de vérité)
+         expected: 400 PERMIT_SCHEMA_VIOLATION — contenu non attesté refusé à la frontière
+         observed: {"status_code": 400, "body": {"detail": {"code": "PERMIT_SCHEMA_VIOLATION", "expected": ["action", "audience", "expires_at", "issued_at", "issuer", "nonce", "permit_id", "policy_version", "request_hash", "resource", "signature", "subject"]}}}
+[PASS] T17    Nonce modifié sans re-signature
+         expected: 403 INVALID_SIGNATURE
+         observed: {"status_code": 403, "body": {"detail": {"code": "INVALID_SIGNATURE"}}}
+[PASS] T18    Aucun effet externe réel — pas d'executed=true trompeur
+         expected: événements distincts PERMIT_CONSUMED/ACTION_ATTEMPTED/EFFECT_SIMULATED ; effect_confirmed=False ; 0 canal d'effet externe dans le code
+         observed: {"response": {"status_code": 200, "body": {"status": "AUTHORIZED", "permit_consumed": true, "action_attempted": true, "effect_status": "SIMULATED_LOCAL_ONLY", "effect_confirmed": false, "transaction": "COMMITTED", "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"}}, "events_for_nonce": ["PERMIT_CONSUMED", "ACTION_ATTEMPTED", "EFFECT_SIMULATED"], "forbidden_symbols_in_p
+[PASS] T19    Deuxième paire 1er/2e appel après un second redémarrage
+         expected: nouveau permis 200 ; ancien nonce toujours 403 NONCE_REUSED
+         observed: {"new_permit": {"status_code": 200, "body": {"status": "AUTHORIZED", "permit_consumed": true, "action_attempted": true, "effect_status": "SIMULATED_LOCAL_ONLY", "effect_confirmed": false, "transaction": "COMMITTED", "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"}}, "old_nonce_replay": {"status_code": 403, "body": {"detail": {"code": "NONCE_REUSED"}}}}
+[PASS] T20    Version politique absente (régression V3)
+         expected: 400 PERMIT_SCHEMA_VIOLATION
+         observed: {"status_code": 400, "body": {"detail": {"code": "PERMIT_SCHEMA_VIOLATION", "expected": ["action", "audience", "expires_at", "issued_at", "issuer", "nonce", "permit_id", "policy_version", "request_hash", "resource", "signature", "subject"]}}}
+[PASS] T21    Crash injecté après COMMIT du nonce
+         expected: exit 73 ; état PENDING ; seul PERMIT_CONSUMED ; réessai 403 NONCE_REUSED (fail-closed)
+         observed: {"crash_exit_code": 73, "client_error": "RemoteProtocolError('Server disconnected without sending a response.')", "db_row": [["N-T21-5dd88dbb", "P-T21", "agent-alpha", "report.read", "reports/q3", 1792188478.92494, "PENDING"]], "events": ["PERMIT_CONSUMED"], "retry": {"status_code": 403, "body": {"detail": {"code": "NONCE_REUSED"}}}}
+[PASS] T22    Borne d'expiration exclusive (now == expires_at => BLOCK)
+         expected: à expires_at exactement : 403 PERMIT_EXPIRED ; juste avant : 200
+         observed: {"at_exact_boundary": {"status_code": 403, "body": {"detail": {"code": "PERMIT_EXPIRED"}}}, "strictly_before": {"status_code": 200, "body": {"status": "AUTHORIZED", "permit_consumed": true, "action_attempted": true, "effect_status": "SIMULATED_LOCAL_ONLY", "effect_confirmed": false, "transaction": "COMMITTED", "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"}}, "fixed
+[PASS] T23    issued_at +24 heures (régression V3)
+         expected: 403 FUTURE_ISSUED_AT
+         observed: {"status_code": 403, "body": {"detail": {"code": "FUTURE_ISSUED_AT"}}}
+[PASS] T24    TTL approximatif 1 an (régression V3)
+         expected: 403 TTL_EXCEEDED (borne max_ttl_seconds)
+         observed: {"status_code": 403, "body": {"detail": {"code": "TTL_EXCEEDED"}}}
+[PASS] F01    canonical_hash : indépendance d'ordre des clés, sensibilité au contenu
+         expected: h(ordre1)==h(ordre2) ; h(contenu différent)!=h
+         observed: {"h_order1": "eb6310a3bdc0819a821654549ae26c44b6ddd0ca3ee277544fd1d3f5b65cb4bc", "h_order2": "eb6310a3bdc0819a821654549ae26c44b6ddd0ca3ee277544fd1d3f5b65cb4bc", "h_other_content": "1c00eb02d1a42c14259718f7a20ae22a57c047f5401633fc3df0111d96aa4260"}
+[PASS] F02    Roundtrip Ed25519 sur corps canonique
+         expected: valide accepté ; corps altéré => signature invalide
+         observed: {"valid_signature_ok": true, "tampered_body_rejected": true}
+[PASS] F03    load_trust : clé + pin fichier + politique concordants
+         expected: TrustState OK avec empreinte SHA-256 exacte
+         observed: {"ok": true, "code": "OK", "fingerprint": "0398644b2e8ed0230b81a7add7691e53858c498b040aa75b5c5e0259f612384a"}
+[PASS] F04    Allowlist PEP : sujet/action exacts, ressource en motif fnmatch
+         expected: 5 cas : 2×200 attendus, 3×403 attendus
+         observed: {"cases": [{"case": ["agent-alpha", "report.read", "reports/q3"], "want": 200, "got": 200}, {"case": ["agent-alpha", "report.read", "secrets/other"], "want": 403, "got": 403}, {"case": ["agent-beta", "email.send", "outbox/digest"], "want": 403, "got": 403}, {"case": ["agent-gamma", "report.read", "reports/q3"], "want": 403, "got": 403}, {"case": ["agent-beta", "report.read", "reports/public/x"], "
+[PASS] F05    Schéma strict : champ manquant ou supplémentaire
+         expected: 400 PERMIT_SCHEMA_VIOLATION dans les deux cas (jamais 500)
+         observed: {"missing_field": {"status_code": 400, "body": {"detail": {"code": "PERMIT_SCHEMA_VIOLATION", "expected": ["action", "audience", "expires_at", "issued_at", "issuer", "nonce", "permit_id", "policy_version", "request_hash", "resource", "signature", "subject"]}}}, "extra_field": {"status_code": 400, "body": {"detail": {"code": "PERMIT_SCHEMA_VIOLATION", "expected": ["action", "audience", "expires_at"
+[PASS] F06    Bornes temporelles : exclusive expire, skew, TTL (horloge figée)
+         expected: 5 cas : expired/future/ttl bloqués, deux cas limites valides
+         observed: {"cases": [{"issued_at": 970.0, "expires_at": 1000.0, "want": "PERMIT_EXPIRED", "got": "PERMIT_EXPIRED"}, {"issued_at": 970.0, "expires_at": 1000.5, "want": "200", "got": 200}, {"issued_at": 1061.0, "expires_at": 1161.0, "want": "FUTURE_ISSUED_AT", "got": "FUTURE_ISSUED_AT"}, {"issued_at": 1060.0, "expires_at": 1160.0, "want": "200", "got": 200}, {"issued_at": 900.0, "expires_at": 1301.0, "want": 
+[PASS] F07    Ledger : PRIMARY KEY nonce = arbitre d'unicité
+         expected: 2e consommation du même nonce => NonceReused
+         observed: {"second_consume": "NonceReused"}
+[PASS] F08    Événements : ordre PERMIT_CONSUMED < ACTION_ATTEMPTED < EFFECT_SIMULATED
+         expected: séquence exacte sur un execute complet
+         observed: {"status_code": 200, "events": ["PERMIT_CONSUMED", "ACTION_ATTEMPTED", "EFFECT_SIMULATED"]}
+[PASS] F09    Contrat de réponse : aucun executed=true, effect_confirmed=False
+         expected: champs exacts {status, permit_consumed, action_attempted, effect_status, effect_confirmed, transaction, note}
+         observed: {"body": {"status": "AUTHORIZED", "permit_consumed": true, "action_attempted": true, "effect_status": "SIMULATED_LOCAL_ONLY", "effect_confirmed": false, "transaction": "COMMITTED", "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"}}
+[PASS] F10    Fail-closed : pin substitué => aucun execute possible
+         expected: 503 + health.trust_root != OK
+         observed: {"execute": {"status_code": 503, "body": {"detail": {"code": "PEP_TRUST_ROOT_PIN_MISMATCH"}}}, "health": {"trust_root": "PEP_TRUST_ROOT_PIN_MISMATCH", "policy_loaded": true, "policy_version": "v3c.1.0", "clock_mode": "SYSTEM"}}
+[PASS] A01    Rejeu dans le même processus
+         expected: 1er 200 ; 2e 403 NONCE_REUSED
+         observed: {"first": {"status_code": 200, "body": {"status": "AUTHORIZED", "permit_consumed": true, "action_attempted": true, "effect_status": "SIMULATED_LOCAL_ONLY", "effect_confirmed": false, "transaction": "COMMITTED", "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"}}, "second": {"status_code": 403, "body": {"detail": {"code": "NONCE_REUSED"}}}}
+[PASS] A02    Rejeu après mort+renaissance du processus serveur
+         expected: 403 NONCE_REUSED (durabilité SQLite)
+         observed: {"status_code": 403, "body": {"detail": {"code": "NONCE_REUSED"}}}
+[PASS] A03    Pression concurrente : 16 interpréteurs, même permis
+         expected: exactement 1×200 et 15×403 NONCE_REUSED
+         observed: {"status_codes": [403, 403, 403, 403, 403, 403, 403, 200, 403, 403, 403, 403, 403, 403, 403, 403], "accepted": 1, "nonce_reused": 15}
+[PASS] A04    Collision de nonce entre deux permis distincts (signés)
+         expected: 1er 200 ; 2e 403 NONCE_REUSED même avec signature valide
+         observed: {"first": {"status_code": 200, "body": {"status": "AUTHORIZED", "permit_consumed": true, "action_attempted": true, "effect_status": "SIMULATED_LOCAL_ONLY", "effect_confirmed": false, "transaction": "COMMITTED", "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"}}, "second": {"status_code": 403, "body": {"detail": {"code": "NONCE_REUSED"}}}}
+[PASS] A05    Permis signé par la clé attaquante (clé légitime en place)
+         expected: 403 INVALID_SIGNATURE — la signature valide d'une clé non épinglée ne vaut rien
+         observed: {"status_code": 403, "body": {"detail": {"code": "INVALID_SIGNATURE"}}}
+[PASS] A06    Permis sans champ signature
+         expected: 400 PERMIT_SCHEMA_VIOLATION
+         observed: {"status_code": 400, "body": {"detail": {"code": "PERMIT_SCHEMA_VIOLATION", "expected": ["action", "audience", "expires_at", "issued_at", "issuer", "nonce", "permit_id", "policy_version", "request_hash", "resource", "signature", "subject"]}}}
+[PASS] A07    Usurpation d'issuer + signature valide sous clé non épinglée
+         expected: 403 INVALID_SIGNATURE (la clé non épinglée ne vérifie rien)
+         observed: {"status_code": 403, "body": {"detail": {"code": "INVALID_SIGNATURE"}}}
+[PASS] A08    Altération de expires_at après signature
+         expected: 403 INVALID_SIGNATURE
+         observed: {"status_code": 403, "body": {"detail": {"code": "INVALID_SIGNATURE"}}}
+[PASS] A09    Altération de la requête : rejet SANS brûler le nonce
+         expected: 403 REQUEST_TAMPERED puis la requête légitime obtient encore 200
+         observed: {"tampered": {"status_code": 403, "body": {"detail": {"code": "REQUEST_TAMPERED"}}}, "legit_afterward": {"status_code": 200, "body": {"status": "AUTHORIZED", "permit_consumed": true, "action_attempted": true, "effect_status": "SIMULATED_LOCAL_ONLY", "effect_confirmed": false, "transaction": "COMMITTED", "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"}}}
+[PASS] A10    Confusion de types (bool/null/chaîne sur les horodatages)
+         expected: 400 INVALID_FIELD_TYPE dans tous les cas (jamais 500)
+         observed: {"cases": [{"field": "issued_at", "bad_value": "True", "observed": {"status_code": 400, "body": {"detail": {"code": "INVALID_FIELD_TYPE", "field": "issued_at"}}}}, {"field": "expires_at", "bad_value": "'123'", "observed": {"status_code": 400, "body": {"detail": {"code": "INVALID_FIELD_TYPE", "field": "expires_at"}}}}, {"field": "issued_at", "bad_value": "None", "observed": {"status_code": 400, "bo
+[PASS] A11    Canonisation : ordre JSON neutre, homoglyphe non transmissible, hash contraignant
+         expected: JSON réordonné => 200 ; rejeu => 403 NONCE_REUSED ; homoglyphe => 4xx ; ressource ASCII différente => 403 REQUEST_TAMPERED
+         observed: {"reordered_json": {"status_code": 200, "body": {"status": "AUTHORIZED", "permit_consumed": true, "action_attempted": true, "effect_status": "SIMULATED_LOCAL_ONLY", "effect_confirmed": false, "transaction": "COMMITTED", "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"}}, "replay": {"status_code": 403, "body": {"detail": {"code": "NONCE_REUSED"}}}, "homoglyph_resource"
+[PASS] A12    Injection SQL dans le nonce
+         expected: 400 INVALID_FIELD_FORMAT (charset nonce) ; table intacte
+         observed: {"response": {"status_code": 400, "body": {"detail": {"code": "INVALID_FIELD_FORMAT", "field": "nonce"}}}, "table_still_queryable": true}
+[PASS] A13    Traversée de chemin dans la ressource
+         expected: 400 INVALID_FIELD_FORMAT ('..' refusé) avant tout le reste
+         observed: {"status_code": 400, "body": {"detail": {"code": "INVALID_FIELD_FORMAT", "field": "resource"}}}
+[PASS] A14    Usurpation de sujet (root) signée
+         expected: 403 SUBJECT_FORBIDDEN — la signature ne crée pas de droits
+         observed: {"status_code": 403, "body": {"detail": {"code": "SUBJECT_FORBIDDEN", "subject": "root"}}}
+[PASS] A15    Rétrogradation de policy_version signée
+         expected: 403 POLICY_VERSION_MISMATCH
+         observed: {"status_code": 403, "body": {"detail": {"code": "POLICY_VERSION_MISMATCH"}}}
+[PASS] A16    Champ surdimensionné et structure profonde
+         expected: réponses 4xx contrôlées sur champ géant ; pas de crash serveur
+         observed: {"oversized_field": {"status_code": 400, "body": {"detail": {"code": "INVALID_FIELD_FORMAT", "field": "resource"}}}, "deep_nesting": {"status_code": 400, "body": {"detail": {"code": "REQUEST_SCHEMA_VIOLATION", "expected": ["action", "resource", "subject"]}}}}
+
+== SUMMARY: 50/50 PASS_LOCAL, 0 FAIL ==
+   GATE_TRUST_ROOT_PIN: PASS_LOCAL
+   GATE_PEP_POLICY_AUTHZ: PASS_LOCAL
+   GATE_NONCE_PERSISTENCE: PASS_LOCAL
+   GATE_CONCURRENCY: PASS_LOCAL
+   GATE_TEMPORAL_SEMANTICS: PASS_LOCAL
+   GATE_CRYPTO_BINDING: PASS_LOCAL
+   GATE_STRICT_PARSING: PASS_LOCAL
+   GATE_BURN_ON_TAMPER: PASS_LOCAL
+   GATE_EFFECT_SEMANTICS: PASS_LOCAL
+   GATE_CRASH_RECOVERY: PASS_LOCAL
+   GATE_REAL_OS_PERMISSIONS: NOT_EXECUTED
+   GATE_PRODUCTION_DEPLOYMENT: NOT_EXECUTED
+   written: EXPERIMENT_RESULTS_v3d_reg_vs_v3d.json, VERDICT_v3d_reg_vs_v3d.json
+
+{"runner_exit": 0, "summary": {"total": 50, "pass": 50, "fail": 0}, "log": "/home/user/monsterdog-exochronos-contact-machine/aegis_v3d/results/regression_v3c_vs_v3d_stdout.txt"}
+
+written: /home/user/monsterdog-exochronos-contact-machine/aegis_v3d/results/REGRESSION_RESULTS.json | verdict: PASS_LOCAL

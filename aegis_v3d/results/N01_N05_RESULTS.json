@@ -1,0 +1,188 @@
+{
+  "mission": "AEGIS_V3D_REAL_EFFECT_WITNESS_004",
+  "suite": "N01_N05_REPRODUCTION",
+  "finished_at": "2026-10-16T22:05:37Z",
+  "results": [
+    {
+      "id": "N01",
+      "target": "V3C",
+      "title": "Champ JSON externe system_eval sur requête légitime",
+      "nemesis_finding": "wrapper permissif : HTTP 200 silencieux",
+      "observed": {
+        "status_code": 200,
+        "body": {
+          "status": "AUTHORIZED",
+          "permit_consumed": true,
+          "action_attempted": true,
+          "effect_status": "SIMULATED_LOCAL_ONLY",
+          "effect_confirmed": false,
+          "transaction": "COMMITTED",
+          "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"
+        }
+      },
+      "verdict": "REPRODUCED"
+    },
+    {
+      "id": "N02",
+      "target": "V3C",
+      "title": "Deux permis, même permit_id, nonces distincts",
+      "nemesis_finding": "200 puis 200 : unicité nonce seulement, pas d'idempotence métier",
+      "observed": {
+        "first": 200,
+        "second": 200
+      },
+      "verdict": "REPRODUCED"
+    },
+    {
+      "id": "N03",
+      "target": "V3C",
+      "title": "Révocation de politique après démarrage",
+      "nemesis_finding": "autorisation chargée non révoquée : HTTP 200 après modification disque",
+      "observed": {
+        "before_change": 200,
+        "after_revocation": 200
+      },
+      "verdict": "REPRODUCED"
+    },
+    {
+      "id": "N04",
+      "target": "V3C",
+      "title": "Remplacement conjoint clé publique + pin + politique",
+      "nemesis_finding": "racine réinstallée par l'attaquant : HTTP 200 (3 fichiers mutables != racine)",
+      "observed": {
+        "status_code": 200,
+        "body": {
+          "status": "AUTHORIZED",
+          "permit_consumed": true,
+          "action_attempted": true,
+          "effect_status": "SIMULATED_LOCAL_ONLY",
+          "effect_confirmed": false,
+          "transaction": "COMMITTED",
+          "note": "SIMULATED_ACTION!=PHYSICAL_ACTION; PERMIT_CONSUMED!=EFFECT_COMPLETED"
+        }
+      },
+      "verdict": "REPRODUCED"
+    },
+    {
+      "id": "N05",
+      "target": "V3C",
+      "title": "Rollback simulé du registre (DELETE des 3 tables)",
+      "nemesis_finding": "même permis réaccepté : HTTP 200 (pas de témoin monotone)",
+      "observed": {
+        "first": 200,
+        "replay_after_rollback": 200
+      },
+      "verdict": "REPRODUCED"
+    },
+    {
+      "id": "N01",
+      "target": "V3D",
+      "title": "Champ JSON externe system_eval (extra=forbid)",
+      "nemesis_finding": "V3C acceptait en silence ; V3D doit refuser",
+      "observed": {
+        "status_code": 422,
+        "body": {
+          "detail": [
+            {
+              "type": "extra_forbidden",
+              "loc": [
+                "body",
+                "system_eval"
+              ],
+              "msg": "Extra inputs are not permitted",
+              "input": "__import__('os').system('id')"
+            }
+          ]
+        }
+      },
+      "verdict": "FIXED"
+    },
+    {
+      "id": "N02",
+      "target": "V3D",
+      "title": "Même permit_id, nonces distincts",
+      "nemesis_finding": "V3C donnait 200/200 ; V3D doit refuser le second (idempotence métier)",
+      "observed": {
+        "first": 200,
+        "second": 403,
+        "second_code": "PERMIT_ID_REUSED"
+      },
+      "verdict": "FIXED"
+    },
+    {
+      "id": "N03",
+      "target": "V3D",
+      "title": "Révocation administrative de politique",
+      "nemesis_finding": "V3C ignorait la modification ; contrat V3D : effective à la requête suivante",
+      "observed": {
+        "before": 200,
+        "after_revocation": 403,
+        "after_code": "ACTION_FORBIDDEN",
+        "policy_restored": true
+      },
+      "verdict": "FIXED"
+    },
+    {
+      "id": "N04",
+      "target": "V3D",
+      "title": "Remplacement conjoint clé+pin+politique tenté par l'agent non fiable",
+      "nemesis_finding": "V3C : 200 (fichiers mutables) ; V3D : refus OS sur les 3 fichiers",
+      "observed": {
+        "write_key": {
+          "rc": 0,
+          "stdout": "EACCES",
+          "stderr": ""
+        },
+        "write_pin": {
+          "rc": 0,
+          "stdout": "EACCES",
+          "stderr": ""
+        },
+        "write_policy": {
+          "rc": 0,
+          "stdout": "EACCES",
+          "stderr": ""
+        },
+        "pep_health_after": {
+          "trust_root": "OK",
+          "policy_loaded": true,
+          "policy_version": "v3d.1.0",
+          "clock_mode": "SYSTEM"
+        }
+      },
+      "verdict": "SCOPE_MOVED_TO_OS"
+    },
+    {
+      "id": "N05",
+      "target": "V3D",
+      "title": "Rollback du registre : agent vs propriétaire privilégié",
+      "nemesis_finding": "V3C : rejeu 200 ; V3D : agent bloqué OS, rollback privilégié démontré + détecté",
+      "observed": {
+        "first": 200,
+        "agent_rollback_attempt": {
+          "rc": 0,
+          "stdout": "OperationalError",
+          "stderr": ""
+        },
+        "agent_state_dir_list": {
+          "rc": 0,
+          "stdout": "EACCES",
+          "stderr": ""
+        },
+        "replay_after_agent_rollback": {
+          "status": 403,
+          "code": "NONCE_REUSED"
+        },
+        "chain_floor_before_privileged_rollback": "b5400ae63e2df10206ce415ca8d837c824f763a464de264862a81704eba18758",
+        "chain_head_after_privileged_rollback": "cb164645071573cec14a536bb9f5fca18256f82a47033859849eb45effce8897",
+        "chain_regression_detected": true,
+        "replay_after_privileged_db_rollback": {
+          "status": 502,
+          "code": "EFFECT_UNCONFIRMED"
+        },
+        "note": "O_EXCL du marqueur FS : un rollback DB seul ne recrée pas l'effet"
+      },
+      "verdict": "LAYERED"
+    }
+  ]
+}
