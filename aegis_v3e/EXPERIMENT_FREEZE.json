@@ -1,0 +1,119 @@
+{
+  "mission": "AEGIS_V3E_INDEPENDENT_WITNESS_ATTESTATION_005",
+  "frozen_before_execution": true,
+  "frozen_at_utc": "2026-10-16T22:40:00Z",
+  "schema": "aegis-experiment-freeze/1",
+  "principle": "CLAIM <= EVIDENCE",
+  "vocabulary": ["OBSERVED", "RECOMPUTED", "REPORTED", "NOT_EXECUTED", "BLOCKED", "BLOCKED_ENVIRONMENT", "HOLD"],
+  "oracle": {
+    "sole_effect_oracle": "INDEPENDENT_WITNESS_SOURCE/witness_v3e.sh",
+    "not_oracles": ["HTTP 200", "PEP response body", "aegis_v3d/tests/effect_witness.py", "sha256 of a report without raw bytes"],
+    "witness_requirements": [
+      "opens files of the effect directory itself",
+      "recomputes bytes/length/sha256",
+      "compares to input assertion",
+      "reports effective uid, own source hash, run id",
+      "refuses (exit 1) on any byte alteration"
+    ],
+    "external_verifier": "tests/verify_bundle.py (third implementation, recomputes from RAW bytes)"
+  },
+  "trust_root": {
+    "os_controller": "Arena/E2B ephemeral container platform (hostname e2b.local, per-session recycle observed)",
+    "privileged_actor": "human user, conditional authorization for minimal root provisioning in this ephemeral container only",
+    "root_out_of_scope": ["root rollback", "privileged state rebuild", "power loss", "multi-site", "key rotation"],
+    "external_anchor": "git push of this freeze commit BEFORE tests (GitHub receive timestamp)"
+  },
+  "sandbox": {
+    "root": "/tmp/aegis_v3e_sandbox",
+    "identities": {"aegis_pep": "server+effect+state owner", "aegis_witness": "independent witness uid", "aegis_agent": "untrusted client uid"},
+    "admin_rules": [
+      "test accounts only, no admin privileges",
+      "preflight before any modification",
+      "no modification of /home, user data, existing repos, secrets, system configs",
+      "no recursive deletion, no global chmod, no external installation, no public deployment",
+      "every privileged command journaled with stdout/stderr/exit code",
+      "stop immediately if isolation or permissions cannot be verified",
+      "non-destructive test markers only"
+    ]
+  },
+  "fixture": {
+    "clock": {"AEGIS_FIXED_NOW": "1760650000.0", "note": "horloge figée -> marqueurs pré-calculables avant exécution"},
+    "authorized_permit": {
+      "subject": "agent-alpha",
+      "action": "marker.create",
+      "resource": "effect/marker-P-V3E.json",
+      "nonce": "nonce-v3e-allow-001",
+      "permit_id": "P-V3E"
+    },
+    "authorized_permit_concurrency": {
+      "subject": "agent-alpha",
+      "action": "marker.create",
+      "resource": "effect/marker-P-V3E-C12.json",
+      "nonce": "nonce-v3e-c12-001",
+      "permit_id": "P-V3E-C12"
+    },
+    "crash_permits": {
+      "C1": {"permit_id": "P-V3E-C1", "nonce": "nonce-v3e-c1", "resource": "effect/marker-P-V3E-C1.json"},
+      "C2": {"permit_id": "P-V3E-C2", "nonce": "nonce-v3e-c2", "resource": "effect/marker-P-V3E-C2.json"},
+      "C3": {"permit_id": "P-V3E-C3", "nonce": "nonce-v3e-c3", "resource": "effect/marker-P-V3E-C3.json"},
+      "C4": {"permit_id": "P-V3E-C4", "nonce": "nonce-v3e-c4", "resource": "effect/marker-P-V3E-C4.json"}
+    },
+    "precomputed_marker_sha256": {
+      "note": "valeurs calculées par tests/run_v3e_tribunal.py AVANT toute exécution et écrites dans RAW_EVIDENCE/precomputed_expectations.json ; le témoin les compare aux octets observés",
+      "algorithm": "json.dumps(sort_keys=True,separators=(',',':'),ensure_ascii=False)+'\\n' sur {permit_id,nonce,subject,action,resource,policy_version,materialized_at,content_digest}"
+    },
+    "negative_cases": [
+      "X1 unknown field in body (identity/system_eval) -> 422, no marker",
+      "X2 forbidden action admin.delete (validly signed) -> 4xx, no marker",
+      "X3 wrong signing key -> 4xx, no marker",
+      "X4 tampered nonce after signature -> 4xx, no marker",
+      "X5 replayed signature of consumed permit -> 4xx, no second marker",
+      "X6 resource outside allowlist -> 4xx, no marker",
+      "X7 revoked subject/policy -> 4xx, no marker"
+    ],
+    "crash_points": {
+      "C1": "AEGIS_FAULT=before_consume_commit -> NO_CONSUMPTION; retry may succeed exactly once",
+      "C2": "AEGIS_FAULT=after_consume_commit -> CONSUMED_NO_ATTEMPT",
+      "C3": "AEGIS_FAULT=after_attempt -> ATTEMPTED_NO_EFFECT",
+      "C4": "AEGIS_FAULT=after_effect -> EFFECT_PRESENT_DB_INCOMPLETE"
+    },
+    "effect_state_taxonomy": ["NO_CONSUMPTION", "CONSUMED_NO_ATTEMPT", "ATTEMPTED_NO_EFFECT", "EFFECT_PRESENT_DB_INCOMPLETE", "CONFIRMED (witness only)", "UNKNOWN"]
+  },
+  "control_families": {
+    "A": "permission ALLOW -> exactly one unique marker, confirmed by independent witness",
+    "B": "forbidden action/signature/identity -> zero marker",
+    "C": "replay/restart/concurrency -> never a second effect (same nonce, 8 concurrent, restart)",
+    "D": "direct access by agent uid -> EACCES on effect dir, registry and config writes (BLOCKED_ENVIRONMENT if provisioning not authorized)",
+    "E": "crash C1-C4 -> composite states justified, witnessed independently"
+  },
+  "attestation_negative_controls": {
+    "V1": "alter one marker byte -> witness must refuse",
+    "V2": "substitute witness report -> external verifier must refuse",
+    "V3": "earlier timestamp/chain head rollback -> must not validate by simple hash; compare independent anchors",
+    "V4": "old signed permit + old/rebuilt registry -> no second effect; compare independent anchors (marker O_EXCL floor, receipts)",
+    "V5": "witness unavailable -> UNKNOWN/HOLD, never CONFIRMED by default"
+  },
+  "durability_rules": [
+    "process crash != power loss",
+    "fsync(file) != fsync(dir); pep_v3e_effect syncs both",
+    "POWER_LOSS_DURABILITY stays NOT_EXECUTED without a power-cut rig",
+    "observed marker != reboot durability proof"
+  ],
+  "refusal_criteria": [
+    "no PASS without executed command and raw receipt",
+    "never rename EXPECTED to OBSERVED",
+    "witness missing/altered -> UNKNOWN/HOLD",
+    "chain or anchor mismatch -> HOLD",
+    "one critical veto imposes HOLD",
+    "PUBLIC_DEPLOYMENT stays BLOCKED"
+  ],
+  "deliverables": [
+    "V3E_THREAT_MODEL.md", "EXPERIMENT_FREEZE.json", "INDEPENDENT_WITNESS_SOURCE/",
+    "RAW_EVIDENCE/", "ATTACK_LEDGER.json", "REPLAY.sh", "VERDICT.json", "REPORT_FR.md"
+  ],
+  "preservation": {
+    "aegis_v3c": "untouched, hash-verified",
+    "aegis_v3d": "untouched, hash-verified, historical results preserved",
+    "rule": "successors only as new files"
+  }
+}

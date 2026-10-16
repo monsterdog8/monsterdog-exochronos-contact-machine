@@ -9,3 +9,6 @@ aegis_v3d/tests/keys/
 aegis_v3d/results/policy_stage.json
 aegis_v3d/results/n_v3c_workspace/
 aegis_v3d/results/n_v3c_evil_config/
+aegis_v3e/tests/keys/
+aegis_v3e/results_stage/
+aegis_v3e/PROVISION_JOURNAL.jsonl

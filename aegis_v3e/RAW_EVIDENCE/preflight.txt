@@ -1,0 +1,32 @@
+=== AEGIS V3E PREFLIGHT (no modification) 2026-10-16T22:38:25Z ===
+--- identity ---
+uid=1001(user) gid=1001(user) groups=1001(user),27(sudo),100(users)
+e2b.local
+Linux e2b.local 6.1.158+ #1 SMP PREEMPT_DYNAMIC Mon May 11 18:48:24 UTC 2026 x86_64 GNU/Linux
+--- container isolation evidence ---
+ls: cannot access '/.dockerenv': No such file or directory
+0::/init.scope
+systemd
+/dev/vda on / type ext4 (rw,relatime,discard)
+--- sudo state ---
+sudo_n_exit=0
+--- existing accounts ---
+getent_exit=2
+--- target paths ---
+ls: cannot access '/tmp/aegis_v3e_sandbox': No such file or directory
+drwxrwxrwt 10 root root 4096 Oct 16 22:38 /tmp
+drwx------  3 user user 4096 Oct 16 22:38 /home/user
+drwxr-xr-x 15 user user 4096 Oct 16 22:38 /home/user/monsterdog-exochronos-contact-machine
+--- tools ---
+/usr/bin/sha256sum
+/usr/bin/stat
+/usr/bin/od
+/usr/bin/find
+/usr/bin/sort
+/usr/bin/date
+/usr/bin/python3
+/usr/bin/sudo
+/usr/bin/install
+--- writable probe (unprivileged) ---
+/tmp writable OK
+=== PREFLIGHT END ===
